@@ -9,6 +9,7 @@ export default function ProfileSettings() {
   const [modalOpen, setModalOpen] = useState(false);
   const [verified, setVerified] = useState(false);
   const [data, setdata] = useState({});
+
   useEffect(() => {
     async function featchdata() {
       try {
@@ -37,7 +38,7 @@ export default function ProfileSettings() {
           }}
         />
       )}
-      <h2 className=" font-semibold mb-3">Profile Settings</h2>
+      <h2 className="font-semibold mb-3">Profile Settings</h2>
       <section className="bg-white text-sm border-t border-t-gray-200 pt-4 py-6 mb-1">
         <h3 className="font-semibold text-gray-800 mb-3">Basic Information</h3>
         <div className="flex items-center gap-4 mb-4 bg-gray-50 p-5 rounded-md">
@@ -46,14 +47,14 @@ export default function ProfileSettings() {
               <img
                 src={`http://localhost:8000/${data?.userId?.profileImage}`}
                 alt="Profile"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-full"
               />
             ) : (
               "📷"
             )}
           </div>
           <div>
-            <p className=" font-semibold">profile picture</p>
+            <p className="font-semibold">Profile Picture</p>
             <p className="text-sm text-gray-500 mb-1">
               Recommended image size is 40px x 40px
             </p>
@@ -68,7 +69,7 @@ export default function ProfileSettings() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-xs text-gray-700 font-medium mb-1">
               Full Name
@@ -76,7 +77,8 @@ export default function ProfileSettings() {
             <input
               type="text"
               value={data?.userId?.name}
-              className="w-full border rounded px-3 border-gray-300 outline-0 py-2 text-sm"
+              readOnly
+              className="w-full rounded px-3 py-2 text-sm bg-gray-100 text-gray-700 border border-gray-300 cursor-not-allowed outline-none"
             />
           </div>
           <div>
@@ -86,7 +88,8 @@ export default function ProfileSettings() {
             <input
               type="tel"
               value={data?.phone}
-              className="w-full border rounded px-3 border-gray-300 outline-0 py-2 text-sm"
+              readOnly
+              className="w-full rounded px-3 py-2 text-sm bg-gray-100 text-gray-700 border border-gray-300 cursor-not-allowed outline-none"
             />
           </div>
           <div>
@@ -96,12 +99,14 @@ export default function ProfileSettings() {
             <input
               type="email"
               value={data?.userId?.email}
-              className="w-full border rounded px-3 border-gray-300 outline-0 py-2 text-sm"
+              readOnly
+              className="w-full rounded px-3 py-2 text-sm bg-gray-100 text-gray-700 border border-gray-300 cursor-not-allowed outline-none"
             />
           </div>
         </div>
       </section>
-      <section className="bg-white border-t border-t-gray-300  py-4">
+
+      <section className="bg-white border-t border-t-gray-300 py-4">
         <h3 className="font-semibold text-sm text-gray-800 mb-3">
           Address Information
         </h3>
@@ -111,7 +116,8 @@ export default function ProfileSettings() {
           <input
             type="text"
             value={data?.address}
-            className="w-full border rounded px-3 border-gray-300 outline-0 py-2 text-sm"
+            readOnly
+            className="w-full rounded px-3 py-2 text-sm bg-gray-100 text-gray-700 border border-gray-300 cursor-not-allowed outline-none"
           />
         </div>
 
@@ -121,7 +127,8 @@ export default function ProfileSettings() {
             <input
               type="text"
               value={data?.country}
-              className="w-full border rounded px-3 border-gray-300 outline-0 py-2 text-sm"
+              readOnly
+              className="w-full rounded px-3 py-2 text-sm bg-gray-100 text-gray-700 border border-gray-300 cursor-not-allowed outline-none"
             />
           </div>
           <div>
@@ -129,7 +136,8 @@ export default function ProfileSettings() {
             <input
               type="text"
               value={data?.state}
-              className="w-full border rounded px-3 border-gray-300 outline-0 py-2 text-sm"
+              readOnly
+              className="w-full rounded px-3 py-2 text-sm bg-gray-100 text-gray-700 border border-gray-300 cursor-not-allowed outline-none"
             />
           </div>
           <div>
@@ -137,7 +145,8 @@ export default function ProfileSettings() {
             <input
               type="text"
               value={data?.city}
-              className="w-full border rounded px-3 border-gray-300 outline-0 py-2 text-sm"
+              readOnly
+              className="w-full rounded px-3 py-2 text-sm bg-gray-100 text-gray-700 border border-gray-300 cursor-not-allowed outline-none"
             />
           </div>
         </div>
@@ -147,11 +156,10 @@ export default function ProfileSettings() {
           <input
             type="text"
             value={data?.postalcode}
-            className="w-full border rounded px-3 border-gray-300 outline-0 py-2 text-sm"
+            readOnly
+            className="w-full rounded px-3 py-2 text-sm bg-gray-100 text-gray-700 border border-gray-300 cursor-not-allowed outline-none"
           />
         </div>
-
-        {/* Buttons */}
       </section>
     </div>
   );
