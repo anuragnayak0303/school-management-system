@@ -31,8 +31,7 @@ export const saveAddress = async (req, res) => {
       countryCode,
       image,
     } = req.body;
-    console.log(req.body);
-    console.log(req.file);
+   
 
     const Address = await Addressmodel.findOne({ userId: req.user });
 
