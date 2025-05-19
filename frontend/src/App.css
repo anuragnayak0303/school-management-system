@@ -8,7 +8,9 @@
     opacity: 1;
     transform: translateY(0);
   }
-}*{
+}
+
+* {
   scroll-behavior: smooth;
 }
 
@@ -38,6 +40,136 @@
   }
 }
 
-.bacgroundImageAdd{
+.bacgroundImageAdd {
   background-image: url('https://images.pexels.com/photos/2982449/pexels-photo-2982449.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+}
+
+/* ===== Classic & Clean Fonts ===== */
+
+.Paprika {
+  font-family: "Paprika", Sans-serif;
+}
+
+.font-roboto {
+  font-family: 'Roboto', sans-serif;
+  /* Roboto */
+}
+
+.font-open-sans {
+  font-family: 'Open Sans', sans-serif;
+  /* Open Sans */
+}
+
+.font-lato {
+  font-family: 'Lato', sans-serif;
+  /* Lato */
+}
+
+.font-ubuntu {
+  font-family: 'Ubuntu', sans-serif;
+  /* Ubuntu */
+}
+
+.font-pt-sans {
+  font-family: 'PT Sans', sans-serif;
+  /* PT Sans */
+}
+
+/* ===== Elegant & Serif Fonts ===== */
+.font-merriweather {
+  font-family: 'Merriweather', serif;
+  /* Merriweather */
+}
+
+.font-playfair {
+  font-family: 'Playfair Display', serif;
+  /* Playfair Display */
+}
+
+.font-lora {
+  font-family: 'Lora', serif;
+  /* Lora */
+}
+
+.font-eb-garamond {
+  font-family: 'EB Garamond', serif;
+  /* EB Garamond */
+}
+
+.font-domine {
+  font-family: 'Domine', serif;
+  /* Domine */
+}
+
+/* ===== Stylish Headings ===== */
+.font-italiana {
+  font-family: 'Italiana', serif;
+  /* Italiana */
+}
+
+.font-great-vibes {
+  font-family: 'Great Vibes', cursive;
+  /* Great Vibes */
+}
+
+.font-pacifico {
+  font-family: 'Pacifico', cursive;
+  /* Pacifico */
+}
+
+.font-dancing-script {
+  font-family: 'Dancing Script', cursive;
+  /* Dancing Script */
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+  /* Cinzel */
+}
+
+/* ===== Minimal & Modern ===== */
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+  /* Poppins */
+}
+
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+  /* Montserrat */
+}
+
+.font-rubik {
+  font-family: 'Rubik', sans-serif;
+  /* Rubik */
+}
+
+.font-nunito {
+  font-family: 'Nunito', sans-serif;
+  /* Nunito */
+}
+
+.font-quicksand {
+  font-family: 'Quicksand', sans-serif;
+  /* Quicksand */
+}
+
+/* ===== Creative Titles ===== */
+.font-oswald {
+  font-family: 'Oswald', sans-serif;
+  /* Oswald */
+}
+
+.font-bebas-neue {
+  font-family: 'Bebas Neue', sans-serif;
+  /* Bebas Neue */
+}
+
+.font-raleway {
+  font-family: 'Raleway', sans-serif;
+  /* Raleway */
+}
+
+.font-courgette {
+  font-family: 'Courgette', cursive;
+  /* Courgette */
 }

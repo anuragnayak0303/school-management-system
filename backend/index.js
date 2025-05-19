@@ -9,6 +9,7 @@ import employeeRoutes from "./routes/employeeRoute.js";
 import leaveRoutes from "./routes/leaveRoute.js";
 import salaryRoutes from "./routes/salaryRoute.js";
 import Addressrouter from "./routes/addressRoutes.js";
+import Admissionrouter from "./routes/admissionRoutes.routes.js";
 // INSTANCE OF EXPRESS
 const app = express();
 // PORT
@@ -30,6 +31,7 @@ app.use("/api/v2/employees/", employeeRoutes);
 app.use("/api/v2/employees/salary/", salaryRoutes);
 // http://localhost:8000/api/v2/employees/leave
 app.use("/api/v2/employees/leave/", leaveRoutes);
+app.use("/api/v2/admission", Admissionrouter);
 
 app.use("/api/v2", Addressrouter);
 

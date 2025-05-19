@@ -13,6 +13,8 @@ import AdminProtected from "./Admin/Routes/AdminProtected";
 import SecuritySettings from "./Admin/setting/SecuritySettings ";
 import Website from "./Admin/setting/Website";
 import Mission from "./page/Mission";
+import PrincipleMessage from "./page/PrincipleMessage";
+import Admission from "./page/Amission";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -24,6 +26,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Homepage />} />
           <Route path="/mission-and-vision" element={<Mission />} />
+          <Route path="/Principal-Message" element={<PrincipleMessage />} />
+          <Route path="/Admissions-Enquiry" element={<Admission />} />
           <Route path="/dash" element={<Dashboard />} />
 
           <Route path="/school/" element={<AdminProtected />}>

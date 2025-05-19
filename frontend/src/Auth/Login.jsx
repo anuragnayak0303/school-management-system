@@ -1,47 +1,64 @@
-import axios from "axios";
 import React, { useState } from "react";
-import toast, { Toaster } from 'react-hot-toast'
+import axios from "axios";
+import { Toaster, toast } from "react-hot-toast";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
 
   const togglePassword = () => setShowPassword(!showPassword);
 
-  const handleSubmit =async (e) => {
-    e.preventDefault()
-    try {
-      const res = await axios.post(`http://localhost:8000/api/v2/emp/login`, {
-        email, password
-      }
-      )
-      // console.log(res?.data)
-      if (res?.data?.success) {
-        localStorage.setItem("auth",JSON.stringify(
-          {user:res?.data?.user,
-            token:res?.data?.token}))
-        toast.success(res?.data?.message)
-        // console.log(res?.data?.user?.role)
-       
-        res?.data?.user.role=='Admin'
-        ? navigate('/school/admin/dashboard')
-        : navigate('/employee/dashboard')
-        window.location.reload()
-        
-        
-      }
+  const roles = ["Admin", "Teacher", "Student", "Staff"];
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!role) {
+      toast.error("Please select a role");
+      return;
+    }
+
+    try {
+      const res = await axios.post("http://localhost:8000/api/v2/emp/login", {
+        email,
+        password,
+        role, // Pass role in the request
+      });
+
+      if (res?.data?.success) {
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({
+            user: res?.data?.user,
+            token: res?.data?.token,
+          })
+        );
+
+        toast.success(res?.data?.message);
+
+        // Redirect based on role
+        if (res?.data?.user?.role === "Admin") {
+          navigate("/school/admin/dashboard");
+        } else {
+          navigate("/employee/dashboard");
+        }
+
+        window.location.reload();
+      }
     } catch (error) {
-      // setError(error?.response?.data?.message)
-      toast.error(error?.response?.data?.message)
+      toast.error(error?.response?.data?.message || "Login failed");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <Toaster/>
+      <Toaster />
       <div className="flex w-full max-w-5xl bg-white rounded-xl shadow-lg overflow-hidden animate-fade-in">
         {/* Left image */}
         <div className="hidden md:block md:w-1/2">
@@ -98,6 +115,35 @@ export default function Login() {
               </div>
             </div>
 
+            {/* Role Selection */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Select Role
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {roles.map((r) => (
+                  <label
+                    key={r}
+                    className={`flex items-center gap-2 px-4 py-2 border rounded cursor-pointer transition ${
+                      role === r
+                        ? "bg-blue-100 border-blue-500"
+                        : "border-gray-300"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="role"
+                      value={r}
+                      checked={role === r}
+                      onChange={() => setRole(r)}
+                      className="form-radio text-blue-500"
+                    />
+                    <span className="text-gray-700">{r}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
             {/* Submit */}
             <div>
               <button
@@ -109,7 +155,6 @@ export default function Login() {
             </div>
           </form>
 
-          {/* Optional Links */}
           <div className="mt-4 text-sm text-center text-gray-500">
             Don’t have an account?{" "}
             <a href="/register" className="text-blue-600 hover:underline">
