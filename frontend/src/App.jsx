@@ -12,6 +12,7 @@ import Login from "./Auth/Login";
 import AdminProtected from "./Admin/Routes/AdminProtected";
 import SecuritySettings from "./Admin/setting/SecuritySettings ";
 import Website from "./Admin/setting/Website";
+import Mission from "./page/Mission";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Homepage />} />
+          <Route path="/mission-and-vision" element={<Mission />} />
           <Route path="/dash" element={<Dashboard />} />
 
           <Route path="/school/" element={<AdminProtected />}>

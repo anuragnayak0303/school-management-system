@@ -8,6 +8,8 @@
     opacity: 1;
     transform: translateY(0);
   }
+}*{
+  scroll-behavior: smooth;
 }
 
 .animate-slide-down {
@@ -34,4 +36,8 @@
   100% {
     transform: translateX(-50%);
   }
+}
+
+.bacgroundImageAdd{
+  background-image: url('https://images.pexels.com/photos/2982449/pexels-photo-2982449.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
 }
