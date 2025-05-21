@@ -15,6 +15,8 @@ import Website from "./Admin/setting/Website";
 import Mission from "./page/Mission";
 import PrincipleMessage from "./page/PrincipleMessage";
 import Admission from "./page/Amission";
+import AllClassess from "./Admin/AllClassess";
+import VisterAdmission from "./Admin/VisterAdmission";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -33,6 +35,8 @@ function App() {
           <Route path="/school/" element={<AdminProtected />}>
             <Route path="admin/dashboard" element={<Dashboard />} />
             <Route path="academy/course" element={<CourseManagement />} />
+            <Route path="academy/all_classess" element={<AllClassess />} />
+            <Route path="vister_admission_list" element={<VisterAdmission />} />
             <Route path="admin/setting" element={<Setting />}>
               <Route index element={<Navigate to="profile" />} />
               <Route path="profile" element={<ProfileSettings />} />

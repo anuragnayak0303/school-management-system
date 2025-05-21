@@ -1,5 +1,4 @@
-// Sidebar.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   IoHomeOutline,
   IoSchoolOutline,
@@ -14,19 +13,35 @@ import {
 } from "react-icons/io5";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { NavLink, useLocation } from "react-router-dom";
+import { FaClipboardList } from 'react-icons/fa';
 
 const Sidebar = () => {
-  const [academicOpen, setAcademicOpen] = useState(true);
+  const [academicOpen, setAcademicOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
-  const isAcademicActive = location.pathname.includes("/school/academy");
+  // Define all sub-paths under Academic
+  const academicPaths = [
+    "/school/academy/course",
+    "/school/academy/subject",
+    "/school/academy/result-rule",
+    "/school/academy/exam",
+    "/school/academy/schedule",
+    "/school/academy/all_classess"
+  ];
+
+  // Auto-open Academic if the current path matches
+  useEffect(() => {
+    if (academicPaths.includes(location.pathname)) {
+      setAcademicOpen(true);
+    }
+  }, [location.pathname]);
 
   return (
     <>
       {/* Mobile toggle button */}
       <button
-        className="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded shadow-md "
+        className="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded shadow-md"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
         {sidebarOpen ? <IoClose size={20} /> : <IoMenu size={20} />}
@@ -34,9 +49,8 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <aside
-        className={`${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 transition-transform duration-300 fixed top-0 left-0 z-40 w-64 h-screen bg-white shadow-lg border-r px-4 border-r-gray-200 overflow-y-auto`}
+        className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 transition-transform duration-300 fixed top-0 left-0 z-40 w-64 h-screen bg-white shadow-lg border-r px-4 border-r-gray-200 overflow-y-auto`}
       >
         {/* Logo */}
         <div className="flex items-center gap-3 p-4">
@@ -53,11 +67,10 @@ const Sidebar = () => {
           <div>
             <button
               onClick={() => setAcademicOpen(!academicOpen)}
-              className={`w-full flex items-center justify-between px-4 py-2 rounded ${
-                isAcademicActive
-                  ? ""
-                  : "hover:bg-gray-100 text-gray-700"
-              }`}
+              className={`w-full flex items-center justify-between px-4 py-2 rounded ${academicOpen
+                ? "text-blue-700"
+                : "hover:bg-gray-100 text-gray-700"
+                }`}
             >
               <div className="flex items-center gap-3">
                 <IoSchoolOutline size={20} /> Academic
@@ -67,28 +80,19 @@ const Sidebar = () => {
 
             {academicOpen && (
               <div className="ml-8 mt-1 space-y-1">
-                <NavLink to="/school/academy/course" className={subLinkClasses}>
-                  Course
-                </NavLink>
-                <NavLink to="/school/academy/subject" className={subLinkClasses}>
-                  Subject
-                </NavLink>
-                <NavLink to="/school/academy/result-rule" className={subLinkClasses}>
-                  Result Rule
-                </NavLink>
-                <NavLink to="/school/academy/exam" className={subLinkClasses}>
-                  Exam
-                </NavLink>
-                <NavLink to="/school/academy/schedule" className={subLinkClasses}>
-                  Class Schedule
-                </NavLink>
-                <NavLink to="/school/academy/department" className={subLinkClasses}>
-                  Department
-                </NavLink>
+                <NavLink to="/school/academy/course" className={subLinkClasses}>Course</NavLink>
+                <NavLink to="/school/academy/subject" className={subLinkClasses}>Subject</NavLink>
+                <NavLink to="/school/academy/result-rule" className={subLinkClasses}>Result Rule</NavLink>
+                <NavLink to="/school/academy/exam" className={subLinkClasses}>Exam</NavLink>
+                <NavLink to="/school/academy/schedule" className={subLinkClasses}>Class Schedule</NavLink>
+                <NavLink to="/school/academy/all_classess" className={subLinkClasses}>All Classes</NavLink>
               </div>
             )}
           </div>
 
+          <NavLink to="/school/vister_admission_list" className={navLinkClasses}>
+            <FaClipboardList size={20} /> Vist Admission List
+          </NavLink>
           <NavLink to="/meeting" className={navLinkClasses}>
             <IoPeopleCircleOutline size={20} /> Meeting
           </NavLink>
@@ -115,15 +119,13 @@ const Sidebar = () => {
 
 export default Sidebar;
 
-// Utility classes for links
+// Utility classes
 const navLinkClasses = ({ isActive }) =>
-  `flex items-center gap-3 px-4 py-2 rounded transition-all ${
-    isActive ? "bg-gray-200 text-blue-600" : "text-gray-700 hover:bg-gray-100"
+  `flex items-center gap-3 px-4 py-2 rounded transition-all ${isActive ? "bg-gray-200 text-blue-600" : "text-gray-700 hover:bg-gray-100"
   }`;
 
 const subLinkClasses = ({ isActive }) =>
-  `block pl-3 py-2 text-sm rounded ${
-    isActive
-      ? "text-orange-600 font-medium bg-gray-200"
-      : "text-gray-600 hover:text-blue-600 hover:bg-gray-100"
+  `block pl-3 py-2 text-sm rounded ${isActive
+    ? "text-orange-600 font-medium bg-gray-200"
+    : "text-gray-600 hover:text-blue-600 hover:bg-gray-100"
   }`;

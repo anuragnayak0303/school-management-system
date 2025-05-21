@@ -23,7 +23,7 @@ export default function Setting() {
         <div className="p-4 sm:p-6">
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Settings Navigation */}
-            <div className="w-full h-[28vh] lg:w-1/4 border border-gray-200 rounded-lg p-4 bg-white shadow-sm">
+            <div className="w-full h-[29vh] lg:w-1/4 border border-gray-200 rounded-lg p-4 bg-white shadow-sm">
               {links.map(({ name, path }) => (
                 <NavLink
                   key={path}

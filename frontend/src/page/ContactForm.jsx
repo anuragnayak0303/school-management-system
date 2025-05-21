@@ -6,7 +6,7 @@ export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
+    phone: null,
     description: "",
   });
 
@@ -96,6 +96,7 @@ export default function ContactForm() {
         <input
           type="tel"
           name="phone"
+          maxLength={10}
           placeholder="Phone Number"
           value={formData.phone}
           onChange={handleChange}

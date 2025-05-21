@@ -3,7 +3,7 @@ import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-
+import login_img from '../assets/login.png'
 export default function Login() {
   const navigate = useNavigate();
 
@@ -63,7 +63,7 @@ export default function Login() {
         {/* Left image */}
         <div className="hidden md:block md:w-1/2">
           <img
-            src="/login-image.jpg"
+            src={login_img}
             alt="Login"
             className="object-cover h-full w-full"
           />
@@ -124,11 +124,10 @@ export default function Login() {
                 {roles.map((r) => (
                   <label
                     key={r}
-                    className={`flex items-center gap-2 px-4 py-2 border rounded cursor-pointer transition ${
-                      role === r
+                    className={`flex items-center gap-2 px-4 py-2 border rounded cursor-pointer transition ${role === r
                         ? "bg-blue-100 border-blue-500"
                         : "border-gray-300"
-                    }`}
+                      }`}
                   >
                     <input
                       type="radio"

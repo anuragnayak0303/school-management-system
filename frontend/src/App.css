@@ -173,3 +173,20 @@
   font-family: 'Courgette', cursive;
   /* Courgette */
 }
+
+/* in global.css */
+@keyframes fade-in-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.3s ease-out;
+}

@@ -4,7 +4,7 @@ import chalk from "chalk";
 import connectDB from "./db/config.js";
 import cors from "cors";
 import userRoutes from "./routes/userRoute.js";
-import departmentRoutes from "./routes/departmentRoute.js";
+import ClassRoutes from "./routes/ClassRoutes.js";
 import employeeRoutes from "./routes/employeeRoute.js";
 import leaveRoutes from "./routes/leaveRoute.js";
 import salaryRoutes from "./routes/salaryRoute.js";
@@ -24,7 +24,7 @@ app.use(express.static("public/uploads"));
 // http://localhost:8000/api/v2/emp/
 app.use("/api/v2/emp/", userRoutes);
 // localhost:8000/api/v2/department
-app.use("/api/v2/department/", departmentRoutes);
+app.use("/api/v2/class/", ClassRoutes);
 // localhost:8000/api/v2/employees
 app.use("/api/v2/employees/", employeeRoutes);
 // http://localhost:8000/api/v2/employees/salary

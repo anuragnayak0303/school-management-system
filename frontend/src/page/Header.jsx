@@ -41,19 +41,34 @@ export default function Header() {
                     <div className="flex space-x-4 text-sm text-gray-700 items-center relative">
                         <span>📞 +91 954 954 9195</span>
                         <span>📧 admissions@dpssoyla.com</span>
-                        <div className="relative">
-                            <BsThreeDotsVertical
-                                className="text-xl cursor-pointer"
-                                onClick={() => setRoleMenuOpen(!roleMenuOpen)}
-                            />
-                            {roleMenuOpen && (
-                                <div className="absolute right-0 mt-2 w-24 bg-fuchsia-500 rounded-md  shadow-md z-[100]">
-                                    <ul className=" text-gray-700">
-                                        <NavLink to={'/login'} className="px-2 py-1 hover:bg-fuchsia-600 hover:rounded-md text-white font-semibold text-lg  cursor-pointer">Login</NavLink>
-                                    </ul>
-                                </div>
-                            )}
+
+                        <div className="w-40 bg-white rounded-lg shadow-lg z-[100] border border-gray-200">
+                            <ul className="text-gray-700">
+                                <li>
+                                    <NavLink
+                                        to="/login"
+                                        className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-800 hover:bg-fuchsia-100 hover:text-fuchsia-700 rounded-md transition duration-200 ease-in-out"
+                                    >
+                                        <svg
+                                            className="w-5 h-5 text-fuchsia-500"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M15 12H3m0 0l4-4m-4 4l4 4m8-4a9 9 0 11-18 0 9 9 0 0118 0z"
+                                            />
+                                        </svg>
+                                        Login
+                                    </NavLink>
+                                </li>
+                            </ul>
                         </div>
+
+
                     </div>
                 </div>
             )}

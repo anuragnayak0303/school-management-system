@@ -123,3 +123,12 @@ export const forgetpassowrd = async (req, res) => {
     console.log(error);
   }
 };
+
+export const getSigngleUser = async (req, res) => {
+  try {
+    const data = await userModel.findById(req.user)
+    res.send(data)
+  } catch (error) {
+    console.log(error)
+  }
+}

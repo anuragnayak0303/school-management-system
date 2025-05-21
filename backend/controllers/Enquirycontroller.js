@@ -26,6 +26,16 @@ export const submitAdmissionEnquiry = async (req, res) => {
       return res.status(409).json({ message: `${field} already exists.` });
     }
 
-    res.status(500).json({ message: "Something went wrong. Please try again later." ,error});
+    res.status(500).json({ message: "Something went wrong. Please try again later.", error });
   }
 };
+
+export const getAllAdmissionDetails = async (req, res) => {
+  try {
+    const Data = await AdmissionEnquiryModel.find().lean()
+    // console.log(Data)
+    res.send(Data)
+  } catch (error) {
+    console.log(error)
+  }
+}

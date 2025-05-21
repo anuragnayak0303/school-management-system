@@ -2,6 +2,7 @@ import express from "express";
 import {
   EmailVerification,
   forgetpassowrd,
+  getSigngleUser,
   loginController,
   passwordmatch,
   registerController,
@@ -33,4 +34,7 @@ router.get("/user-protected", isSignIn, (req, res) => {
 //http://localhost:8000/api/v2/emp/passwordmatch
 router.post('/passwordmatch',isSignIn ,passwordmatch)
 router.post('/ForgetPass',isSignIn ,forgetpassowrd)
+router.get('/getsingle',isSignIn ,getSigngleUser)
+
+
 export default router;
