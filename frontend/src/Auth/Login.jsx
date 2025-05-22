@@ -63,7 +63,7 @@ export default function Login() {
         {/* Left image */}
         <div className="hidden md:block md:w-1/2">
           <img
-            src={login_img}
+            src='https://media.istockphoto.com/id/1011441292/photo/login-written-on-an-old-typewriter.jpg?s=1024x1024&w=is&k=20&c=R-EECNShcfjAJofLxggBjgY9X1sf1AF2QTGI0ctqu3w='
             alt="Login"
             className="object-cover h-full w-full"
           />

@@ -37,7 +37,7 @@ export default function MainHeader() {
     if (confirm("Are You Want To Logout")) {
       localStorage.removeItem("auth");
       setAuth({ user: null, token: "" });
-      window.location.href = "/login"; // Redirect to login
+      window.location.href = "/"; // Redirect to login
     }
   };
 

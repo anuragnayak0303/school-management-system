@@ -42,7 +42,7 @@ export default function Header() {
                         <span>📞 +91 954 954 9195</span>
                         <span>📧 admissions@dpssoyla.com</span>
 
-                        <div className="w-40 bg-white rounded-lg shadow-lg z-[100] border border-gray-200">
+                        <div className="w-24 bg-white rounded-lg z-[100] border border-gray-200">
                             <ul className="text-gray-700">
                                 <li>
                                     <NavLink

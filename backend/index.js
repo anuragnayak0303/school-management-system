@@ -10,6 +10,8 @@ import leaveRoutes from "./routes/leaveRoute.js";
 import salaryRoutes from "./routes/salaryRoute.js";
 import Addressrouter from "./routes/addressRoutes.js";
 import Admissionrouter from "./routes/admissionRoutes.routes.js";
+import subjectRoutes from "./routes/subjectRoutes.js";
+import teacherRoutes from "./routes/teacherRoutes.js";
 // INSTANCE OF EXPRESS
 const app = express();
 // PORT
@@ -32,6 +34,9 @@ app.use("/api/v2/employees/salary/", salaryRoutes);
 // http://localhost:8000/api/v2/employees/leave
 app.use("/api/v2/employees/leave/", leaveRoutes);
 app.use("/api/v2/admission", Admissionrouter);
+app.use("/api/v2/subject", subjectRoutes);
+app.use("/api/teachers", teacherRoutes);
+
 
 app.use("/api/v2", Addressrouter);
 
