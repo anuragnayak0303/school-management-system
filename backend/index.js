@@ -12,6 +12,8 @@ import Addressrouter from "./routes/addressRoutes.js";
 import Admissionrouter from "./routes/admissionRoutes.routes.js";
 import subjectRoutes from "./routes/subjectRoutes.js";
 import teacherRoutes from "./routes/teacherRoutes.js";
+import studentRoutes from "./routes/StudentRout.js";
+import ertRoutes from "./routes/ertRoutes.js";
 // INSTANCE OF EXPRESS
 const app = express();
 // PORT
@@ -36,6 +38,8 @@ app.use("/api/v2/employees/leave/", leaveRoutes);
 app.use("/api/v2/admission", Admissionrouter);
 app.use("/api/v2/subject", subjectRoutes);
 app.use("/api/teachers", teacherRoutes);
+app.use("/api/v3/student",studentRoutes)
+app.use('/api/ert', ertRoutes);
 
 
 app.use("/api/v2", Addressrouter);

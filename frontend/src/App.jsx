@@ -20,6 +20,13 @@ import VisterAdmission from "./Admin/VisterAdmission";
 import { Toaster } from "react-hot-toast";
 import AllTeacherList from "./Admin/AllTeacherList";
 import AddTeacher from "./Admin/AddTeacher";
+import ViewTeacher from "./Admin/ViewTeacher";
+import StudentAdmissionList from "./Admin/StudentAdmissionFrom";
+import ContactPage from "./page/ContactPage";
+import Campus from "./page/Campus";
+import AllStudent from "./Admin/AllStudent";
+import ERT from "./page/ERT";
+import ERTlist from "./Admin/ERTlist";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -31,8 +38,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Homepage />} />
           <Route path="/mission-and-vision" element={<Mission />} />
-          <Route path="/Principal-Message" element={<PrincipleMessage />} />
-          <Route path="/Admissions-Enquiry" element={<Admission />} />
+          <Route path="/principal-message" element={<PrincipleMessage />} />
+          <Route path="/admissions-enquiry" element={<Admission />} />
+          <Route path="/registration-for-ert" element={<ERT />} />
+          <Route path="/campus-infrastructure" element={<Campus />} />
+          <Route path="/contact-us" element={<ContactPage />} />
           <Route path="/dash" element={<Dashboard />} />
 
           <Route path="/school/" element={<AdminProtected />}>
@@ -40,8 +50,12 @@ function App() {
             <Route path="academy/subject" element={<CourseManagement />} />
             <Route path="academy/all_classess" element={<AllClassess />} />
             <Route path="vister_admission_list" element={<VisterAdmission />} />
+            <Route path="ert-list" element={<ERTlist />} />
+            <Route path="admission_from" element={<StudentAdmissionList />} />
+            <Route path="all_student" element={<AllStudent />} />
             <Route path="all_teacher" element={<AllTeacherList />} />
-            <Route path="add_teacher" element={<AddTeacher/>} />
+            <Route path="add_teacher" element={<AddTeacher />} />
+            <Route path="view_teacher/:id" element={<ViewTeacher />} />
             <Route path="admin/setting" element={<Setting />}>
               <Route index element={<Navigate to="profile" />} />
               <Route path="profile" element={<ProfileSettings />} />
@@ -50,7 +64,7 @@ function App() {
             </Route>
           </Route>
         </Routes>
-        <Toaster/>
+        <Toaster />
       </BrowserRouter>
     </>
   );

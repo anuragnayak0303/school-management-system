@@ -115,6 +115,7 @@ export default function AddTeacher() {
                                     { name: "workExperience", label: "Work Experience (Years)", type: "number" },
                                     { name: "address", label: "Address", type: "text" },
                                     { name: "panOrIdNumber", label: "PAN or ID Number", type: "text" },
+                                    { name: "salary", label: "Basic salary", type: "number" },
                                 ].map((field, idx) => (
                                     <div key={idx}>
                                         <label className="block text-sm font-medium mb-1">{field.label}</label>

@@ -11,8 +11,7 @@ import { IoEye } from 'react-icons/io5';
 export default function AllTeacherList() {
     const [teachers, setteachers] = useState([]);
     const nav = useNavigate();
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [selectedTeacher, setSelectedTeacher] = useState(null);
+
     const getAllTeacher = async () => {
         try {
             const { data } = await axios.get(`http://localhost:8000/api/teachers/get`);
@@ -102,11 +101,13 @@ export default function AllTeacherList() {
                                                 {teacher.status}
                                             </span>
                                         </td>
-                                        <td className="px-4 py-3 flex space-x-2.5">
+                                        <td className="px-4 py-3 space-x-2.5">
                                             <button onClick={() => nav(`/school/view_teacher/${teacher._id}`)} className="text-gray-500 hover:text-gray-700">
                                                 <IoEye className="text-xl text-purple-500" />
                                             </button>
-                                
+                                            <button className="text-gray-500 hover:text-gray-700">
+                                                <FiEdit className="text-xl text-blue-500" />
+                                            </button>
                                             <button onClick={() => deleteTeacher(teacher._id)} className="text-gray-500 hover:text-gray-700">
                                                 <MdDelete className="text-xl text-red-500" />
                                             </button>

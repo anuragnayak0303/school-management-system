@@ -13,7 +13,7 @@ import {
 } from "react-icons/io5";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { NavLink, useLocation } from "react-router-dom";
-import { FaClipboardList, FaUser } from 'react-icons/fa';
+import { FaClipboardList, FaUser, FaUsers } from 'react-icons/fa';
 
 const Sidebar = () => {
   const [academicOpen, setAcademicOpen] = useState(false);
@@ -50,7 +50,7 @@ const Sidebar = () => {
       {/* Sidebar */}
       <aside
         className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } md:translate-x-0 transition-transform duration-300 fixed top-0 left-0 z-40 w-64 h-screen bg-white shadow-lg border-r px-4 border-r-gray-200 overflow-y-auto`}
+          } md:translate-x-0 transition-transform duration-300 fixed top-0 left-0 z-50 w-64 h-screen bg-white shadow-lg border-r px-4 border-r-gray-200 overflow-y-auto`}
       >
         {/* Logo */}
         <div className="flex items-center gap-3 p-4">
@@ -92,17 +92,21 @@ const Sidebar = () => {
           <NavLink to="/school/vister_admission_list" className={navLinkClasses}>
             <FaClipboardList size={20} /> Vist Admission List
           </NavLink>
+          <NavLink to="/school/ert-list" className={navLinkClasses}>
+            <FaUser size={20} />ERT LIst
+          </NavLink>
+          <NavLink to="/school/admission_from" className={navLinkClasses}>
+            <FaUser size={20} />Students Admission
+          </NavLink>
+
+          <NavLink to="/school/all_student" className={navLinkClasses}>
+            <FaUsers size={20} />All Students
+          </NavLink>
           <NavLink to="/school/all_teacher" className={navLinkClasses}>
-            <FaUser size={20} /> All Teacher 
+            <FaUsers size={20} /> All Teacher
           </NavLink>
           <NavLink to="/leave-request" className={navLinkClasses}>
             <IoCalendarOutline size={20} /> Leave Request
-          </NavLink>
-          <NavLink to="/transaction" className={navLinkClasses}>
-            <IoWalletOutline size={20} /> All Transaction
-          </NavLink>
-          <NavLink to="/transaction-type" className={navLinkClasses}>
-            <IoListOutline size={20} /> Transaction Type
           </NavLink>
           <NavLink to="/notice-board" className={navLinkClasses}>
             <IoNewspaperOutline size={20} /> Notice Board

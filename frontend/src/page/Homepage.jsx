@@ -165,7 +165,7 @@ const Homepage = () => {
         </section>
 
 
-        <section className="py-16 px-4 md:px-16 bg-white text-center ">
+        {/* <section className="py-16 px-4 md:px-16 bg-white text-center ">
           <div className='w-full flex justify-center items-center'>
             <div className='w-auto h-20 max-w-sm px-8 py-5 rounded-md   mb-4 bg-blue-900 flex justify-center items-center'>
               <h2 className="text-3xl font-bold text-white ">Eminent Visitors</h2>
@@ -189,7 +189,7 @@ const Homepage = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
 
         <section

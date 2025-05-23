@@ -190,3 +190,10 @@
 .animate-fade-in-up {
   animation: fade-in-up 0.3s ease-out;
 }
+
+.main-div {
+  background-image: url('../src/assets/pexels-meruyert-gonullu-7317589.jpg');
+  background-size: 'cover';
+    background-position: 'center';
+    height: '100vh';
+}

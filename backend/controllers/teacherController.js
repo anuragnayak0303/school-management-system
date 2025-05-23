@@ -41,6 +41,7 @@ export const addTeacher = async (req, res) => {
             panOrIdNumber,
             accountName,
             accountNumber,
+            salary,
             bankName,
             ifscCode,
             branchName
@@ -90,7 +91,7 @@ export const addTeacher = async (req, res) => {
         // Create teacher profile
         const teacher = new TeacherDetail({
             userId: user._id,
-            teacherId,
+            teacherId: "DSP" + teacherId,
             gender,
             dateOfBirth,
             dateOfJoining,
@@ -99,6 +100,7 @@ export const addTeacher = async (req, res) => {
             qualification,
             workExperience,
             status,
+            salary,
             Class: [classId],
             subject: subjectArray,
             fatherName,
@@ -126,8 +128,31 @@ export const addTeacher = async (req, res) => {
 
 export const GetAllTeacher = async (req, res) => {
     try {
-        const data = await TeacherDetail.find().populate("userId").populate('Class').populate("address")
+        const data = await TeacherDetail.find().populate("userId").populate('Class').populate("address").populate("subject")
         return res.send(data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const GetSigleData = async (req, res) => {
+    try {
+        console.log(req?.params.id)
+        const data = await TeacherDetail.findById(req?.params?.id).populate("userId").populate('Class').populate("address").populate("subject")
+        return res.send(data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const GetSingledelet = async (req, res) => {
+    try {
+        const data = await TeacherDetail.findByIdAndDelete(req.params.id)
+        if (data) {
+            const user = await userModel.findByIdAndDelete(data?.userId)
+            const adress = await Addressmodel.findByIdAndDelete(data?.address)
+            return res.send("Delete Successfully")
+        }
     } catch (error) {
         console.log(error)
     }

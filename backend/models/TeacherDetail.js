@@ -9,7 +9,7 @@ const teacherSchema = new mongoose.Schema({
   bloodGroup: { type: String },
   qualification: { type: String },
   workExperience: { type: String },
-  address:{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' },
+  address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' },
   status: { type: String, enum: ["Active", "Inactive"] },
   Class: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Department' }], // Consider linking to Class model if needed
   subject: [{ type: mongoose.Schema.Types.ObjectId, ref: "Subject" }], // Same here
@@ -23,6 +23,7 @@ const teacherSchema = new mongoose.Schema({
     ifscCode: String,
     branchName: String
   },
+  salary: { type: Number },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });

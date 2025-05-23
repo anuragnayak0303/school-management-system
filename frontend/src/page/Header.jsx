@@ -15,13 +15,20 @@ export default function Header() {
         { label: "HOME", path: "/" },
         {
             label: "ABOUT US",
-            submenu: ["Mission and Vision", "Principal Message", "Campus Infrastructure", "Eminent Visitors"],
-            path: "/vision-mission-motto/"
+            submenu: ["Mission and Vision", "Principal Message",
+                //  "Campus Infrastructure",
+                // "Eminent Visitors"
+            ],
+            // path: "/vision-mission-motto/"
         },
         { label: "ADMISSIONS", submenu: ["Admissions Enquiry"] },
-        { label: "ACADEMICS", submenu: ["Brochure", "Campus Infrastructure"] },
+        {
+            label: "ACADEMICS", submenu: [
+                // "Brochure",
+                "Campus Infrastructure"]
+        },
         { label: "OTHER LINKS", submenu: ["Registration for ERT"] },
-        { label: "NEWS & EVENTS", submenu: ["Latest News", "Events"] },
+        // { label: "NEWS & EVENTS", submenu: ["Latest News", "Events"] },
         { label: "CONTACT US", path: "/contact-us" }
     ];
 
