@@ -13,3 +13,16 @@ export const submitERTForm = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error", error });
     }
 };
+
+export const GetER = async (req, res) => {
+    try {
+        const from = await ERTForm.find(); // ✅ await added
+        res.status(200).json(from);        // ✅ send as JSON with 200 OK
+    } catch (error) {
+        console.error('Error fetching ERT data:', error);
+        res.status(500).json({             // ✅ send proper error response
+            message: 'Server error while fetching ERT data',
+            error: error.message
+        });
+    }
+};

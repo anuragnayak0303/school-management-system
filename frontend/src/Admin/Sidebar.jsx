@@ -105,12 +105,12 @@ const Sidebar = () => {
           <NavLink to="/school/all_teacher" className={navLinkClasses}>
             <FaUsers size={20} /> All Teacher
           </NavLink>
-          <NavLink to="/leave-request" className={navLinkClasses}>
+          {/* <NavLink to="/leave-request" className={navLinkClasses}>
             <IoCalendarOutline size={20} /> Leave Request
           </NavLink>
           <NavLink to="/notice-board" className={navLinkClasses}>
             <IoNewspaperOutline size={20} /> Notice Board
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/school/admin/setting" className={navLinkClasses}>
             <IoSettings size={20} /> Settings
           </NavLink>
