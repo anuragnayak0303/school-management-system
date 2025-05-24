@@ -90,20 +90,3 @@ export const DeleteClassCotroller = async (req, res) => {
         })
     }
 }
-
-// getSingleDepartmentCotroller
-// export const getSingleDepartmentCotroller = async (req, res) => {
-//     try {
-//         const department = await departmentModel.findById({ _id: req.params._id });
-//         res.status(200).json({
-//             success: true,
-//             department
-//         })
-//     } catch (error) {
-//         res.status(500).json({
-//             success: false,
-//             message: "error while getting dept...",
-//             error
-//         })
-//     }
-// }
