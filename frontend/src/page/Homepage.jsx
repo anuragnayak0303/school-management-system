@@ -67,13 +67,14 @@ const Homepage = () => {
       <header className="w-full font-sans">
         <Header />
 
-        <marquee className="w-full overflow-hidden whitespace-nowrap bg-[#00001157] text-white py-2 text-sm sm:text-base">
-          <div className="inline-block animate-marquee px-4">
-            {marqueeText.text}
-          </div>
-        </marquee>
 
-        <div className="relative w-full overflow-hidden mt-[1px] h-[300px] sm:h-[400px] md:h-[500px]">
+
+        <div className="relative w-full overflow-hidden mt-[px] h-[250px] sm:h-[400px] md:h-[500px]">
+          <marquee className="w-full absolute z-40 overflow-hidden whitespace-nowrap bg-[#00001157] text-white py-2 text-sm sm:text-base">
+            <div className="inline-block text-xl font-semibold animate-marquee px-4">
+              {marqueeText.text}
+            </div>
+          </marquee>
           {sliderImages.map((img, idx) => (
             <img
               key={idx}
