@@ -4,6 +4,7 @@ import StudentAdmission from '../models/StudentAdmission.js';
 import userModel from '../models/userModel.js';
 import { hashedPassword } from '../utils/utils.js';
 import path from 'path'
+import ClassModel from '../models/Class.js';
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -111,6 +112,12 @@ export const submitAdmission = async (req, res) => {
         });
 
         await newAdmission.save();
+
+        const ClassStuden = await ClassModel.findById({ _id: className });
+
+        const Class = await ClassModel.findByIdAndUpdate({ _id: className }, {
+            Student_Of_no: ClassStuden?.Student_Of_no + 1
+        })
 
         res.status(201).json({ success: true, message: "Admission submitted successfully", data: newAdmission });
 
