@@ -27,12 +27,16 @@ export default function AllTeacherList() {
         if (!confirmDelete) return;
 
         try {
-            await axios.delete(`http://localhost:8000/api/teachers/get/delet/${id}`);
-            toast.success("Teacher deleted successfully");
+            const { data } = await axios.delete(`http://localhost:8000/api/teachers/delet/${id}`);
+            toast.success(data?.message || "Teacher deleted successfully");
             getAllTeacher(); // Refresh list
         } catch (error) {
-            toast.error("Failed to delete teacher");
-            console.error(error);
+            console.error("Error deleting teacher:", error);
+            if (error.response?.data?.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Failed to delete teacher");
+            }
         }
     };
 
@@ -106,7 +110,7 @@ export default function AllTeacherList() {
                                             <button onClick={() => nav(`/school/view_teacher/${teacher._id}`)} className="text-gray-500 hover:text-gray-700">
                                                 <IoEye className="text-xl text-purple-500" />
                                             </button>
-                                
+
                                             <button onClick={() => deleteTeacher(teacher._id)} className="text-gray-500 hover:text-gray-700">
                                                 <MdDelete className="text-xl text-red-500" />
                                             </button>

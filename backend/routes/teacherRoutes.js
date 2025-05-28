@@ -6,6 +6,7 @@ const teacherRoutes = express.Router();
 teacherRoutes.post("/add", Teacherupload.single('photo'), addTeacher);
 teacherRoutes.get("/get", GetAllTeacher)
 teacherRoutes.get('/getSingle/:id', GetSigleData)
+
 teacherRoutes.delete('/delet/:id', GetSingledelet)
 
 

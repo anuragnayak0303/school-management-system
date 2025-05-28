@@ -105,9 +105,13 @@ export default function Header() {
                                     {item.label}
                                 </NavLink>
                             )}
-                        </div>
-                    ))}
 
+                        </div>
+
+                    ))}
+                    <div className="block text-blue-800 font-semibold py-2">
+                        <NavLink to={'/login'}>Login</NavLink>
+                    </div>
                     <div className="flex mt-10 justify-center gap-4 mb-6">
                         <FaFacebook className='text-2xl text-gray-800' />
                         <FaSquareXTwitter className='text-2xl text-gray-800' />
@@ -135,6 +139,9 @@ export default function Header() {
                 <button className="hidden md:block bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded-md text-base font-semibold">
                     ADMISSION
                 </button>
+                <NavLink to={"/login"} className="hidden md:block border-blue-800 border hover:text-white hover:bg-blue-800 px-2 py-1 rounded-md text-base font-semibold">
+                    Login
+                </NavLink>
             </div>
 
             {/* Desktop Navigation */}

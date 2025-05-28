@@ -32,7 +32,7 @@ export const registerController = async (req, res) => {
 //LOGIN CONTROLLER
 export const loginController = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     if (!email || !password) {
       return res.status(404).json({
@@ -52,12 +52,16 @@ export const loginController = async (req, res) => {
       return res.status(401).json({ message: "invalid credentials!" });
     }
 
+    if (existingUser?.role !== role) {
+      return res.status(401).json({ message: `You are not ${role} !!` });
+    }
     // JWT TOKEN
     const token = jwt.sign(
       { _id: existingUser._id },
       process.env.JWT_SECRET_KEY,
       { expiresIn: "1d" }
     );
+    console.log(role)
     res.status(200).json({
       success: true,
       message: "Login successfull!",

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import login_img from '../assets/login.png'
 export default function Login() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export default function Login() {
     }
 
     try {
-      const res = await axios.post("http://localhost:8000/api/v2/emp/login", {
+      const res = await axios.post("http://localhost:8000/api/v2/user/login", {
         email,
         password,
         role, // Pass role in the request
@@ -41,12 +41,12 @@ export default function Login() {
         );
 
         toast.success(res?.data?.message);
-
+console.log(res?.data)
         // Redirect based on role
         if (res?.data?.user?.role === "Admin") {
           navigate("/school/admin/dashboard");
-        } else {
-          navigate("/employee/dashboard");
+        } else if (res?.data?.user?.role === "Teacher") {
+          navigate("/school/dashboard");
         }
 
         window.location.reload();
@@ -84,6 +84,7 @@ export default function Login() {
               <input
                 type="email"
                 value={email}
+
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="example@mail.com"
@@ -100,6 +101,7 @@ export default function Login() {
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
+
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="Enter your password"
@@ -125,14 +127,15 @@ export default function Login() {
                   <label
                     key={r}
                     className={`flex items-center gap-2 px-4 py-2 border rounded cursor-pointer transition ${role === r
-                        ? "bg-blue-100 border-blue-500"
-                        : "border-gray-300"
+                      ? "bg-blue-100 border-blue-500"
+                      : "border-gray-300"
                       }`}
                   >
                     <input
                       type="radio"
                       name="role"
                       value={r}
+                      onDoubleClick={() => setRole()}
                       checked={role === r}
                       onChange={() => setRole(r)}
                       className="form-radio text-blue-500"

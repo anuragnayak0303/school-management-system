@@ -21,20 +21,37 @@ export const isSignIn = (req, res, next) => {
 }
 
 // isAdmin
-export const isAdmin = async(req,res,next)=>{
+export const isAdmin = async (req, res, next) => {
     try {
-         const user = await userModel.findOne({_id:req?.user})
+        const user = await userModel.findOne({ _id: req?.user })
         //  console.log(user?.role)
-         if(user?.role!=="Admin")
-         {
+        if (user?.role !== "Admin") {
             return res.status(401).json({
-                success:false,
-                message:"You are not admin!"
-            })      
-         }
-         else{
+                success: false,
+                message: "You are not admin!"
+            })
+        }
+        else {
             next()
-         }
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const isTeacher = async (req, res, next) => {
+    try {
+        const user = await userModel.findOne({ _id: req?.user })
+        //  console.log(user?.role)
+        if (user?.role !== "Teacher") {
+            return res.status(401).json({
+                success: false,
+                message: "You are not Teacher!"
+            })
+        }
+        else {
+            next()
+        }
     } catch (error) {
         console.log(error)
     }

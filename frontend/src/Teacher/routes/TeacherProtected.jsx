@@ -6,13 +6,13 @@ import { Outlet } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import Login from "../../Auth/Login";
 
-export default function AdminProtected() {
+export default function TeacherProtected() {
   const [ok, setOk] = useState(false);
   const {auth} = useAuth();
   useEffect(() => {
     async function authCheck() {
       const { data } = await axios.get(
-        `http://localhost:8000/api/v2/user/admin-protected`,
+        `http://localhost:8000/api/v2/user/teacher-protected`,
         {
           headers: {
             Authorization: `Bearer ${auth?.token}`,

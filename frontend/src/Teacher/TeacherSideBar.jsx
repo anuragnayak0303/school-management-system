@@ -12,7 +12,7 @@ import { FaClipboardList, FaUser, FaUsers } from "react-icons/fa";
 import { LoadingContext } from "../context/LoadingProvider ";
 
 
-const Sidebar = () => {
+const TeacherSidebar = () => {
   const [academicOpen, setAcademicOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
@@ -98,34 +98,10 @@ const Sidebar = () => {
 
         <nav className="py-4 text-sm space-y-1">
           <NavItem
-            to="/school/admin/dashboard"
+            to="/school/dashboard"
             icon={<IoHomeOutline size={20} />}
             label="Dashboard"
           />
-
-          {/* Academic Dropdown */}
-          <div>
-            <button
-              onClick={() => setAcademicOpen(!academicOpen)}
-              className={`w-full flex items-center justify-between px-4 py-2 rounded ${
-                academicOpen
-                  ? "text-blue-700"
-                  : "hover:bg-gray-100 text-gray-700"
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <IoSchoolOutline size={20} /> Academic
-              </div>
-              {academicOpen ? <FiChevronUp /> : <FiChevronDown />}
-            </button>
-
-            {academicOpen && (
-              <div className="ml-8 mt-1 space-y-1">
-                <SubItem to="/school/academy/subject" label="Subject" />
-                <SubItem to="/school/academy/all_classess" label="All Classes" />
-              </div>
-            )}
-          </div>
 
           <NavItem
             to="/school/vister_admission_list"
@@ -153,7 +129,7 @@ const Sidebar = () => {
             label="All Teacher"
           />
           <NavItem
-            to="/school/admin/setting"
+            to="/school/setting"
             icon={<IoSettings size={20} />}
             label="Settings"
           />
@@ -163,4 +139,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default TeacherSidebar;

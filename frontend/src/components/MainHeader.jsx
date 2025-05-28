@@ -14,7 +14,7 @@ export default function MainHeader() {
     const fetchUser = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/api/v2/emp/getsingle",
+          "http://localhost:8000/api/v2/user/getsingle",
           {
             headers: {
               Authorization: `Bearer ${auth?.token}`,
@@ -32,12 +32,27 @@ export default function MainHeader() {
     }
   }, [auth]);
 
+  // Multi-tab logout listener
+  useEffect(() => {
+    const syncLogout = (event) => {
+      if (event.key === "logout") {
+        localStorage.removeItem("auth");
+        setAuth({ user: null, token: "" });
+        window.location.href = "/";
+      }
+    };
+
+    window.addEventListener("storage", syncLogout);
+    return () => window.removeEventListener("storage", syncLogout);
+  }, []);
+
   // Logout handler
   const handleLogout = () => {
     if (confirm("Are You Want To Logout")) {
       localStorage.removeItem("auth");
+      localStorage.setItem("logout", Date.now()); // 🔁 Sync logout
       setAuth({ user: null, token: "" });
-      window.location.href = "/"; // Redirect to login
+      window.location.href = "/";
     }
   };
 
@@ -59,8 +74,6 @@ export default function MainHeader() {
           <li>
             <IoSunnyOutline className="text-2xl" />
           </li>
-
-          {/* Avatar or Name Initial */}
           <li className="w-8 h-8 rounded-full bg-sky-100 flex justify-center items-center text-blue-700 font-semibold uppercase">
             {user?.profileImage ? (
               <img
@@ -68,12 +81,12 @@ export default function MainHeader() {
                 alt="avatar"
                 className="w-full h-full rounded-full object-cover"
               />
+            ) : user?.name ? (
+              user.name.charAt(0)
             ) : (
-              user?.name ? user.name.charAt(0) : "U"
+              "U"
             )}
           </li>
-
-          {/* Logout */}
           <li>
             <button
               onClick={handleLogout}

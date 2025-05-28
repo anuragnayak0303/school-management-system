@@ -194,6 +194,37 @@
 .main-div {
   background-image: url('../src/assets/pexels-meruyert-gonullu-7317589.jpg');
   background-size: 'cover';
-    background-position: 'center';
-    height: '100vh';
+  background-position: 'center';
+  height: '100vh';
+}
+
+
+/* Wiggle animation for cockroaches */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+}
+
+.animate-wiggle {
+  animation: wiggle 0.3s infinite;
+}
+
+/* Cockroaches running to the right */
+@keyframes run-away {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100vw); }
+}
+
+.animate-run-away {
+  animation: run-away 3s linear infinite;
+}
+
+/* Oggy running after them */
+@keyframes oggy-run {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(80vw); }
+}
+
+.animate-oggy-run {
+  animation: oggy-run 3s linear infinite;
 }

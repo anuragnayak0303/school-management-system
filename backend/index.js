@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(express.static("public/uploads"));
 
 // API ROUTES
-app.use("/api/v2/emp/", userRoutes);                 // User routes
+app.use("/api/v2/user/", userRoutes);                 // User routes
 app.use("/api/v2/class/", ClassRoutes);              // Class routes
 app.use("/api/v2/employees/", employeeRoutes);       // Employee routes
 app.use("/api/v2/employees/salary/", salaryRoutes);  // Salary routes

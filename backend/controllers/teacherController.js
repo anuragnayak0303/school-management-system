@@ -147,13 +147,19 @@ export const GetSigleData = async (req, res) => {
 
 export const GetSingledelet = async (req, res) => {
     try {
-        const data = await TeacherDetail.findByIdAndDelete(req.params.id)
-        if (data) {
-            const user = await userModel.findByIdAndDelete(data?.userId)
-            const adress = await Addressmodel.findByIdAndDelete(data?.address)
-            return res.send("Delete Successfully")
+        const data = await TeacherDetail.findByIdAndDelete(req.params.id);
+
+        if (!data) {
+            return res.status(404).json({ message: "Teacher not found" });
         }
+
+        const user = await userModel.findByIdAndDelete(data.userId);
+        const address = await Addressmodel.findByIdAndDelete(data.address);
+
+        return res.status(200).json({ message: "Deleted successfully" });
     } catch (error) {
-        console.log(error)
+        console.error("Error while deleting teacher:", error);
+        return res.status(500).json({ message: "Internal server error", error: error.message });
     }
-}
+};
+

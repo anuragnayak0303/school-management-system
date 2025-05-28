@@ -27,6 +27,9 @@ import Campus from "./page/Campus";
 import AllStudent from "./Admin/AllStudent";
 import ERT from "./page/ERT";
 import ERTlist from "./Admin/ERTlist";
+import LoadingScreen from "./components/LoadingScreen";
+import TeacherProtected from "./Teacher/routes/TeacherProtected";
+import TeacheDashbaord from "./Teacher/TeacherDashbaord";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -34,6 +37,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <LoadingScreen />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Homepage />} />
@@ -44,7 +48,7 @@ function App() {
           <Route path="/campus-infrastructure" element={<Campus />} />
           <Route path="/contact-us" element={<ContactPage />} />
           <Route path="/dash" element={<Dashboard />} />
-
+          {/* Admin Protected Route */}
           <Route path="/school/" element={<AdminProtected />}>
             <Route path="admin/dashboard" element={<Dashboard />} />
             <Route path="academy/subject" element={<CourseManagement />} />
@@ -62,6 +66,15 @@ function App() {
               <Route path="security" element={<SecuritySettings />} />
               <Route path="LogoEdit" element={<Website />} />
             </Route>
+          </Route>
+          {/*End Admin Protected Route */}
+
+
+
+          {/* Teacher Protected */}
+          <Route path="/school/" element={<TeacherProtected />}>
+            <Route path="dashboard" element={<TeacheDashbaord />} />
+            <Route path="setting" element={<Setting/>}/>
           </Route>
         </Routes>
         <Toaster />

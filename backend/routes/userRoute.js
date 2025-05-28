@@ -7,34 +7,39 @@ import {
   passwordmatch,
   registerController,
 } from "../controllers/userContoller.js";
-import { isAdmin, isSignIn } from "../middlewares/authMiddeware.js";
-// ROUTER INSTANCE
+import { isAdmin, isSignIn, isTeacher } from "../middlewares/authMiddeware.js";
+
 const router = express.Router();
-//API ROUTES
-// REGISTER
-// http://localhost:8000/api/v2/emp/register
+
+// http://localhost:8000/api/v2/user/register
 router.post("/register", registerController);
-// LOGIN
-//  http://localhost:8000/api/v2/emp/login
+
+//  http://localhost:8000/api/v2/user/login
 router.post("/login", loginController);
 
+// http://localhost:8000/api/v2/user/emailVerified
+router.post("/emailVerified", isSignIn, EmailVerification);
+
+//http://localhost:8000/api/v2/user/passwordmatch
+router.post('/passwordmatch', isSignIn,isAdmin, passwordmatch)
+router.post('/ForgetPass', isSignIn,isAdmin, forgetpassowrd)
+router.get('/getsingle', isSignIn,isAdmin, getSigngleUser)
+
+
 //PROTECTD ROUTES
-// localhost:8000/api/v2/emp/admin-protected
+// localhost:8000/api/v2/user/admin-protected
 router.get("/admin-protected", isSignIn, isAdmin, (req, res) => {
   res.status(200).json({ ok: true });
 });
-// http://localhost:8000/api/v2/emp/emailVerified
-router.post("/emailVerified", isSignIn, EmailVerification);
-
-//http://localhost:8000/api/v2/emp/user-protected
-router.get("/user-protected", isSignIn, (req, res) => {
+//http://localhost:8000/api/v2/user/teacher-protected
+router.get("/teacher-protected", isSignIn, isTeacher, (req, res) => {
   res.status(200).json({ ok: true });
 });
+// router.get("/user-protected", isSignIn, (req, res) => {
+//   res.status(200).json({ ok: true });
+// });
 
-//http://localhost:8000/api/v2/emp/passwordmatch
-router.post('/passwordmatch',isSignIn ,passwordmatch)
-router.post('/ForgetPass',isSignIn ,forgetpassowrd)
-router.get('/getsingle',isSignIn ,getSigngleUser)
+
 
 
 export default router;

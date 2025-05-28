@@ -17,7 +17,8 @@ export default function AllTeacherList() {
             const { data } = await axios.get(`http://localhost:8000/api/teachers/get`);
             setteachers(data);
         } catch (error) {
-            console.log(error);
+            console.error("Error fetching teachers:", error);
+            toast.error("Failed to load teachers list");
         }
     };
 
@@ -26,12 +27,16 @@ export default function AllTeacherList() {
         if (!confirmDelete) return;
 
         try {
-            await axios.delete(`http://localhost:8000/api/teachers/get/delet/${id}`);
-            toast.success("Teacher deleted successfully");
+            const { data } = await axios.delete(`http://localhost:8000/api/teachers/delet/${id}`);
+            toast.success(data?.message || "Teacher deleted successfully");
             getAllTeacher(); // Refresh list
         } catch (error) {
-            toast.error("Failed to delete teacher");
-            console.error(error);
+            console.error("Error deleting teacher:", error);
+            if (error.response?.data?.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Failed to delete teacher");
+            }
         }
     };
 
@@ -74,7 +79,9 @@ export default function AllTeacherList() {
                             <tbody>
                                 {teachers.map((teacher, index) => (
                                     <tr key={index}>
-                                        <td className="px-4 py-3 text-blue-600 font-medium hover:underline cursor-pointer">{teacher.teacherId}</td>
+                                        <td className="px-4 py-3 text-blue-600 font-medium hover:underline cursor-pointer">
+                                            {teacher.teacherId}
+                                        </td>
                                         <td className="px-4 py-3 flex items-center gap-2">
                                             {teacher?.userId?.profileImage ? (
                                                 <img
@@ -94,7 +101,7 @@ export default function AllTeacherList() {
                                             )}
                                         </td>
                                         <td className="px-4 py-3">{teacher?.userId?.email}</td>
-                                        <td className="px-4 py-3">{teacher?.address?.phone || '984653749'}</td>
+                                        <td className="px-4 py-3">{teacher?.address?.phone || 'N/A'}</td>
                                         <td className="px-4 py-3">{new Date(teacher.dateOfBirth).toLocaleDateString()}</td>
                                         <td className="px-4 py-3">
                                             <span className={`px-2 py-[1px] tracking-wider text-xs font-medium ${teacher.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
@@ -105,7 +112,7 @@ export default function AllTeacherList() {
                                             <button onClick={() => nav(`/school/view_teacher/${teacher._id}`)} className="text-gray-500 hover:text-gray-700">
                                                 <IoEye className="text-xl text-purple-500" />
                                             </button>
-                                            <button className="text-gray-500 hover:text-gray-700">
+                                            <button onClick={() => nav(`/school/edit_teacher/${teacher._id}`)} className="text-gray-500 hover:text-gray-700">
                                                 <FiEdit className="text-xl text-blue-500" />
                                             </button>
                                             <button onClick={() => deleteTeacher(teacher._id)} className="text-gray-500 hover:text-gray-700">
