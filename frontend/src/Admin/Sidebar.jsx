@@ -21,12 +21,12 @@ const Sidebar = () => {
 
   // All paths under Academic to auto-expand the dropdown
   const academicPaths = [
-    "/school/academy/course",
-    "/school/academy/subject",
-    "/school/academy/result-rule",
-    "/school/academy/exam",
-    "/school/academy/schedule",
-    "/school/academy/all_classess",
+    "/school/admin/academy/course",
+    "/school/admin/academy/subject",
+    "/school/admin/academy/result-rule",
+    "/school/admin/academy/exam",
+    "/school/admin/academy/schedule",
+    "/school/admin/academy/all_classess",
   ];
 
   useEffect(() => {
@@ -35,9 +35,9 @@ const Sidebar = () => {
     }
   }, [location.pathname]);
 
-  // Navigation handler with loading animation for /school/ routes
+  // Navigation handler with loading animation for /school/admin/ routes
   const handleNavigation = (path) => {
-    if (path.startsWith("/school/")) {
+    if (path.startsWith("/school/admin/")) {
       setLoading(true);
       setTimeout(() => {
         navigate(path);
@@ -121,39 +121,39 @@ const Sidebar = () => {
 
             {academicOpen && (
               <div className="ml-8 mt-1 space-y-1">
-                <SubItem to="/school/academy/subject" label="Subject" />
-                <SubItem to="/school/academy/all_classess" label="All Classes" />
+                <SubItem to="/school/admin/academy/subject" label="Subject" />
+                <SubItem to="/school/admin/academy/all_classess" label="All Classes" />
               </div>
             )}
           </div>
 
           <NavItem
-            to="/school/vister_admission_list"
+            to="/school/admin/vister_admission_list"
             icon={<FaClipboardList size={20} />}
             label="Vist Admission List"
           />
           <NavItem
-            to="/school/ert-list"
+            to="/school/admin/ert-list"
             icon={<FaUser size={20} />}
             label="ERT List"
           />
           <NavItem
-            to="/school/admission_from"
+            to="/school/admin/admission_from"
             icon={<FaUser size={20} />}
             label="Students Admission"
           />
           <NavItem
-            to="/school/all_student"
+            to="/school/admin/all_student"
             icon={<FaUsers size={20} />}
             label="All Students"
           />
           <NavItem
-            to="/school/all_teacher"
+            to="/school/admin/all_teacher"
             icon={<FaUsers size={20} />}
             label="All Teacher"
           />
           <NavItem
-            to="/school/admin/setting"
+            to="/school/admin/admin/setting"
             icon={<IoSettings size={20} />}
             label="Settings"
           />

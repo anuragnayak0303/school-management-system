@@ -44,9 +44,9 @@ export default function Login() {
 console.log(res?.data)
         // Redirect based on role
         if (res?.data?.user?.role === "Admin") {
-          navigate("/school/admin/dashboard");
+          navigate("/school/admin/admin/dashboard");
         } else if (res?.data?.user?.role === "Teacher") {
-          navigate("/school/dashboard");
+          navigate("/school/teacher/dashboard");
         }
 
         window.location.reload();

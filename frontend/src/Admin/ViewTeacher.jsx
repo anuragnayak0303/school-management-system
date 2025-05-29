@@ -35,7 +35,7 @@ export default function ViewTeacher() {
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-md mb-6 shadow-sm">
                         <h1 className="text-xl font-bold text-gray-800">Teachers Details</h1>
                         <NavLink
-                            to={'/school/all_teacher'}
+                            to={'/school/admin/all_teacher'}
                             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
                         >
                             All Teacher

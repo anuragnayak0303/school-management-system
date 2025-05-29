@@ -21,9 +21,9 @@ router.post("/login", loginController);
 router.post("/emailVerified", isSignIn, EmailVerification);
 
 //http://localhost:8000/api/v2/user/passwordmatch
-router.post('/passwordmatch', isSignIn,isAdmin, passwordmatch)
-router.post('/ForgetPass', isSignIn,isAdmin, forgetpassowrd)
-router.get('/getsingle', isSignIn,isAdmin, getSigngleUser)
+router.post('/passwordmatch', isSignIn, passwordmatch)
+router.post('/ForgetPass', isSignIn, forgetpassowrd)
+router.get('/getsingle', isSignIn, getSigngleUser)
 
 
 //PROTECTD ROUTES

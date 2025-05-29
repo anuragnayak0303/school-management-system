@@ -56,7 +56,7 @@ export default function AllTeacherList() {
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-md mb-6 shadow-sm">
                         <h1 className="text-xl font-bold text-gray-800">Teachers List</h1>
                         <NavLink
-                            to={'/school/add_teacher'}
+                            to={'/school/admin/add_teacher'}
                             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
                         >
                             Add Teacher
@@ -107,7 +107,7 @@ export default function AllTeacherList() {
                                             </span>
                                         </td>
                                         <td className="px-4 py-3 flex space-x-2.5">
-                                            <button onClick={() => nav(`/school/view_teacher/${teacher._id}`)} className="text-gray-500 hover:text-gray-700">
+                                            <button onClick={() => nav(`/school/admin/view_teacher/${teacher._id}`)} className="text-gray-500 hover:text-gray-700">
                                                 <IoEye className="text-xl text-purple-500" />
                                             </button>
 

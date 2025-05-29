@@ -49,8 +49,8 @@ function App() {
           <Route path="/contact-us" element={<ContactPage />} />
           <Route path="/dash" element={<Dashboard />} />
           {/* Admin Protected Route */}
-          <Route path="/school/" element={<AdminProtected />}>
-            <Route path="admin/dashboard" element={<Dashboard />} />
+          <Route path="/school/admin/" element={<AdminProtected />}>
+            <Route path="dashboard" element={<Dashboard />} />
             <Route path="academy/subject" element={<CourseManagement />} />
             <Route path="academy/all_classess" element={<AllClassess />} />
             <Route path="vister_admission_list" element={<VisterAdmission />} />
@@ -72,7 +72,7 @@ function App() {
 
 
           {/* Teacher Protected */}
-          <Route path="/school/" element={<TeacherProtected />}>
+          <Route path="/school/teacher/" element={<TeacherProtected />}>
             <Route path="dashboard" element={<TeacheDashbaord />} />
             <Route path="setting" element={<Setting/>}/>
           </Route>
