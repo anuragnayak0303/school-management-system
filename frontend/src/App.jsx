@@ -30,6 +30,8 @@ import ERTlist from "./Admin/ERTlist";
 import LoadingScreen from "./components/LoadingScreen";
 import TeacherProtected from "./Teacher/routes/TeacherProtected";
 import TeacheDashbaord from "./Teacher/TeacherDashbaord";
+import ViewDetails from "./Teacher/ViewDetails";
+import StudentAttendenc from "./Teacher/StudentAttendenc";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -74,7 +76,14 @@ function App() {
           {/* Teacher Protected */}
           <Route path="/school/teacher/" element={<TeacherProtected />}>
             <Route path="dashboard" element={<TeacheDashbaord />} />
-            <Route path="setting" element={<Setting/>}/>
+            <Route path="student_attendance" element={<StudentAttendenc />} />
+            <Route path="view_details" element={<ViewDetails />} />
+            <Route path="setting" element={<Setting />}>
+              <Route index element={<Navigate to="profile" />} />
+              <Route path="profile" element={<ProfileSettings />} />
+              <Route path="security" element={<SecuritySettings />} />
+              {/* <Route path="LogoEdit" element={<Website />} /> */}
+            </Route>
           </Route>
         </Routes>
         <Toaster />

@@ -163,3 +163,12 @@ export const GetSingledelet = async (req, res) => {
     }
 };
 
+export const GetTearcherdatabyusingUserId = async (req, res) => {
+    try {
+        console.log(req?.params.id)
+        const data = await TeacherDetail.findOne({userId:req?.params?.id}).populate("userId").populate('Class').populate("address").populate("subject")
+        return res.send(data)
+    } catch (error) {
+        console.log(error)
+    }
+}

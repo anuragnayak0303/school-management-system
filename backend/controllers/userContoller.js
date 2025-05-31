@@ -13,6 +13,7 @@ export const registerController = async (req, res) => {
       email,
       password: hashPass,
       role,
+      
     });
     await user.save();
     res.status(201).json({
@@ -71,6 +72,8 @@ export const loginController = async (req, res) => {
         name: existingUser.name,
         email: existingUser.email,
         role: existingUser.role,
+        role: existingUser.role,
+        image:existingUser.profileImage
       },
     });
   } catch (error) {

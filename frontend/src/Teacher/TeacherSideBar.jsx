@@ -8,7 +8,7 @@ import {
 } from "react-icons/io5";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaClipboardList, FaUser, FaUsers } from "react-icons/fa";
+import { FaBookReader, FaClipboardList, FaUser, FaUsers } from "react-icons/fa";
 import { LoadingContext } from "../context/LoadingProvider ";
 
 
@@ -21,12 +21,12 @@ const TeacherSidebar = () => {
 
   // All paths under Academic to auto-expand the dropdown
   const academicPaths = [
-    "/school/admin/academy/course",
-    "/school/admin/academy/subject",
-    "/school/admin/academy/result-rule",
-    "/school/admin/academy/exam",
-    "/school/admin/academy/schedule",
-    "/school/admin/academy/all_classess",
+    "/school/teacher/academy/course",
+    "/school/teacher/academy/subject",
+    "/school/teacher/academy/result-rule",
+    "/school/teacher/academy/exam",
+    "/school/teacher/academy/schedule",
+    "/school/teacher/academy/all_classess",
   ];
 
   useEffect(() => {
@@ -35,9 +35,9 @@ const TeacherSidebar = () => {
     }
   }, [location.pathname]);
 
-  // Navigation handler with loading animation for /school/admin/ routes
+  // Navigation handler with loading animation for /school/teacher/ routes
   const handleNavigation = (path) => {
-    if (path.startsWith("/school/admin/")) {
+    if (path.startsWith("/school/teacher/")) {
       setLoading(true);
       setTimeout(() => {
         navigate(path);
@@ -98,38 +98,22 @@ const TeacherSidebar = () => {
 
         <nav className="py-4 text-sm space-y-1">
           <NavItem
-            to="/school/admin/dashboard"
+            to="/school/teacher/dashboard"
             icon={<IoHomeOutline size={20} />}
             label="Dashboard"
           />
-
           <NavItem
-            to="/school/admin/vister_admission_list"
-            icon={<FaClipboardList size={20} />}
-            label="Vist Admission List"
+            to="/school/teacher/student_attendance"
+            icon={<FaBookReader size={20} />}
+            label="Student Attendash"
           />
           <NavItem
-            to="/school/admin/ert-list"
-            icon={<FaUser size={20} />}
-            label="ERT List"
+            to="/school/teacher/view_details"
+            icon={<IoHomeOutline size={20} />}
+            label="Teacher Details"
           />
           <NavItem
-            to="/school/admin/admission_from"
-            icon={<FaUser size={20} />}
-            label="Students Admission"
-          />
-          <NavItem
-            to="/school/admin/all_student"
-            icon={<FaUsers size={20} />}
-            label="All Students"
-          />
-          <NavItem
-            to="/school/admin/all_teacher"
-            icon={<FaUsers size={20} />}
-            label="All Teacher"
-          />
-          <NavItem
-            to="/school/admin/setting"
+            to="/school/teacher/setting"
             icon={<IoSettings size={20} />}
             label="Settings"
           />
