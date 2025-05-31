@@ -193,7 +193,13 @@ export const GetTearcherdatabyusingUserId = async (req, res) => {
             .populate("userId")
             .populate("address")
             .populate("Class")
-            .populate("subject");
+            .populate({
+                path: "subject",
+                populate: {
+                    path: "classId",
+                    model: "Department" // replace with your actual class model name if different
+                }
+            });
         res.send(data);
     } catch (error) {
         console.error(error);
