@@ -7,6 +7,8 @@ import axios from 'axios';
 import { FiEdit } from 'react-icons/fi';
 import { MdDelete } from 'react-icons/md';
 import { IoEye } from 'react-icons/io5';
+import { FaUserGear } from 'react-icons/fa6';
+import { FaUserEdit, FaUserInjured } from 'react-icons/fa';
 
 export default function AllTeacherList() {
     const [teachers, setteachers] = useState([]);
@@ -107,12 +109,15 @@ export default function AllTeacherList() {
                                             </span>
                                         </td>
                                         <td className="px-4 py-3 flex space-x-2.5">
-                                            <button onClick={() => nav(`/school/admin/view_teacher/${teacher._id}`)} className="text-gray-500 hover:text-gray-700">
-                                                <IoEye className="text-xl text-purple-500" />
+                                            <button onClick={() => nav(`/school/admin/view_teacher/${teacher._id}`)} className="text-gray-500 hover:text-gray-700 ">
+                                                <IoEye className="text-xl text-purple-500  cursor-pointer" />
+                                            </button>
+                                            <button onClick={() => nav(`/school/admin/edit_teacher/${teacher._id}`)} className="text-gray-500 hover:text-gray-700">
+                                                <FaUserEdit className="text-xl text-green-500 cursor-pointer" />
                                             </button>
 
                                             <button onClick={() => deleteTeacher(teacher._id)} className="text-gray-500 hover:text-gray-700">
-                                                <MdDelete className="text-xl text-red-500" />
+                                                <MdDelete className="text-xl cursor-pointer text-red-500" />
                                             </button>
                                         </td>
                                     </tr>

@@ -97,7 +97,7 @@ export default function ViewTeacher() {
                                 <h3 className="text-lg font-semibold text-gray-800 mb-4">Bank Details</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
                                     <Detail label="Bank Name" value={teacherDetails?.bankDetails?.bankName} />
-                                    <Detail label="Branch" value={teacherDetails?.bankDetails?.branchName} />
+                                    <Detail label="A/C" value={teacherDetails?.bankDetails?.accountNumber} />
                                     <Detail label="IFSC" value={teacherDetails?.bankDetails?.ifscCode} />
                                 </div>
                             </section>

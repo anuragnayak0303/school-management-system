@@ -39,10 +39,10 @@ const SubjectTable = ({
           <tbody>
             {paginatedSubjects.map((subj, index) => (
               <tr key={subj._id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                <td className="px-4 py-2 font-medium text-gray-800">{subj.subjectName}</td>
-                <td className="px-4 py-2">{subj.subjectCode || "—"}</td>
+                <td className="px-4 py-2 font-medium text-gray-800 capitalize">{subj.subjectName}</td>
+                <td className="px-4 py-2 font-bold">{subj.subjectCode || "—"}</td>
                 <td className="px-4 py-2">{subj.subjectType}</td>
-                <td className="px-4 py-2">{subj.classId?.Classname || "N/A"}</td>
+                <td className="px-4 py-2 uppercase text-xs font-bold text-green-600">{subj.classId?.Classname || "N/A"}</td>
                 <td className="px-4 py-2 text-center">
                   <div className="flex justify-center gap-2">
                     <button

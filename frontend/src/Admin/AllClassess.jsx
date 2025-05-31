@@ -68,9 +68,9 @@ export default function AllClassess() {
                             <tbody className="bg-white divide-y divide-gray-100 text-sm text-gray-700">
                                 {AllClasses.map((cls) => (
                                     <tr key={cls._id}>
-                                        <td className="px-6 py-4 font-medium text-gray-900">{cls?.Classname}</td>
-                                        <td className="px-6 py-4">{cls?.Student_Of_no}</td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-2 font-medium text-gray-900 uppercase">{cls?.Classname}</td>
+                                        <td className="px-6 py-2">{cls?.Student_Of_no}</td>
+                                        <td className="px-6 py-2">
                                             <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${cls?.status === 'Active'
                                                 ? 'bg-green-100 text-green-800'
                                                 : 'bg-yellow-100 text-yellow-800'
@@ -78,7 +78,7 @@ export default function AllClassess() {
                                                 {cls.status}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4 text-right space-x-2">
+                                        <td className="px-6 py-2 text-right space-x-2">
                                             <button
                                                 className="text-blue-600 hover:text-blue-900 text-sm"
                                                 onClick={() => {

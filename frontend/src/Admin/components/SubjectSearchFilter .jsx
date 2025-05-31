@@ -8,12 +8,12 @@ const SubjectSearchFilter = ({ search, setSearch, filterClass, setFilterClass, c
         placeholder="Search by Subject Name"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="px-4 py-2 border rounded-md w-full sm:w-1/2 text-sm"
+        className="px-4 py-2 border bg-white outline-0 border-gray-200 rounded-md w-full sm:w-1/2 text-sm"
       />
       <select
         value={filterClass}
         onChange={(e) => setFilterClass(e.target.value)}
-        className="px-4 py-2 border rounded-md w-full sm:w-1/2 text-sm"
+        className="px-4 py-2 border rounded-md outline-0 bg-white border-gray-200 w-full sm:w-1/2 text-sm"
       >
         <option value="">All Classes</option>
         {classList.map((cls) => (

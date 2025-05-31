@@ -32,6 +32,7 @@ import TeacherProtected from "./Teacher/routes/TeacherProtected";
 import TeacheDashbaord from "./Teacher/TeacherDashbaord";
 import ViewDetails from "./Teacher/ViewDetails";
 import StudentAttendenc from "./Teacher/StudentAttendenc";
+import EditTeacher from "./Admin/EditTeacher";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -61,6 +62,7 @@ function App() {
             <Route path="all_student" element={<AllStudent />} />
             <Route path="all_teacher" element={<AllTeacherList />} />
             <Route path="add_teacher" element={<AddTeacher />} />
+            <Route path="edit_teacher/:id" element={<EditTeacher />} />
             <Route path="view_teacher/:id" element={<ViewTeacher />} />
             <Route path="admin/setting" element={<Setting />}>
               <Route index element={<Navigate to="profile" />} />

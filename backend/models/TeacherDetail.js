@@ -1,4 +1,6 @@
+// models/TeacherDetail.js
 import mongoose from "mongoose";
+
 const teacherSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   teacherId: { type: String, required: true, unique: true },
@@ -9,10 +11,13 @@ const teacherSchema = new mongoose.Schema({
   bloodGroup: { type: String },
   qualification: { type: String },
   workExperience: { type: String },
-  address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' },
+  address: { type: mongoose.Schema.Types.ObjectId, ref: "Address" },
   status: { type: String, enum: ["Active", "Inactive"] },
-  Class: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Department' }], // Consider linking to Class model if needed
-  subject: [{ type: mongoose.Schema.Types.ObjectId, ref: "Subject" }], // Same here
+  
+  // Only one subject array, not tied to classes
+  Class: [{ type: mongoose.Schema.Types.ObjectId, ref: "Department" }],
+  subject: [{ type: mongoose.Schema.Types.ObjectId, ref: "Subject" }],
+  
   fatherName: { type: String },
   motherName: { type: String },
   panOrIdNumber: { type: String },
@@ -27,5 +32,6 @@ const teacherSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });
+
 const TeacherDetail = mongoose.model("TeacherDetail", teacherSchema);
 export default TeacherDetail;

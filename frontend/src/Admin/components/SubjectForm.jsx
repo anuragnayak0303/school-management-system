@@ -92,6 +92,8 @@ const SubjectForm = ({
                     <input
                         type="text"
                         value={subjectCode}
+                        maxLength={editingSubjectId ? 6 : 3}
+                        placeholder="Without using ##"
                         onChange={(e) => setSubjectCode(e.target.value)}
                         className="w-full border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 text-sm"
                     />
