@@ -40,12 +40,12 @@ export default function AllClassess() {
         <div className="flex flex-col md:flex-row">
             <Sidebar />
             <Toaster />
-            <main className="md:ml-64 w-full min-h-screen bg-gray-100">
+            <main className="md:ml-64 w-full min-h-screen bg-gradient-to-br from-blue-50 to-purple-100">
                 <MainHeader />
                 <div className="p-4 sm:p-6">
                     <div className="text-sm text-gray-500 mb-2">Admin &gt; Classes</div>
 
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-md mb-6 shadow-sm">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-xl mb-6 shadow-lg border-l-4 border-blue-500">
                         <h1 className="text-xl font-bold text-gray-800">All Class Management</h1>
                         <button
                             onClick={handleAddClass}

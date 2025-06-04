@@ -2,6 +2,7 @@ import express from "express";
 import {
   EmailVerification,
   forgetpassowrd,
+  getroleWiseData,
   getSigngleUser,
   loginController,
   passwordmatch,
@@ -24,6 +25,8 @@ router.post("/emailVerified", isSignIn, EmailVerification);
 router.post('/passwordmatch', isSignIn, passwordmatch)
 router.post('/ForgetPass', isSignIn, forgetpassowrd)
 router.get('/getsingle', isSignIn, getSigngleUser)
+// http://localhost:8000/api/v2/user/getAll
+router.get('/getAll', getroleWiseData)
 
 
 //PROTECTD ROUTES

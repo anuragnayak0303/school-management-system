@@ -18,6 +18,8 @@ import studentRoutes from "./routes/StudentRout.js";
 import ertRoutes from "./routes/ertRoutes.js";
 import MarqueeRoute from "./routes/MarqueeRoute.js";
 import attendanceRoute from "./routes/attendanceRoutes.js";
+import studentAttendencrouter from "./routes/studentattendanceRoutes.js";
+import Eventrouter from "./routes/eventRoutes.js";
 
 // INSTANCE OF EXPRESS
 const app = express();
@@ -47,6 +49,8 @@ app.use("/api/ert", ertRoutes);                      // ERT routes
 app.use("/api/marquee", MarqueeRoute);               // Marquee routes
 app.use("/api/v2", Addressrouter);   
 app.use("/api/attendance", attendanceRoute);                // Address routes
+app.use("/api/v8/student/attendance" ,studentAttendencrouter)
+app.use("/api/v8/event" ,Eventrouter)
 
 // NEW ROUTE: Get Client's Public IP
 app.get("/api/get-ip", (req, res) => {

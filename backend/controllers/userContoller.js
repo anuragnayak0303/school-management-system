@@ -13,7 +13,7 @@ export const registerController = async (req, res) => {
       email,
       password: hashPass,
       role,
-      
+
     });
     await user.save();
     res.status(201).json({
@@ -73,7 +73,7 @@ export const loginController = async (req, res) => {
         email: existingUser.email,
         role: existingUser.role,
         role: existingUser.role,
-        image:existingUser.profileImage
+        image: existingUser.profileImage
       },
     });
   } catch (error) {
@@ -139,3 +139,16 @@ export const getSigngleUser = async (req, res) => {
     console.log(error)
   }
 }
+
+export const getroleWiseData = async (req, res) => {
+  try {
+    const data = await userModel.find({
+      role: { $in: ["Teacher", "Staff"] }
+    });
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.error("Error fetching role-wise data:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};

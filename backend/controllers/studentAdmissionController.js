@@ -136,3 +136,16 @@ export const GetDataAll = async (req, res) => {
         console.log(error)
     }
 }
+
+export const GetStudentByClassID = async (req, res) => {
+
+    try {
+        console.log(req.params.id)
+        const data  = await StudentAdmission.find({ class: req.params.id }).populate('userId')
+        // console.log(data)
+        res.send(data)
+        
+    } catch (error) {
+        console.log(error)
+    }
+}

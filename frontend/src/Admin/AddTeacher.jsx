@@ -95,12 +95,12 @@ export default function AddTeacher() {
         <div className="flex flex-col md:flex-row">
             <Toaster />
             <Sidebar />
-            <main className="md:ml-64 w-full min-h-screen bg-gray-100">
+            <main className="ml-0 md:ml-64 w-full min-h-screen bg-gradient-to-br from-blue-50 to-purple-100">
                 <MainHeader />
 
                 <div className="p-4 sm:p-6">
                     <div className="text-sm text-gray-500 mb-2">Admin &gt; Teacher</div>
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-md mb-6 shadow-sm">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-xl mb-6 shadow-lg border-l-4 border-blue-500">
                         <h1 className="text-xl font-bold text-gray-800">Add New Teacher</h1>
                         <NavLink
                             to={'/school/admin/all_teacher'}
@@ -259,7 +259,7 @@ export default function AddTeacher() {
                         </div>
                     </form>
                 </div>
-            </main>
-        </div>
+            </main >
+        </div >
     );
 }

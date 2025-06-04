@@ -47,7 +47,7 @@ export const addTeacher = async (req, res) => {
             ifscCode,
             branchName,
         } = req.body;
-        console.log(req.body)
+        // console.log(req.body)
         const fullAddress = req.body.address;
 
         // Handle classes input (classId + subjects[])
@@ -162,7 +162,7 @@ export const GetSigleData = async (req, res) => {
             .populate("address")
             .populate("Class")
             .populate("subject");
-        console.log(data)
+        // console.log(data)
         res.send(data);
     } catch (error) {
         console.error(error);

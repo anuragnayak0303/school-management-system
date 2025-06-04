@@ -11,6 +11,7 @@ export default function AllStudent() {
         try {
             const { data } = await axios.get(`http://localhost:8000/api/v3/student/get`);
             setAllStudent(data);
+            console.log(data)
         } catch (error) {
             console.log(error);
         }
@@ -34,7 +35,7 @@ export default function AllStudent() {
                 <div className="p-6">
                     <div className="text-sm text-gray-500 mb-3">Admin &gt; <span className="font-medium text-gray-700">Students</span></div>
 
-                    <div className="bg-white p-4 rounded-md shadow-md flex items-center justify-between mb-6">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-xl mb-6 shadow-lg border-l-4 border-blue-500">
                         <h1 className="text-2xl font-semibold text-gray-800">All Students</h1>
                     </div>
 

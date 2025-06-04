@@ -66,7 +66,7 @@ export default function VisterAdmission() {
     return (
         <div className="flex flex-col md:flex-row">
             <Sidebar />
-            <main className="md:ml-64 w-full min-h-screen bg-gray-100">
+            <main className="ml-0 md:ml-64 w-full min-h-screen bg-gradient-to-br from-blue-50 to-purple-100">
                 <MainHeader />
                 <div className="p-4 sm:p-6">
                     <div className="text-sm text-gray-500 mb-2">Admin &gt; Admission Visitor</div>

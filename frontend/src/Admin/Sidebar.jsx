@@ -8,8 +8,10 @@ import {
 } from "react-icons/io5";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaClipboardList, FaUser, FaUsers } from "react-icons/fa";
+import { FaClipboardList, FaUser, FaUserAlt, FaUserAltSlash, FaUserCheck, FaUserFriends, FaUserGraduate, FaUsers } from "react-icons/fa";
 import { LoadingContext } from "../context/LoadingProvider ";
+import { Fa42Group, FaUserAstronaut, FaUserGroup, FaUserPlus } from "react-icons/fa6";
+import { UserGroupIcon } from "@heroicons/react/24/solid";
 
 
 const Sidebar = () => {
@@ -42,7 +44,7 @@ const Sidebar = () => {
       setTimeout(() => {
         navigate(path);
         setLoading(false);
-      },2000); // Simulate 700ms loading
+      }, 2000); // Simulate 700ms loading
     } else {
       navigate(path);
     }
@@ -52,11 +54,10 @@ const Sidebar = () => {
   const NavItem = ({ to, icon, label }) => (
     <button
       onClick={() => handleNavigation(to)}
-      className={`w-full text-left flex items-center gap-3 px-4 py-2 rounded transition-all ${
-        location.pathname === to
+      className={`w-full text-left flex items-center gap-3 px-4 py-2 rounded transition-all ${location.pathname === to
           ? "bg-gray-200 text-blue-600"
           : "text-gray-700 hover:bg-gray-100"
-      }`}
+        }`}
     >
       {icon} {label}
     </button>
@@ -66,11 +67,10 @@ const Sidebar = () => {
   const SubItem = ({ to, label }) => (
     <button
       onClick={() => handleNavigation(to)}
-      className={`block w-full text-left pl-3 py-2 text-sm rounded ${
-        location.pathname === to
+      className={`block w-full text-left pl-3 py-2 text-sm rounded ${location.pathname === to
           ? "text-orange-600 font-medium bg-gray-200"
           : "text-gray-600 hover:text-blue-600 hover:bg-gray-100"
-      }`}
+        }`}
     >
       {label}
     </button>
@@ -88,9 +88,8 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <aside
-        className={`${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 transition-transform duration-300 fixed top-0 left-0 z-40 w-64 h-screen bg-white shadow-lg border-r px-4 border-r-gray-200 overflow-y-auto`}
+        className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 transition-transform duration-300 fixed top-0 left-0 z-40 w-64 h-screen bg-white shadow-lg border-r px-4 border-r-gray-200 overflow-y-auto`}
       >
         <div className="flex items-center gap-3 p-4">
           <span className="text-lg font-bold">Schooling</span>
@@ -107,11 +106,10 @@ const Sidebar = () => {
           <div>
             <button
               onClick={() => setAcademicOpen(!academicOpen)}
-              className={`w-full flex items-center justify-between px-4 py-2 rounded ${
-                academicOpen
+              className={`w-full flex items-center justify-between px-4 py-2 rounded ${academicOpen
                   ? "text-blue-700"
                   : "hover:bg-gray-100 text-gray-700"
-              }`}
+                }`}
             >
               <div className="flex items-center gap-3">
                 <IoSchoolOutline size={20} /> Academic
@@ -139,14 +137,22 @@ const Sidebar = () => {
           />
           <NavItem
             to="/school/admin/admission_from"
-            icon={<FaUser size={20} />}
+            icon={<FaUserPlus size={20} />}
             label="Students Admission"
           />
+
+          <NavItem
+            to="/school/admin/all_users"
+            icon={<FaUserFriends size={20} />}
+            label="All STAFF"
+          />
+
           <NavItem
             to="/school/admin/all_student"
-            icon={<FaUsers size={20} />}
+            icon={<FaUserGraduate size={20} />}
             label="All Students"
           />
+
           <NavItem
             to="/school/admin/all_teacher"
             icon={<FaUsers size={20} />}
