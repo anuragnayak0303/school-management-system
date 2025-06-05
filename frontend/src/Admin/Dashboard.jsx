@@ -87,7 +87,7 @@ const quickLinks = [
 // 🔧 Quick Links Card
 const QuickLinksCard =  () => {
   return (
-    <div className="bg-white h-[50vh] rounded shadow-md p-5 w-full max-w-[400px]">
+    <div className="bg-white h-[55vh] rounded shadow-md p-5 w-full max-w-[400px]">
       <h2 className="text-lg font-semibold text-gray-700 mb-4">Quick Links</h2>
       <div className="grid grid-cols-3 gap-4">
         {quickLinks.map((item, idx) => (

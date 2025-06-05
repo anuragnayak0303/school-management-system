@@ -35,6 +35,7 @@ import StudentAttendenc from "./Teacher/StudentAttendenc";
 import EditTeacher from "./Admin/EditTeacher";
 import CreateStaff from "./Admin/CreateStaff";
 import AllUsers from "./Admin/AllUsers";
+import NoticeBoard from "./Admin/NoticeBoard";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -53,6 +54,7 @@ function App() {
           <Route path="/campus-infrastructure" element={<Campus />} />
           <Route path="/contact-us" element={<ContactPage />} />
           <Route path="/dash" element={<Dashboard />} />
+          
           {/* Admin Protected Route */}
           <Route path="/school/admin/" element={<AdminProtected />}>
             <Route path="dashboard" element={<Dashboard />} />
@@ -68,6 +70,7 @@ function App() {
             <Route path="view_teacher/:id" element={<ViewTeacher />} />
             <Route path="all_users" element={<AllUsers/>} />
             <Route path="create_staff" element={<CreateStaff/>} />
+            <Route path="notice-board" element={<NoticeBoard/>} />
             <Route path="admin/setting" element={<Setting />}>
               <Route index element={<Navigate to="profile" />} />
               <Route path="profile" element={<ProfileSettings />} />

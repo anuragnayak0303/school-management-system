@@ -34,7 +34,7 @@ export default function RecentEvent() {
   }
 
   return (
-    <div className="w-full md:w-[30%] h-[50vh] bg-white rounded shadow p-5 text-gray-800">
+    <div className="w-full md:w-[30%] h-[55vh] bg-white rounded shadow p-5 text-gray-800">
       <h3 className="font-semibold text-gray-800 text-base mb-3">Upcoming Events</h3>
 
       <div className="h-[100%] overflow-y-auto pr-1">

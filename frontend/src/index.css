@@ -4,3 +4,33 @@
   display: none;
 }
 
+
+/* ✅ Fix Tailwind's oklch() issue for html2canvas */
+:root {
+  --tw-color-white: #ffffff;
+  --tw-color-blue-50: #eff6ff;
+  --tw-color-blue-100: #dbeafe;
+  --tw-color-blue-500: #3b82f6;
+  --tw-color-blue-600: #2563eb;
+  --tw-color-blue-700: #1d4ed8;
+  --tw-color-indigo-600: #4f46e5;
+  --tw-color-indigo-700: #4338ca;
+  --tw-color-purple-50: #f5f3ff;
+  --tw-color-gray-50: #f9fafb;
+  --tw-color-gray-100: #f3f4f6;
+  --tw-color-gray-200: #e5e7eb;
+  --tw-color-gray-300: #d1d5db;
+  --tw-color-gray-400: #9ca3af;
+  --tw-color-gray-500: #6b7280;
+  --tw-color-gray-600: #4b5563;
+  --tw-color-gray-700: #374151;
+  --tw-color-gray-800: #1f2937;
+  --tw-color-gray-900: #111827;
+}
+
+@layer base {
+  html {
+    --tw-bg-opacity: 1 !important;
+    --tw-text-opacity: 1 !important;
+  }
+}

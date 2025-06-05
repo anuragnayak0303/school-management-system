@@ -38,7 +38,7 @@ export default function AdminSheduleCard() {
   const calendarDays = getMonthDays(currentDate.getFullYear(), currentDate.getMonth());
 
   return (
-    <div className="w-full md:w-[30%] h-[50vh] bg-white rounded shadow p-5 text-gray-800">
+    <div className="w-full md:w-[30%] h-[55vh] bg-white rounded shadow p-5 text-gray-800">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold">Schedules</h2>
         <button

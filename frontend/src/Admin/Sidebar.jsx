@@ -7,12 +7,18 @@ import {
   IoClose,
 } from "react-icons/io5";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import {
+  FaClipboardList,
+  FaUser,
+  FaUserPlus,
+  FaUserFriends,
+  FaUserGraduate,
+  FaUsers,
+  FaFile,
+} from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaClipboardList, FaUser, FaUserAlt, FaUserAltSlash, FaUserCheck, FaUserFriends, FaUserGraduate, FaUsers } from "react-icons/fa";
 import { LoadingContext } from "../context/LoadingProvider ";
-import { Fa42Group, FaUserAstronaut, FaUserGroup, FaUserPlus } from "react-icons/fa6";
-import { UserGroupIcon } from "@heroicons/react/24/solid";
-
+// adjust path if needed
 
 const Sidebar = () => {
   const [academicOpen, setAcademicOpen] = useState(false);
@@ -21,7 +27,6 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const { setLoading } = useContext(LoadingContext);
 
-  // All paths under Academic to auto-expand the dropdown
   const academicPaths = [
     "/school/admin/academy/course",
     "/school/admin/academy/subject",
@@ -37,38 +42,38 @@ const Sidebar = () => {
     }
   }, [location.pathname]);
 
-  // Navigation handler with loading animation for /school/admin/ routes
   const handleNavigation = (path) => {
     if (path.startsWith("/school/admin/")) {
       setLoading(true);
       setTimeout(() => {
         navigate(path);
         setLoading(false);
-      }, 2000); // Simulate 700ms loading
+      }, 700);
     } else {
       navigate(path);
     }
   };
 
-  // Top-level navigation item
   const NavItem = ({ to, icon, label }) => (
     <button
       onClick={() => handleNavigation(to)}
-      className={`w-full text-left flex items-center gap-3 px-4 py-2 rounded transition-all ${location.pathname === to
-          ? "bg-gray-200 text-blue-600"
-          : "text-gray-700 hover:bg-gray-100"
+      className={`flex items-center gap-3 px-4 py-2 rounded-xl w-full transition-all duration-200 group 
+        ${location.pathname === to
+          ? "bg-blue-100 text-blue-700"
+          : "text-gray-700 hover:bg-gray-100 hover:text-blue-600"
         }`}
     >
-      {icon} {label}
+      <span className="text-blue-600 group-hover:scale-110 transition">{icon}</span>
+      <span className="text-sm font-medium">{label}</span>
     </button>
   );
 
-  // Sub-item for dropdown
   const SubItem = ({ to, label }) => (
     <button
       onClick={() => handleNavigation(to)}
-      className={`block w-full text-left pl-3 py-2 text-sm rounded ${location.pathname === to
-          ? "text-orange-600 font-medium bg-gray-200"
+      className={`block w-full text-left px-5 py-1.5 text-sm rounded-lg transition 
+        ${location.pathname === to
+          ? "bg-blue-50 text-blue-600 font-semibold"
           : "text-gray-600 hover:text-blue-600 hover:bg-gray-100"
         }`}
     >
@@ -78,7 +83,7 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Mobile toggle button */}
+      {/* Mobile Toggle Button */}
       <button
         className="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded shadow-md"
         onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -88,81 +93,65 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <aside
-        className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } md:translate-x-0 transition-transform duration-300 fixed top-0 left-0 z-40 w-64 h-screen bg-white shadow-lg border-r px-4 border-r-gray-200 overflow-y-auto`}
+        className={`fixed top-0 left-0 z-40 h-screen w-64 bg-white shadow-xl border-r border-gray-200 transform 
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
+        md:translate-x-0 transition-transform duration-300`}
       >
-        <div className="flex items-center gap-3 p-4">
-          <span className="text-lg font-bold">Schooling</span>
+        {/* Logo Header */}
+        <div className="flex items-center gap-3 p-5 border-b border-gray-100">
+          <div className="bg-gradient-to-tr from-blue-600 to-indigo-500 text-white w-9 h-9 flex items-center justify-center rounded-full shadow">
+            <IoSchoolOutline />
+          </div>
+          <span className="text-xl font-bold text-gray-800">Schooling</span>
         </div>
 
-        <nav className="py-4 text-sm space-y-1">
-          <NavItem
-            to="/school/admin/dashboard"
-            icon={<IoHomeOutline size={20} />}
-            label="Dashboard"
-          />
+        {/* User Welcome (Optional Avatar Area) */}
+        <div className="px-4 pt-4 pb-2 border-b border-gray-100">
+          <div className="flex items-center gap-3">
+            <div className="bg-blue-600 text-white w-9 h-9 flex justify-center items-center rounded-full uppercase font-semibold">
+              A
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-gray-800">Admin</p>
+              <p className="text-xs text-gray-500">System Admin</p>
+            </div>
+          </div>
+        </div>
 
-          {/* Academic Dropdown */}
-          <div>
+        {/* Navigation */}
+        <nav className="py-4 space-y-1 text-sm font-medium">
+          <NavItem to="/school/admin/dashboard" icon={<IoHomeOutline size={18} />} label="Dashboard" />
+
+          {/* Academic */}
+          <div className="px-2">
             <button
               onClick={() => setAcademicOpen(!academicOpen)}
-              className={`w-full flex items-center justify-between px-4 py-2 rounded ${academicOpen
-                  ? "text-blue-700"
-                  : "hover:bg-gray-100 text-gray-700"
-                }`}
+              className={`w-full flex items-center justify-between px-2 py-2 rounded-lg transition 
+                ${academicOpen ? "text-blue-700 bg-blue-50" : "text-gray-700 hover:bg-gray-100"}`}
             >
-              <div className="flex items-center gap-3">
-                <IoSchoolOutline size={20} /> Academic
-              </div>
-              {academicOpen ? <FiChevronUp /> : <FiChevronDown />}
+              <span className="flex items-center gap-2">
+                <IoSchoolOutline size={18} />
+                Academic
+              </span>
+              {academicOpen ? <FiChevronUp size={16} /> : <FiChevronDown size={16} />}
             </button>
 
             {academicOpen && (
-              <div className="ml-8 mt-1 space-y-1">
+              <div className="mt-2 ml-4 border-l border-gray-200 pl-3 space-y-1">
                 <SubItem to="/school/admin/academy/subject" label="Subject" />
                 <SubItem to="/school/admin/academy/all_classess" label="All Classes" />
               </div>
             )}
           </div>
 
-          <NavItem
-            to="/school/admin/vister_admission_list"
-            icon={<FaClipboardList size={20} />}
-            label="Vist Admission List"
-          />
-          <NavItem
-            to="/school/admin/ert-list"
-            icon={<FaUser size={20} />}
-            label="ERT List"
-          />
-          <NavItem
-            to="/school/admin/admission_from"
-            icon={<FaUserPlus size={20} />}
-            label="Students Admission"
-          />
-
-          <NavItem
-            to="/school/admin/all_users"
-            icon={<FaUserFriends size={20} />}
-            label="All STAFF"
-          />
-
-          <NavItem
-            to="/school/admin/all_student"
-            icon={<FaUserGraduate size={20} />}
-            label="All Students"
-          />
-
-          <NavItem
-            to="/school/admin/all_teacher"
-            icon={<FaUsers size={20} />}
-            label="All Teacher"
-          />
-          <NavItem
-            to="/school/admin/admin/setting"
-            icon={<IoSettings size={20} />}
-            label="Settings"
-          />
+          <NavItem to="/school/admin/vister_admission_list" icon={<FaClipboardList size={16} />} label="Visit Admission List" />
+          <NavItem to="/school/admin/ert-list" icon={<FaUser size={16} />} label="ERT List" />
+          <NavItem to="/school/admin/admission_from" icon={<FaUserPlus size={16} />} label="Students Admission" />
+          <NavItem to="/school/admin/all_users" icon={<FaUserFriends size={16} />} label="All Staff" />
+          <NavItem to="/school/admin/all_student" icon={<FaUserGraduate size={16} />} label="All Students" />
+          <NavItem to="/school/admin/all_teacher" icon={<FaUsers size={16} />} label="All Teacher" />
+          <NavItem to="/school/admin/notice-board" icon={<FaFile size={16} />} label="Notice Board" />
+          <NavItem to="/school/admin/admin/setting" icon={<IoSettings size={18} />} label="Settings" />
         </nav>
       </aside>
     </>
