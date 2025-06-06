@@ -1,9 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
+import AddEventModal from "../../Admin/components/AddEventModal";
 
 export default function ScheduleCard() {
+  const [showModal, setShowModal] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
   const today = new Date();
+  const [events, setEvents] = useState([])
+
+  const getEvents = async () => {
+    try {
+      const { data } = await axios.get(`http://localhost:8000/api/v8/event/all`)
+      setEvents(data)
+    } catch (error) {
+      console.error("Failed to fetch events:", error)
+    }
+  }
+
+  useEffect(() => {
+    getEvents()
+  }, [])
+
+  const formatTime = (timeStr) => {
+    return new Date(`1970-01-01T${timeStr}`).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    })
+  }
+
+  const formatDate = (dateStr) => {
+    return new Date(dateStr).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    })
+  }
 
   const getMonthDays = (year, month) => {
     const firstDay = new Date(year, month, 1).getDay();
@@ -38,9 +71,9 @@ export default function ScheduleCard() {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold">Schedules</h2>
-        <a href="#" className="text-blue-600 text-sm hover:underline font-medium">
+        <button onClick={() => setShowModal(true)} className="text-blue-600 cursor-pointer text-sm hover:underline font-medium">
           + Add New
-        </a>
+        </button>
       </div>
 
       {/* Calendar */}
@@ -94,32 +127,28 @@ export default function ScheduleCard() {
 
       {/* Events */}
       <h3 className="font-semibold text-gray-800 text-base mb-3"> Upcoming Events</h3>
-      <div className="h-[53vh] overflow-y-scroll">
-
-        {/* Event 1 */}
-        <div className="border-l-2 border-red-500 shadow-md p-3 mb-4 ">
-          <div className="flex justify-between text-sm text-gray-800 font-medium mb-2">
-            <span>Vacation Meeting</span>
-            <span className="text-xs text-gray-500">07 Jul 2024</span>
-          </div>
-          <hr className="border-gray-300 py-1.5" />
-          <div className="text-xs text-gray-500 flex items-center gap-1">
-            <span></span> 09:10 AM – 10:50 PM
-          </div>
-        </div>
-
-        {/* Event 2 */}
-        <div className="border-l-2 border-blue-500 shadow-md p-3 ">
-          <div className="flex justify-between text-sm text-gray-800 font-medium mb-2">
-            <span>Parents Teacher Meet</span>
-            <span className="text-xs text-gray-500">15 Jul 2024</span>
-          </div>
-          <hr className="border-gray-300 py-1.5" />
-          <div className="text-xs text-gray-500 flex items-center gap-1">
-            <span></span> 09:10 AM – 10:50 PM
-          </div>
-        </div>
+      <div className="h-[100%] overflow-y-auto pr-1">
+        {events && events.length > 0 ? (
+          events.map((e, i) => (
+            <div key={i} className="border-l-2 border-blue-500 shadow-md p-3 mb-4 bg-white rounded-md">
+              <div className="flex justify-between text-sm font-semibold text-blue-900 mb-2">
+                <span>{e?.title}</span>
+                <span className="text-xs text-gray-500">{formatDate(e?.startDate)}</span>
+              </div>
+              <hr className="border-gray-300 my-1" />
+              <div className="text-xs text-gray-600 flex items-center gap-1">
+                {formatTime(e?.startTime)} – {formatTime(e?.endTime)}
+              </div>
+              <div className="text-xs text-gray-500 mt-1 italic">
+                {e?.category} | {e?.audience}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-sm text-gray-500 text-center mt-10">No upcoming events.</div>
+        )}
       </div>
+      {showModal && <AddEventModal onClose={() => setShowModal(false)} />}
     </div>
   );
 }

@@ -1,25 +1,18 @@
-import express from "express"
-import { 
-    addLeaveController,
-    getEmployeesLeaves,
-    getLeavesController,
-    leaveDetailController
+import express from "express";
+import { applyLeave, deleteLeave, getAllLeaves, updateLeaveStatus } from "../controllers/leaveController.js";
 
-} from "../controllers/leaveController.js"
-import {isSignIn} from "../middlewares/authMiddeware.js"
+const router = express.Router();
 
-const router = express.Router()
-// Leave routes
-// post API
-// http://localhost:8000/api/v2/employees/leave/add
-router.post("/add", isSignIn,addLeaveController)
-// http://localhost:8000/api/v2/employees/leave/all-leaves
-router.get("/all-leaves/:_id", getLeavesController)
-// http://localhost:8000/api/v2/employees/leave/emp-leaves
-router.get("/emp-leaves",getEmployeesLeaves)
-// http://localhost:8000/api/v2/employees/leave/detail/
-router.get("/detail/:_id",leaveDetailController);
+// Authenticated users
+// /api/v2/employees/leave/apply
+router.post("/apply", applyLeave);
+router.get("/", getAllLeaves);
 
+// Admin
+router.get("/all", getAllLeaves);
 
+router.put("/status/:id", updateLeaveStatus);
+// /api/v2/employees/leave/apply/delete/
+router.delete("/delete/:id", deleteLeave);
 
-export default router
+export default router;

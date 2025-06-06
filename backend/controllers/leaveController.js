@@ -1,81 +1,95 @@
-
-import employeeModel from "../models/employeeModel.js"
-import leaveModel from "../models/leaveModel.js"
+import LeaveApplication from "../models/LeaveApplication.js";
 
 
-export const addLeaveController = async (req, res) => {
-    try {
-        const { userId, leaveType, startDate, endDate, reason } = req.body
-        // console.log(req.body)
-        const leave = new leaveModel({
-            employeeId: userId, leaveType,startDate, endDate, reason
-        })
-
-        const newLeave = await leave.save()
-        // console.log(newLeave)
-        res.status(201).json({
-            success: true,
-            newLeave
-        })
-
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Error while applying leave...",
-            error
-        })
+// ⛳ Submit new leave request
+export const applyLeave = async (req, res) => {
+  try {
+    const { reason, fromDate, toDate ,userId} = req.body;
+    // Assume user is authenticated
+console.log(userId)
+    if (!reason || !fromDate || !toDate) {
+      return res.status(400).json({ message: "All fields are required" });
     }
-}
 
-export const getLeavesController = async (req, res) => {
-    try {
-        const employee = await employeeModel.findOne({ userId: req.params._id })
-        console.log(employee)
-        const leaves = await leaveModel.find({ employeeId: employee.userId })
-        return res.status(200).json({
-            success: true,
-            leaves
-        })
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Error while getting leaves...",
-            error
-        })
+    const leave = new LeaveApplication({
+      reason,
+      fromDate,
+      toDate,
+      userId,
+    });
+
+    await leave.save();
+    res.status(201).json({ message: "Leave application submitted", leave });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// 📄 Get all leaves (admin)
+export const getAllLeaves = async (req, res) => {
+  try {
+    const leaves = await LeaveApplication.find().populate("userId");
+    res.status(200).json(leaves);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+export const getAllLeavesforAdmin = async (req, res) => {
+  try {
+    const leaves = await LeaveApplication.find().populate("userId", "name email");
+    res.status(200).json(leaves);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// 👤 Get my leave applications
+export const getAllLeave = async (req, res) => {
+  try {
+    console.log("Ok ")
+    const leaves = await LeaveApplication.find()
+    console.log(leaves)
+    res.status(200).json(leaves);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// ✅ Update status: Approve or Reject
+export const updateLeaveStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!["Approved", "Rejected"].includes(status)) {
+      return res.status(400).json({ message: "Invalid status" });
     }
-}
 
-export const getEmployeesLeaves = async (req, res) => {
-    try {
-        
-        const leaves = await leaveModel.find()
-        .populate("employeeId","-password")
-       
-        return res.status(200).json({
-            success: true,
-            leaves
-        })
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "error whille getting all leaves.."
-        })
-    }
-}
+    const leave = await LeaveApplication.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
 
-export const leaveDetailController= async (req,res)=>{
-   try {
-        const leave = await leaveModel.findOne({_id:req?.params?._id})
-        .populate("employeeId","-password")
-        return res.status(200).json({
-            success:true, 
-            leave
-        })
-   } catch (error) {
-    res.status(500).json({
-        success:false,
-        message:"Error while in leave detial... ",
-        error
-    })
-   }
-} 
+    if (!leave) return res.status(404).json({ message: "Leave not found" });
+
+    res.status(200).json({ message: "Status updated", leave });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// ❌ Delete leave
+export const deleteLeave = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const leave = await LeaveApplication.findByIdAndDelete(id);
+
+    if (!leave) return res.status(404).json({ message: "Leave not found" });
+
+    res.status(200).json({ message: "Leave deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};

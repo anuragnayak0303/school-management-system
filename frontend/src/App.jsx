@@ -36,6 +36,9 @@ import EditTeacher from "./Admin/EditTeacher";
 import CreateStaff from "./Admin/CreateStaff";
 import AllUsers from "./Admin/AllUsers";
 import NoticeBoard from "./Admin/NoticeBoard";
+import TimeTable from "./Admin/TimeTable";
+import LeaveApplication from "./Teacher/LeaveApplication";
+import LeavRequesr from "./Admin/LeaveRequest";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -63,12 +66,15 @@ function App() {
             <Route path="vister_admission_list" element={<VisterAdmission />} />
             <Route path="ert-list" element={<ERTlist />} />
             <Route path="admission_from" element={<StudentAdmissionList />} />
+            <Route path="time-table" element={<TimeTable />} />
+
             <Route path="all_student" element={<AllStudent />} />
             <Route path="all_teacher" element={<AllTeacherList />} />
             <Route path="add_teacher" element={<AddTeacher />} />
             <Route path="edit_teacher/:id" element={<EditTeacher />} />
             <Route path="view_teacher/:id" element={<ViewTeacher />} />
             <Route path="all_users" element={<AllUsers/>} />
+            <Route path="leave-requser" element={<LeavRequesr/>} />
             <Route path="create_staff" element={<CreateStaff/>} />
             <Route path="notice-board" element={<NoticeBoard/>} />
             <Route path="admin/setting" element={<Setting />}>
@@ -87,6 +93,8 @@ function App() {
             <Route path="dashboard" element={<TeacheDashbaord />} />
             <Route path="student_attendance" element={<StudentAttendenc />} />
             <Route path="view_details" element={<ViewDetails />} />
+            <Route path="notice-board" element={<NoticeBoard/>} />
+            <Route path="leave_application" element={<LeaveApplication/>} />
             <Route path="setting" element={<Setting />}>
               <Route index element={<Navigate to="profile" />} />
               <Route path="profile" element={<ProfileSettings />} />

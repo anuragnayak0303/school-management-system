@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 
-const SubjectTable = ({
-  subjects,
-  handleEdit,
-  handleDelete,
-}) => {
+const GroupedSubjectCards = ({ subjects, handleEdit, handleDelete }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const subjectsPerPage = 20;
+  const classesPerPage = 6;
 
-  const totalPages = Math.ceil(subjects.length / subjectsPerPage);
+  // Group subjects by classId
+  const grouped = subjects.reduce((acc, subj) => {
+    const className = subj.classId?.Classname || "Unknown Class";
+    if (!acc[className]) acc[className] = [];
+    acc[className].push(subj);
+    return acc;
+  }, {});
 
-  const paginatedSubjects = subjects.slice(
-    (currentPage - 1) * subjectsPerPage,
-    currentPage * subjectsPerPage
+  const classGroups = Object.entries(grouped); // [ [className, subjects[]], ... ]
+  const totalPages = Math.ceil(classGroups.length / classesPerPage);
+
+  const paginatedGroups = classGroups.slice(
+    (currentPage - 1) * classesPerPage,
+    currentPage * classesPerPage
   );
 
   const handlePrev = () => {
@@ -24,27 +29,31 @@ const SubjectTable = ({
   };
 
   return (
-    <div className="bg-white shadow-md rounded-xl p-4">
-      <div className="overflow-x-auto">
-        <table className="min-w-full text-sm text-left text-gray-700 border-separate border-spacing-y-1">
-          <thead className="bg-blue-50 text-xs text-blue-800 uppercase font-semibold">
-            <tr>
-              <th className="px-4 py-3">Subject Name</th>
-              <th className="px-4 py-3">Code</th>
-              <th className="px-4 py-3">Type</th>
-              <th className="px-4 py-3">Class</th>
-              <th className="px-4 py-3 text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedSubjects.map((subj, index) => (
-              <tr key={subj._id} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                <td className="px-4 py-2 font-medium text-gray-800 capitalize">{subj.subjectName}</td>
-                <td className="px-4 py-2 font-bold">{subj.subjectCode || "—"}</td>
-                <td className="px-4 py-2">{subj.subjectType}</td>
-                <td className="px-4 py-2 uppercase text-xs font-bold text-green-600">{subj.classId?.Classname || "N/A"}</td>
-                <td className="px-4 py-2 text-center">
-                  <div className="flex justify-center gap-2">
+    <div className="p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
+        {paginatedGroups.map(([className, subjects]) => (
+          <div key={className} className="bg-white shadow-md rounded-xl p-4">
+            {/* Class Header */}
+            <h2 className="text-green-700 uppercase font-bold text-lg mb-3 border-b pb-1">
+              {className}
+            </h2>
+
+            {/* Subjects List */}
+            <ul className="space-y-2">
+              {subjects.map((subj) => (
+                <li
+                  key={subj._id}
+                  className="flex justify-between items-start bg-gray-50 rounded p-2"
+                >
+                  <div>
+                    <div className="text-gray-800 font-semibold capitalize">
+                      {subj.subjectName}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      Code: {subj.subjectCode || "—"} | Type: {subj.subjectType}
+                    </div>
+                  </div>
+                  <div className="flex gap-2 mt-1">
                     <button
                       onClick={() => handleEdit(subj)}
                       className="text-blue-600 hover:text-blue-800"
@@ -58,16 +67,16 @@ const SubjectTable = ({
                       🗑️
                     </button>
                   </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="flex justify-between items-center mt-4 px-2">
+        <div className="flex justify-between items-center mt-6 px-2">
           <button
             onClick={handlePrev}
             disabled={currentPage === 1}
@@ -91,4 +100,4 @@ const SubjectTable = ({
   );
 };
 
-export default SubjectTable;
+export default GroupedSubjectCards;

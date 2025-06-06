@@ -15,6 +15,7 @@ import {
   FaUserGraduate,
   FaUsers,
   FaFile,
+  FaLevelDownAlt,
 } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LoadingContext } from "../context/LoadingProvider ";
@@ -150,6 +151,7 @@ const Sidebar = () => {
           <NavItem to="/school/admin/all_users" icon={<FaUserFriends size={16} />} label="All Staff" />
           <NavItem to="/school/admin/all_student" icon={<FaUserGraduate size={16} />} label="All Students" />
           <NavItem to="/school/admin/all_teacher" icon={<FaUsers size={16} />} label="All Teacher" />
+          <NavItem to="/school/admin/leave-requser" icon={<FaLevelDownAlt size={16} />} label="Leave Request" />
           <NavItem to="/school/admin/notice-board" icon={<FaFile size={16} />} label="Notice Board" />
           <NavItem to="/school/admin/admin/setting" icon={<IoSettings size={18} />} label="Settings" />
         </nav>

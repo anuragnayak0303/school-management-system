@@ -9,6 +9,9 @@ import axios from 'axios';
 import AddEventModal from './components/AddEventModal';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { useLocation } from 'react-router-dom';
+import TeacherDashboard from '../Teacher/TeacherDashbaord';
+import TeacherSidebar from '../Teacher/TeacherSideBar';
 
 export default function NoticeBoard() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -17,7 +20,7 @@ export default function NoticeBoard() {
   const [events, setEvents] = useState([]);
   const [visibleCount, setVisibleCount] = useState(10);
   const [selectedNotices, setSelectedNotices] = useState([]);
-
+  const location = useLocation()
   const getEvents = async () => {
     try {
       const { data } = await axios.get(`http://localhost:8000/api/v8/event/all`);
@@ -60,7 +63,9 @@ export default function NoticeBoard() {
 
   return (
     <div className="flex">
-      <Sidebar />
+      {
+        location.pathname.startsWith('/school/teacher/') ? <TeacherSidebar/> : <Sidebar />
+      }
       <div className="ml-0 md:ml-64 w-full min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
         <MainHeader />
         <div className="p-4 sm:p-6">
@@ -125,7 +130,7 @@ export default function NoticeBoard() {
 
                 {hoveredIndex === index && (
                   <div className="flex items-center space-x-3">
-                    <div onClick={()=>setShowEditModal()} className="w-6 h-6 flex justify-center items-center rounded border border-gray-300 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer">
+                    <div onClick={() => setShowEditModal()} className="w-6 h-6 flex justify-center items-center rounded border border-gray-300 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer">
                       <FiEdit />
                     </div>
                     <div className="w-6 h-6 flex justify-center items-center rounded border border-gray-300 text-red-600 hover:bg-red-600 hover:text-white transition-colors cursor-pointer">

@@ -6,20 +6,34 @@ import {
   IoMenu,
   IoClose,
 } from "react-icons/io5";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import {
+  FiChevronDown,
+  FiChevronUp,
+} from "react-icons/fi";
+import {
+  FaBookReader,
+  FaClipboardList,
+  FaUser,
+  FaUsers,
+  FaChalkboardTeacher,
+  FaCalendarAlt,
+  FaBullhorn,
+  FaRegFileAlt,
+  FaLock,
+} from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaBookReader, FaClipboardList, FaUser, FaUsers } from "react-icons/fa";
-import { LoadingContext } from "../context/LoadingProvider ";
-
+import { LoadingContext } from "../context/LoadingProvider "
 
 const TeacherSidebar = () => {
   const [academicOpen, setAcademicOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [studentOpen, setStudentOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
   const { setLoading } = useContext(LoadingContext);
 
-  // All paths under Academic to auto-expand the dropdown
   const academicPaths = [
     "/school/teacher/academy/course",
     "/school/teacher/academy/subject",
@@ -35,20 +49,18 @@ const TeacherSidebar = () => {
     }
   }, [location.pathname]);
 
-  // Navigation handler with loading animation for /school/teacher/ routes
   const handleNavigation = (path) => {
     if (path.startsWith("/school/teacher/")) {
       setLoading(true);
       setTimeout(() => {
         navigate(path);
         setLoading(false);
-      },2000); // Simulate 700ms loading
+      }, 700);
     } else {
       navigate(path);
     }
   };
 
-  // Top-level navigation item
   const NavItem = ({ to, icon, label }) => (
     <button
       onClick={() => handleNavigation(to)}
@@ -62,11 +74,10 @@ const TeacherSidebar = () => {
     </button>
   );
 
-  // Sub-item for dropdown
   const SubItem = ({ to, label }) => (
     <button
       onClick={() => handleNavigation(to)}
-      className={`block w-full text-left pl-3 py-2 text-sm rounded ${
+      className={`block w-full text-left pl-6 py-2 text-sm rounded ${
         location.pathname === to
           ? "text-orange-600 font-medium bg-gray-200"
           : "text-gray-600 hover:text-blue-600 hover:bg-gray-100"
@@ -78,7 +89,7 @@ const TeacherSidebar = () => {
 
   return (
     <>
-      {/* Mobile toggle button */}
+      {/* Mobile toggle */}
       <button
         className="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded shadow-md"
         onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -93,7 +104,7 @@ const TeacherSidebar = () => {
         } md:translate-x-0 transition-transform duration-300 fixed top-0 left-0 z-40 w-64 h-screen bg-white shadow-lg border-r px-4 border-r-gray-200 overflow-y-auto`}
       >
         <div className="flex items-center gap-3 p-4">
-          <span className="text-lg font-bold">Schooling</span>
+          <span className="text-lg font-bold">ULATer School</span>
         </div>
 
         <nav className="py-4 text-sm space-y-1">
@@ -102,16 +113,94 @@ const TeacherSidebar = () => {
             icon={<IoHomeOutline size={20} />}
             label="Dashboard"
           />
+
           <NavItem
             to="/school/teacher/student_attendance"
             icon={<FaBookReader size={20} />}
-            label="Student Attendash"
+            label="Student Attendance"
           />
+
+          {/* Academic Dropdown */}
+          <button
+            onClick={() => setAcademicOpen(!academicOpen)}
+            className="w-full flex items-center justify-between px-4 py-2 rounded hover:bg-gray-100 text-gray-700"
+          >
+            <div className="flex items-center gap-3">
+              <IoSchoolOutline size={20} /> Academic
+            </div>
+            {academicOpen ? <FiChevronUp /> : <FiChevronDown />}
+          </button>
+          {academicOpen && (
+            <div className="ml-2 space-y-1">
+              <SubItem to="/school/teacher/academy/all_classess" label="All Classes" />
+              <SubItem to="/school/teacher/academy/subject" label="Subjects" />
+              <SubItem to="/school/teacher/academy/schedule" label="Class Schedule" />
+              <SubItem to="/school/teacher/academy/exam" label="Exam Management" />
+              <SubItem to="/school/teacher/academy/result-rule" label="Result Rules" />
+              <SubItem to="/school/teacher/academy/course" label="Courses" />
+            </div>
+          )}
+
+          {/* Student Management Dropdown */}
+          <button
+            onClick={() => setStudentOpen(!studentOpen)}
+            className="w-full flex items-center justify-between px-4 py-2 rounded hover:bg-gray-100 text-gray-700"
+          >
+            <div className="flex items-center gap-3">
+              <FaUsers size={20} /> Student Management
+            </div>
+            {studentOpen ? <FiChevronUp /> : <FiChevronDown />}
+          </button>
+          {studentOpen && (
+            <div className="ml-2 space-y-1">
+              <SubItem to="/school/teacher/students" label="All Students" />
+              <SubItem to="/school/teacher/assignments" label="Assignments" />
+              <SubItem to="/school/teacher/grades" label="Gradebook" />
+            </div>
+          )}
+
+          {/* Other Navigation */}
+          <NavItem
+            to="/school/teacher/notice-board"
+            icon={<FaBullhorn size={20} />}
+            label="Notice Board"
+          />
+
+          <NavItem
+            to="/school/teacher/my_timetable"
+            icon={<FaCalendarAlt size={20} />}
+            label="My Timetable"
+          />
+
+          <NavItem
+            to="/school/teacher/leave_application"
+            icon={<FaRegFileAlt size={20} />}
+            label="Leave Application"
+          />
+
           <NavItem
             to="/school/teacher/view_details"
-            icon={<IoHomeOutline size={20} />}
+            icon={<FaChalkboardTeacher size={20} />}
             label="Teacher Details"
           />
+
+          {/* Profile/Settings Dropdown */}
+          <button
+            onClick={() => setProfileOpen(!profileOpen)}
+            className="w-full flex items-center justify-between px-4 py-2 rounded hover:bg-gray-100 text-gray-700"
+          >
+            <div className="flex items-center gap-3">
+              <FaUser size={20} /> Profile
+            </div>
+            {profileOpen ? <FiChevronUp /> : <FiChevronDown />}
+          </button>
+          {profileOpen && (
+            <div className="ml-2 space-y-1">
+              <SubItem to="/school/teacher/profile" label="My Profile" />
+              <SubItem to="/school/teacher/change_password" label="Change Password" />
+            </div>
+          )}
+
           <NavItem
             to="/school/teacher/setting"
             icon={<IoSettings size={20} />}

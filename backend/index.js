@@ -40,7 +40,7 @@ app.use("/api/v2/user/", userRoutes);                 // User routes
 app.use("/api/v2/class/", ClassRoutes);              // Class routes
 app.use("/api/v2/employees/", employeeRoutes);       // Employee routes
 app.use("/api/v2/employees/salary/", salaryRoutes);  // Salary routes
-app.use("/api/v2/employees/leave/", leaveRoutes);    // Leave routes
+app.use("/api/v2/employees/leave", leaveRoutes);    // Leave routes
 app.use("/api/v2/admission", Admissionrouter);       // Admission routes
 app.use("/api/v2/subject", subjectRoutes);           // Subject routes
 app.use("/api/teachers", teacherRoutes);             // Teacher routes
