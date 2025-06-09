@@ -16,10 +16,10 @@ import {
   FaUsers,
   FaFile,
   FaLevelDownAlt,
+  FaChalkboardTeacher,
 } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LoadingContext } from "../context/LoadingProvider ";
-// adjust path if needed
 
 const Sidebar = () => {
   const [academicOpen, setAcademicOpen] = useState(false);
@@ -96,7 +96,7 @@ const Sidebar = () => {
       <aside
         className={`fixed top-0 left-0 z-40 h-screen w-64 bg-white shadow-xl border-r border-gray-200 transform 
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
-        md:translate-x-0 transition-transform duration-300`}
+        md:translate-x-0 transition-transform duration-300 overflow-y-auto`}
       >
         {/* Logo Header */}
         <div className="flex items-center gap-3 p-5 border-b border-gray-100">
@@ -106,7 +106,7 @@ const Sidebar = () => {
           <span className="text-xl font-bold text-gray-800">Schooling</span>
         </div>
 
-        {/* User Welcome (Optional Avatar Area) */}
+        {/* User Welcome */}
         <div className="px-4 pt-4 pb-2 border-b border-gray-100">
           <div className="flex items-center gap-3">
             <div className="bg-blue-600 text-white w-9 h-9 flex justify-center items-center rounded-full uppercase font-semibold">
@@ -120,11 +120,17 @@ const Sidebar = () => {
         </div>
 
         {/* Navigation */}
-        <nav className="py-4 space-y-1 text-sm font-medium">
-          <NavItem to="/school/admin/dashboard" icon={<IoHomeOutline size={18} />} label="Dashboard" />
+        <nav className="py-4 space-y-6 text-sm font-medium">
 
-          {/* Academic */}
-          <div className="px-2">
+          {/* Section: Dashboard */}
+          <div className="px-4">
+            <p className="text-xs text-gray-500 uppercase mb-2">Dashboard</p>
+            <NavItem to="/school/admin/dashboard" icon={<IoHomeOutline size={18} />} label="Home" />
+          </div>
+
+          {/* Section: Academics */}
+          <div className="px-4">
+            <p className="text-xs text-gray-500 uppercase mb-2">Academics</p>
             <button
               onClick={() => setAcademicOpen(!academicOpen)}
               className={`w-full flex items-center justify-between px-2 py-2 rounded-lg transition 
@@ -136,7 +142,6 @@ const Sidebar = () => {
               </span>
               {academicOpen ? <FiChevronUp size={16} /> : <FiChevronDown size={16} />}
             </button>
-
             {academicOpen && (
               <div className="mt-2 ml-4 border-l border-gray-200 pl-3 space-y-1">
                 <SubItem to="/school/admin/academy/subject" label="Subject" />
@@ -145,15 +150,41 @@ const Sidebar = () => {
             )}
           </div>
 
-          <NavItem to="/school/admin/vister_admission_list" icon={<FaClipboardList size={16} />} label="Visit Admission List" />
-          <NavItem to="/school/admin/ert-list" icon={<FaUser size={16} />} label="ERT List" />
-          <NavItem to="/school/admin/admission_from" icon={<FaUserPlus size={16} />} label="Students Admission" />
-          <NavItem to="/school/admin/all_users" icon={<FaUserFriends size={16} />} label="All Staff" />
-          <NavItem to="/school/admin/all_student" icon={<FaUserGraduate size={16} />} label="All Students" />
-          <NavItem to="/school/admin/all_teacher" icon={<FaUsers size={16} />} label="All Teacher" />
-          <NavItem to="/school/admin/leave-requser" icon={<FaLevelDownAlt size={16} />} label="Leave Request" />
-          <NavItem to="/school/admin/notice-board" icon={<FaFile size={16} />} label="Notice Board" />
-          <NavItem to="/school/admin/admin/setting" icon={<IoSettings size={18} />} label="Settings" />
+          {/* Section: User Registration */}
+          <div className="px-4">
+            <p className="text-xs text-gray-500 uppercase mb-2">User Registration</p>
+            <NavItem to="/school/admin/admission_from" icon={<FaUserPlus size={16} />} label="Add Student" />
+            <NavItem to="/school/admin/add_teacher" icon={<FaChalkboardTeacher size={16} />} label="Add Teacher" />
+            <NavItem to="/school/admin/create_staff" icon={<FaUserFriends size={16} />} label="Add Staff" />
+          </div>
+
+          {/* Section: User Directory */}
+          <div className="px-4">
+            <p className="text-xs text-gray-500 uppercase mb-2">User Directory</p>
+            <NavItem to="/school/admin/all_student" icon={<FaUserGraduate size={16} />} label="All Students" />
+            <NavItem to="/school/admin/all_teacher" icon={<FaUsers size={16} />} label="All Teachers" />
+            <NavItem to="/school/admin/all_users" icon={<FaUserFriends size={16} />} label="All Staff" />
+          </div>
+
+          {/* Section: ERT & Visitor */}
+          <div className="px-4">
+            <p className="text-xs text-gray-500 uppercase mb-2">ERT & Visitor</p>
+            <NavItem to="/school/admin/vister_admission_list" icon={<FaClipboardList size={16} />} label="Visitor List" />
+            <NavItem to="/school/admin/ert-list" icon={<FaUser size={16} />} label="ERT List" />
+          </div>
+
+          {/* Section: Management */}
+          <div className="px-4">
+            <p className="text-xs text-gray-500 uppercase mb-2">Management</p>
+            <NavItem to="/school/admin/leave-requser" icon={<FaLevelDownAlt size={16} />} label="Leave Request" />
+            <NavItem to="/school/admin/notice-board" icon={<FaFile size={16} />} label="Notice Board" />
+          </div>
+
+          {/* Section: System */}
+          <div className="px-4 mb-6">
+            <p className="text-xs text-gray-500 uppercase mb-2">System</p>
+            <NavItem to="/school/admin/admin/setting" icon={<IoSettings size={18} />} label="Settings" />
+          </div>
         </nav>
       </aside>
     </>

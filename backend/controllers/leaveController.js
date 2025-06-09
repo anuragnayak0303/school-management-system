@@ -4,9 +4,9 @@ import LeaveApplication from "../models/LeaveApplication.js";
 // ⛳ Submit new leave request
 export const applyLeave = async (req, res) => {
   try {
-    const { reason, fromDate, toDate ,userId} = req.body;
+    const { reason, fromDate, toDate, userId } = req.body;
     // Assume user is authenticated
-console.log(userId)
+    console.log(userId)
     if (!reason || !fromDate || !toDate) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -28,13 +28,22 @@ console.log(userId)
 // 📄 Get all leaves (admin)
 export const getAllLeaves = async (req, res) => {
   try {
-    const leaves = await LeaveApplication.find().populate("userId");
+    const leaves = await LeaveApplication.find()
+      .populate({
+        path: 'userId',
+        populate: {
+          path: 'userId', // Nested field inside user
+          model: 'User'   // Or replace with correct model name like 'Department' or 'Role'
+        }
+      });
+
     res.status(200).json(leaves);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
 export const getAllLeavesforAdmin = async (req, res) => {
   try {
     const leaves = await LeaveApplication.find().populate("userId", "name email");
@@ -48,7 +57,7 @@ export const getAllLeavesforAdmin = async (req, res) => {
 export const getAllLeave = async (req, res) => {
   try {
     console.log("Ok ")
-    const leaves = await LeaveApplication.find()
+    const leaves = await LeaveApplication.find({userId:req.params.id})
     console.log(leaves)
     res.status(200).json(leaves);
   } catch (error) {

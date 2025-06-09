@@ -41,7 +41,7 @@ export const addEvent = async (req, res) => {
 
 export const getAllEvents = async (req, res) => {
   try {
-    const events = await EventModel.find().sort({ createdAt: -1 });
+    const events = await (await EventModel.find()).reverse()
     res.status(200).json(events);
   } catch (err) {
     console.error("❌ Error fetching events:", err);

@@ -6,10 +6,10 @@ const router = express.Router();
 // Authenticated users
 // /api/v2/employees/leave/apply
 router.post("/apply", applyLeave);
-router.get("/", getAllLeaves);
+router.get("/all", getAllLeaves);
 
 // Admin
-router.get("/all", getAllLeaves);
+router.get("/my/:id", getAllLeaves);
 
 router.put("/status/:id", updateLeaveStatus);
 // /api/v2/employees/leave/apply/delete/

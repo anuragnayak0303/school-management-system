@@ -22,7 +22,7 @@ const leaveApplicationSchema = new mongoose.Schema(
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // or "teacher" depending on your user model
+      ref: "TeacherDetail", // or "teacher" depending on your user model
       required: true,
     },
   },

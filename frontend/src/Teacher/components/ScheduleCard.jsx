@@ -7,51 +7,47 @@ export default function ScheduleCard() {
   const [showModal, setShowModal] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
   const today = new Date();
-  const [events, setEvents] = useState([])
+  const [events, setEvents] = useState([]);
 
   const getEvents = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:8000/api/v8/event/all`)
-      setEvents(data)
+      const { data } = await axios.get("http://localhost:8000/api/v8/event/all");
+      setEvents(data);
     } catch (error) {
-      console.error("Failed to fetch events:", error)
+      console.error("Failed to fetch events:", error);
     }
-  }
+  };
 
   useEffect(() => {
-    getEvents()
-  }, [])
+    getEvents();
+  }, []);
 
-  const formatTime = (timeStr) => {
-    return new Date(`1970-01-01T${timeStr}`).toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
-    })
-  }
+  const formatTime = (timeStr) =>
+    new Date(`1970-01-01T${timeStr}`).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
 
-  const formatDate = (dateStr) => {
-    return new Date(dateStr).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    })
-  }
+  const formatDate = (dateStr) =>
+    new Date(dateStr).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
 
   const getMonthDays = (year, month) => {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const daysArray = [];
-
     for (let i = 0; i < firstDay; i++) daysArray.push(null);
     for (let i = 1; i <= daysInMonth; i++) daysArray.push(i);
-
     return daysArray;
   };
 
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    "July", "August", "September", "October", "November", "December",
   ];
 
   const changeMonth = (offset) => {
@@ -67,11 +63,14 @@ export default function ScheduleCard() {
   const calendarDays = getMonthDays(currentDate.getFullYear(), currentDate.getMonth());
 
   return (
-    <div className="w-full md:w-[30%] h-[102vh] bg-white rounded shadow-xl p-5 text-gray-800">
+    <div className="w-full md:w-[30%] bg-white rounded shadow-xl p-5 text-gray-800 flex flex-col">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold">Schedules</h2>
-        <button onClick={() => setShowModal(true)} className="text-blue-600 cursor-pointer text-sm hover:underline font-medium">
+        <button
+          onClick={() => setShowModal(true)}
+          className="text-blue-600 cursor-pointer text-sm hover:underline font-medium"
+        >
           + Add New
         </button>
       </div>
@@ -79,13 +78,19 @@ export default function ScheduleCard() {
       {/* Calendar */}
       <div className="mb-6">
         <div className="flex items-center justify-between text-sm font-medium text-gray-600 mb-3">
-          <button onClick={() => changeMonth(-1)} className="hover:text-blue-600 bg-amber-100 rounded-full p-1 shadow-gray-400 drop-shadow-sm active:shadow">
+          <button
+            onClick={() => changeMonth(-1)}
+            className="hover:text-blue-600 bg-amber-100 rounded-full p-1 shadow"
+          >
             <ChevronLeftIcon className="w-5 h-5" />
           </button>
           <span className="text-base font-semibold text-gray-800">
             {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
           </span>
-          <button onClick={() => changeMonth(1)} className="hover:text-blue-600 bg-amber-100 rounded-full p-1 shadow-gray-400 drop-shadow-sm active:shadow">
+          <button
+            onClick={() => changeMonth(1)}
+            className="hover:text-blue-600 bg-amber-100 rounded-full p-1 shadow"
+          >
             <ChevronRightIcon className="w-5 h-5" />
           </button>
         </div>
@@ -111,8 +116,9 @@ export default function ScheduleCard() {
               >
                 {day ? (
                   <div
-                    className={`w-7 h-7 flex items-center justify-center rounded-full hover:bg-blue-100 transition ${isToday ? "bg-blue-600 text-white font-semibold" : ""
-                      }`}
+                    className={`w-7 h-7 flex items-center justify-center rounded-full hover:bg-blue-100 transition ${
+                      isToday ? "bg-blue-600 text-white font-semibold" : ""
+                    }`}
                   >
                     {day}
                   </div>
@@ -126,11 +132,14 @@ export default function ScheduleCard() {
       </div>
 
       {/* Events */}
-      <h3 className="font-semibold text-gray-800 text-base mb-3"> Upcoming Events</h3>
-      <div className="h-[100%] overflow-y-auto pr-1">
+      <h3 className="font-semibold text-gray-800 text-base mb-3">Upcoming Events</h3>
+      <div className="overflow-y-auto max-h-[300px] pr-1">
         {events && events.length > 0 ? (
           events.map((e, i) => (
-            <div key={i} className="border-l-2 border-blue-500 shadow-md p-3 mb-4 bg-white rounded-md">
+            <div
+              key={i}
+              className="border-l-2 border-blue-500 shadow p-3 mb-4 bg-white rounded-md"
+            >
               <div className="flex justify-between text-sm font-semibold text-blue-900 mb-2">
                 <span>{e?.title}</span>
                 <span className="text-xs text-gray-500">{formatDate(e?.startDate)}</span>
@@ -145,9 +154,10 @@ export default function ScheduleCard() {
             </div>
           ))
         ) : (
-          <div className="text-sm text-gray-500 text-center mt-10">No upcoming events.</div>
+          <div className="text-sm text-gray-500 text-center mt-4">No upcoming events.</div>
         )}
       </div>
+
       {showModal && <AddEventModal onClose={() => setShowModal(false)} />}
     </div>
   );

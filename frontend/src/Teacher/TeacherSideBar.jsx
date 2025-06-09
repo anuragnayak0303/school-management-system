@@ -20,15 +20,21 @@ import {
   FaBullhorn,
   FaRegFileAlt,
   FaLock,
+  FaBook,
+  FaBus,
+  FaUserGraduate,
 } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
-import { LoadingContext } from "../context/LoadingProvider "
+import { LoadingContext } from "../context/LoadingProvider ";
 
 const TeacherSidebar = () => {
   const [academicOpen, setAcademicOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [studentOpen, setStudentOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [libraryOpen, setLibraryOpen] = useState(false);
+  const [transportOpen, setTransportOpen] = useState(false);
+  const [alumniOpen, setAlumniOpen] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -64,11 +70,10 @@ const TeacherSidebar = () => {
   const NavItem = ({ to, icon, label }) => (
     <button
       onClick={() => handleNavigation(to)}
-      className={`w-full text-left flex items-center gap-3 px-4 py-2 rounded transition-all ${
-        location.pathname === to
+      className={`w-full text-left flex items-center gap-3 px-4 py-2 rounded transition-all ${location.pathname === to
           ? "bg-gray-200 text-blue-600"
           : "text-gray-700 hover:bg-gray-100"
-      }`}
+        }`}
     >
       {icon} {label}
     </button>
@@ -77,11 +82,10 @@ const TeacherSidebar = () => {
   const SubItem = ({ to, label }) => (
     <button
       onClick={() => handleNavigation(to)}
-      className={`block w-full text-left pl-6 py-2 text-sm rounded ${
-        location.pathname === to
+      className={`block w-full text-left pl-6 py-2 text-sm rounded ${location.pathname === to
           ? "text-orange-600 font-medium bg-gray-200"
           : "text-gray-600 hover:text-blue-600 hover:bg-gray-100"
-      }`}
+        }`}
     >
       {label}
     </button>
@@ -99,9 +103,8 @@ const TeacherSidebar = () => {
 
       {/* Sidebar */}
       <aside
-        className={`${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 transition-transform duration-300 fixed top-0 left-0 z-40 w-64 h-screen bg-white shadow-lg border-r px-4 border-r-gray-200 overflow-y-auto`}
+        className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 transition-transform duration-300 fixed top-0 left-0 z-40 w-64 h-screen bg-white shadow-lg border-r px-4 border-r-gray-200 overflow-y-auto`}
       >
         <div className="flex items-center gap-3 p-4">
           <span className="text-lg font-bold">ULATer School</span>
@@ -132,12 +135,12 @@ const TeacherSidebar = () => {
           </button>
           {academicOpen && (
             <div className="ml-2 space-y-1">
-              <SubItem to="/school/teacher/academy/all_classess" label="All Classes" />
-              <SubItem to="/school/teacher/academy/subject" label="Subjects" />
-              <SubItem to="/school/teacher/academy/schedule" label="Class Schedule" />
+              {/* <SubItem to="/school/teacher/academy/all_classess" label="All Classes" /> */}
+              <SubItem to="/school/teacher/Syllabus" label="Syllabus" />
+              {/* <SubItem to="/school/teacher/academy/schedule" label="Class Schedule" />
               <SubItem to="/school/teacher/academy/exam" label="Exam Management" />
               <SubItem to="/school/teacher/academy/result-rule" label="Result Rules" />
-              <SubItem to="/school/teacher/academy/course" label="Courses" />
+              <SubItem to="/school/teacher/academy/course" label="Courses" /> */}
             </div>
           )}
 
@@ -158,6 +161,57 @@ const TeacherSidebar = () => {
               <SubItem to="/school/teacher/grades" label="Gradebook" />
             </div>
           )}
+
+          {/* Library Section */}
+          {/* <button
+            onClick={() => setLibraryOpen(!libraryOpen)}
+            className="w-full flex items-center justify-between px-4 py-2 rounded hover:bg-gray-100 text-gray-700"
+          >
+            <div className="flex items-center gap-3">
+              <FaBook size={20} /> Library
+            </div>
+            {libraryOpen ? <FiChevronUp /> : <FiChevronDown />}
+          </button>
+          {libraryOpen && (
+            <div className="ml-2 space-y-1">
+              <SubItem to="/school/teacher/library/books" label="Books" />
+              <SubItem to="/school/teacher/library/issues" label="Issue History" />
+            </div>
+          )} */}
+
+          {/* Transport Section */}
+          {/* <button
+            onClick={() => setTransportOpen(!transportOpen)}
+            className="w-full flex items-center justify-between px-4 py-2 rounded hover:bg-gray-100 text-gray-700"
+          >
+            <div className="flex items-center gap-3">
+              <FaBus size={20} /> Transport
+            </div>
+            {transportOpen ? <FiChevronUp /> : <FiChevronDown />}
+          </button>
+          {transportOpen && (
+            <div className="ml-2 space-y-1">
+              <SubItem to="/school/teacher/transport/routes" label="Routes" />
+              <SubItem to="/school/teacher/transport/buses" label="Bus Details" />
+            </div>
+          )} */}
+
+          {/* Alumni Section */}
+          {/* <button
+            onClick={() => setAlumniOpen(!alumniOpen)}
+            className="w-full flex items-center justify-between px-4 py-2 rounded hover:bg-gray-100 text-gray-700"
+          >
+            <div className="flex items-center gap-3">
+              <FaUserGraduate size={20} /> Alumni
+            </div>
+            {alumniOpen ? <FiChevronUp /> : <FiChevronDown />}
+          </button>
+          {alumniOpen && (
+            <div className="ml-2 space-y-1">
+              <SubItem to="/school/teacher/alumni/list" label="Alumni List" />
+              <SubItem to="/school/teacher/alumni/events" label="Alumni Events" />
+            </div>
+          )} */}
 
           {/* Other Navigation */}
           <NavItem
@@ -185,7 +239,7 @@ const TeacherSidebar = () => {
           />
 
           {/* Profile/Settings Dropdown */}
-          <button
+          {/* <button
             onClick={() => setProfileOpen(!profileOpen)}
             className="w-full flex items-center justify-between px-4 py-2 rounded hover:bg-gray-100 text-gray-700"
           >
@@ -199,7 +253,7 @@ const TeacherSidebar = () => {
               <SubItem to="/school/teacher/profile" label="My Profile" />
               <SubItem to="/school/teacher/change_password" label="Change Password" />
             </div>
-          )}
+          )} */}
 
           <NavItem
             to="/school/teacher/setting"

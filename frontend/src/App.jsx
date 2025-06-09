@@ -39,6 +39,8 @@ import NoticeBoard from "./Admin/NoticeBoard";
 import TimeTable from "./Admin/TimeTable";
 import LeaveApplication from "./Teacher/LeaveApplication";
 import LeavRequesr from "./Admin/LeaveRequest";
+import TeacherStudentLIst from "./Teacher/StudentAll";
+import AllSyllabus from "./Teacher/AllSyllabus";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -93,6 +95,8 @@ function App() {
             <Route path="dashboard" element={<TeacheDashbaord />} />
             <Route path="student_attendance" element={<StudentAttendenc />} />
             <Route path="view_details" element={<ViewDetails />} />
+            <Route path="Syllabus" element={<AllSyllabus />} />
+            <Route path="students" element={<TeacherStudentLIst/>} />
             <Route path="notice-board" element={<NoticeBoard/>} />
             <Route path="leave_application" element={<LeaveApplication/>} />
             <Route path="setting" element={<Setting />}>

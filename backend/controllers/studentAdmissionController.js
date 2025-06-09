@@ -141,11 +141,29 @@ export const GetStudentByClassID = async (req, res) => {
 
     try {
         console.log(req.params.id)
-        const data  = await StudentAdmission.find({ class: req.params.id }).populate('userId')
+        const data = await StudentAdmission.find({ class: req.params.id }).populate('userId')
         // console.log(data)
         res.send(data)
-        
+
     } catch (error) {
         console.log(error)
     }
 }
+// POST /api/v3/student/students/by-class-list
+export const GetStudentsByClassList = async (req, res) => {
+    try {
+        const { classIds } = req.body;
+        if (!Array.isArray(classIds) || classIds.length === 0) {
+            return res.status(400).json({ success: false, message: "classIds must be a non-empty array" });
+        }
+
+        const students = await StudentAdmission.find({ class: { $in: classIds } })
+            .populate('userId')
+            .populate('class');
+
+        res.status(200).json({ success: true, data: students });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+    }
+};
+
