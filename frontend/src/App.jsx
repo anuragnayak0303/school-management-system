@@ -41,6 +41,8 @@ import LeaveApplication from "./Teacher/LeaveApplication";
 import LeavRequesr from "./Admin/LeaveRequest";
 import TeacherStudentLIst from "./Teacher/StudentAll";
 import AllSyllabus from "./Teacher/AllSyllabus";
+import AttendencAllList from "./Teacher/AttendencAllList";
+import Assignment from "./Teacher/Assignment";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -94,9 +96,11 @@ function App() {
           <Route path="/school/teacher/" element={<TeacherProtected />}>
             <Route path="dashboard" element={<TeacheDashbaord />} />
             <Route path="student_attendance" element={<StudentAttendenc />} />
+            <Route path="all_attendance" element={<AttendencAllList/>} />
             <Route path="view_details" element={<ViewDetails />} />
             <Route path="Syllabus" element={<AllSyllabus />} />
             <Route path="students" element={<TeacherStudentLIst/>} />
+            <Route path="assignments" element={<Assignment/>} />
             <Route path="notice-board" element={<NoticeBoard/>} />
             <Route path="leave_application" element={<LeaveApplication/>} />
             <Route path="setting" element={<Setting />}>

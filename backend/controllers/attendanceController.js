@@ -151,3 +151,45 @@ export const getTodayAttendanceByClassAndSubject = async (req, res) => {
   }
 };
 
+
+
+export const getAttendanceBySubjectIds = async (req, res) => {
+  try {
+    const { subjectIds } = req.body;
+
+    if (!subjectIds || !Array.isArray(subjectIds) || subjectIds.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'subjectIds array is required',
+      });
+    }
+
+    const attendanceRecords = await Attendance.find({
+      subjects: { $in: subjectIds },
+    })
+      .populate('teacherId', 'name')
+      .populate('classId', 'Classname')
+      .populate('subjects', 'subjectName')
+      .populate({
+        path: 'attendance.studentId',
+        populate: {
+          path: 'userId',
+          select: 'name email profileImage',
+        },
+      })
+      .sort({ date: -1 });
+
+    res.status(200).json({
+      success: true,
+      attendance: attendanceRecords,
+    });
+  } catch (error) {
+    console.error('Error fetching attendance by subjects:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+    });
+  }
+};
+
+

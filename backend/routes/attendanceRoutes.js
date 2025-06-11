@@ -8,4 +8,5 @@ const attendanceRoute = express.Router();
 attendanceRoute.post("/add", markAttendance);
 attendanceRoute.get("/:userId", getAttendanceByUser);
 
+
 export default attendanceRoute;

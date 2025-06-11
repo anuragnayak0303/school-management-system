@@ -137,6 +137,7 @@ const TeacherSidebar = () => {
             <div className="ml-2 space-y-1">
               {/* <SubItem to="/school/teacher/academy/all_classess" label="All Classes" /> */}
               <SubItem to="/school/teacher/Syllabus" label="Syllabus" />
+              <SubItem to="/school/teacher/all_attendance" label="All Attendence" />
               {/* <SubItem to="/school/teacher/academy/schedule" label="Class Schedule" />
               <SubItem to="/school/teacher/academy/exam" label="Exam Management" />
               <SubItem to="/school/teacher/academy/result-rule" label="Result Rules" />

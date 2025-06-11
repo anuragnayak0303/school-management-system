@@ -1,5 +1,5 @@
 import express from 'express';
-import { createAttendance, deleteAttendance, getAllAttendance, getAttendanceById, getAttendanceByQuery, getTodayAttendanceByClassAndSubject, updateAttendance } from '../controllers/attendanceController.js';
+import { createAttendance, deleteAttendance, getAllAttendance, getAttendanceById, getAttendanceByQuery, getAttendanceBySubjectIds, getTodayAttendanceByClassAndSubject, updateAttendance } from '../controllers/attendanceController.js';
 
 
 const studentAttendencrouter = express.Router();
@@ -11,5 +11,7 @@ studentAttendencrouter.get('/search', getAttendanceByQuery); // use ?teacherId=&
 studentAttendencrouter.get('/:id', getAttendanceById);
 studentAttendencrouter.delete('/:id', deleteAttendance); // optional
 studentAttendencrouter.put('/:id', updateAttendance);   // optional
+// http://localhost:8000/api/v8/student/attendance/by-subjects
+studentAttendencrouter.post('/by-subjects', getAttendanceBySubjectIds);
 
 export default studentAttendencrouter;

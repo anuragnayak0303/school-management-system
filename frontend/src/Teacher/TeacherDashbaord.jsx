@@ -15,6 +15,7 @@ export default function TeacherDashboard() {
   const [punchTime, setPunchTime] = useState(null);
   const [history, setHistory] = useState([]);
 
+  
   const fetchDetails = async () => {
     try {
       const { data } = await axios.get(
