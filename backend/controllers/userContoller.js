@@ -62,7 +62,6 @@ export const loginController = async (req, res) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: "1d" }
     );
-    console.log(role)
     res.status(200).json({
       success: true,
       message: "Login successfull!",

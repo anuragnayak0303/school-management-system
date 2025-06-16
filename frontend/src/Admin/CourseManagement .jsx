@@ -1,3 +1,5 @@
+// Enhanced CourseManagement.js with colorful 3D effects, animation, and loading indicator
+
 import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import MainHeader from "../components/MainHeader";
@@ -6,7 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 import SubjectSearchFilter from "./components/SubjectSearchFilter ";
 import SubjectTable from "./components/SubjectTable ";
 import SubjectForm from "./components/SubjectForm";
-
+import { Loader2 } from 'lucide-react';
 
 const CourseManagement = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -22,6 +24,7 @@ const CourseManagement = () => {
 
   const [search, setSearch] = useState("");
   const [filterClass, setFilterClass] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const toggleForm = () => {
     if (isFormOpen) resetForm();
@@ -51,6 +54,8 @@ const CourseManagement = () => {
       setAllSubjects(data);
     } catch (error) {
       console.error("Error fetching subjects:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,7 +81,6 @@ const CourseManagement = () => {
       toast.success("Subject deleted successfully");
       getSubjects();
     } catch (error) {
-      console.log(error)
       console.error("Failed to delete subject:", error.response?.data || error.message);
       toast.error("Failed to delete subject");
     }
@@ -113,51 +117,62 @@ const CourseManagement = () => {
     <div className="flex flex-col md:flex-row">
       <Toaster />
       <Sidebar />
-      <main className="ml-0 md:ml-64 w-full min-h-screen bg-gradient-to-br from-blue-50 to-purple-100">
+      <main className="ml-0 md:ml-64 w-full min-h-screen bg-gradient-to-br from-blue-200 via-purple-100 to-pink-200 animate-fade-in">
         <MainHeader />
 
         <div className="p-4 sm:p-6">
           <div className="text-sm text-gray-500 mb-2">Admin &gt; Subject</div>
 
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-md mb-6 shadow-sm">
-            <h1 className="text-xl font-bold text-gray-800">Subject Management</h1>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-6 rounded-xl mb-6 shadow-xl border border-purple-200">
+            <h1 className="text-2xl font-bold text-purple-700 drop-shadow-md">📘 Subject Management</h1>
             <button
               onClick={toggleForm}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
+              className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white px-5 py-2 rounded-full text-sm shadow hover:scale-105 transition-transform"
             >
               {editingSubjectId ? "Edit Subject" : "Add Subject"}
             </button>
           </div>
 
-          <SubjectSearchFilter
-            search={search}
-            setSearch={setSearch}
-            filterClass={filterClass}
-            setFilterClass={setFilterClass}
-            classList={AllClasses}
-          />
+          {loading ? (
+            <div className="flex flex-col items-center justify-center h-[50vh] animate-pulse">
+              <div className="w-16 h-16 border-4 border-indigo-300 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
+              <p className="text-indigo-600 font-medium text-sm animate-bounce">Loading data...</p>
+            </div>
+          ) : (
+            <>
+              <SubjectSearchFilter
+                search={search}
+                setSearch={setSearch}
+                filterClass={filterClass}
+                setFilterClass={setFilterClass}
+                classList={AllClasses}
+              />
 
-          <SubjectTable
-            subjects={filteredSubjects}
-            handleEdit={handleEditSubject}
-            handleDelete={handleDeleteSubject}
-          />
+              <div className="transition-opacity duration-500 ease-in-out">
+                <SubjectTable
+                  subjects={filteredSubjects}
+                  handleEdit={handleEditSubject}
+                  handleDelete={handleDeleteSubject}
+                />
+              </div>
 
-          <SubjectForm
-            isOpen={isFormOpen}
-            toggleForm={toggleForm}
-            onSubmit={handleSubmit}
-            subjectName={subjectName}
-            setSubjectName={setSubjectName}
-            subjectType={subjectType}
-            setSubjectType={setSubjectType}
-            classId={classId}
-            setClassId={setClassId}
-            subjectCode={subjectCode}
-            setSubjectCode={setSubjectCode}
-            editingSubjectId={editingSubjectId}
-            classList={AllClasses}
-          />
+              <SubjectForm
+                isOpen={isFormOpen}
+                toggleForm={toggleForm}
+                onSubmit={handleSubmit}
+                subjectName={subjectName}
+                setSubjectName={setSubjectName}
+                subjectType={subjectType}
+                setSubjectType={setSubjectType}
+                classId={classId}
+                setClassId={setClassId}
+                subjectCode={subjectCode}
+                setSubjectCode={setSubjectCode}
+                editingSubjectId={editingSubjectId}
+                classList={AllClasses}
+              />
+            </>
+          )}
         </div>
       </main>
     </div>

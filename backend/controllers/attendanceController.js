@@ -4,7 +4,6 @@ import Attendance from "../models/attendance.js";
 // Create new attendance record
 export const createAttendance = async (req, res) => {
   try {
-    console.log(req.body)
     const { teacherId, classId, subjects, attendance, date } = req.body;
 
     const newAttendance = new Attendance({

@@ -43,6 +43,8 @@ import TeacherStudentLIst from "./Teacher/StudentAll";
 import AllSyllabus from "./Teacher/AllSyllabus";
 import AttendencAllList from "./Teacher/AttendencAllList";
 import Assignment from "./Teacher/Assignment";
+import StudentProtected from "./Student/Routes/StudentProtected";
+import StudentDashBoard from "./Student/StudentDashBoard";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -61,7 +63,7 @@ function App() {
           <Route path="/campus-infrastructure" element={<Campus />} />
           <Route path="/contact-us" element={<ContactPage />} />
           <Route path="/dash" element={<Dashboard />} />
-          
+
           {/* Admin Protected Route */}
           <Route path="/school/admin/" element={<AdminProtected />}>
             <Route path="dashboard" element={<Dashboard />} />
@@ -77,10 +79,10 @@ function App() {
             <Route path="add_teacher" element={<AddTeacher />} />
             <Route path="edit_teacher/:id" element={<EditTeacher />} />
             <Route path="view_teacher/:id" element={<ViewTeacher />} />
-            <Route path="all_users" element={<AllUsers/>} />
-            <Route path="leave-requser" element={<LeavRequesr/>} />
-            <Route path="create_staff" element={<CreateStaff/>} />
-            <Route path="notice-board" element={<NoticeBoard/>} />
+            <Route path="all_users" element={<AllUsers />} />
+            <Route path="leave-requser" element={<LeavRequesr />} />
+            <Route path="create_staff" element={<CreateStaff />} />
+            <Route path="notice-board" element={<NoticeBoard />} />
             <Route path="admin/setting" element={<Setting />}>
               <Route index element={<Navigate to="profile" />} />
               <Route path="profile" element={<ProfileSettings />} />
@@ -96,13 +98,13 @@ function App() {
           <Route path="/school/teacher/" element={<TeacherProtected />}>
             <Route path="dashboard" element={<TeacheDashbaord />} />
             <Route path="student_attendance" element={<StudentAttendenc />} />
-            <Route path="all_attendance" element={<AttendencAllList/>} />
+            <Route path="all_attendance" element={<AttendencAllList />} />
             <Route path="view_details" element={<ViewDetails />} />
             <Route path="Syllabus" element={<AllSyllabus />} />
-            <Route path="students" element={<TeacherStudentLIst/>} />
-            <Route path="assignments" element={<Assignment/>} />
-            <Route path="notice-board" element={<NoticeBoard/>} />
-            <Route path="leave_application" element={<LeaveApplication/>} />
+            <Route path="students" element={<TeacherStudentLIst />} />
+            <Route path="assignments" element={<Assignment />} />
+            <Route path="notice-board" element={<NoticeBoard />} />
+            <Route path="leave_application" element={<LeaveApplication />} />
             <Route path="setting" element={<Setting />}>
               <Route index element={<Navigate to="profile" />} />
               <Route path="profile" element={<ProfileSettings />} />
@@ -110,6 +112,14 @@ function App() {
               {/* <Route path="LogoEdit" element={<Website />} /> */}
             </Route>
           </Route>
+
+
+
+          {/* Student Protected */}
+          <Route path="/school/student/" element={<StudentProtected />}>
+            <Route path="dashboard" element={<StudentDashBoard/>} />
+          </Route>
+
         </Routes>
         <Toaster />
       </BrowserRouter>

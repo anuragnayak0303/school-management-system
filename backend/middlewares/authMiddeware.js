@@ -56,3 +56,21 @@ export const isTeacher = async (req, res, next) => {
         console.log(error)
     }
 }
+
+export const IsStudent =async (req,res,next)=>{
+    try {
+        const user = await userModel.findOne({ _id: req?.user })
+        //  console.log(user?.role)
+        if (user?.role !== "Student") {
+            return res.status(401).json({
+                success: false,
+                message: "You are not Student!"
+            })
+        }
+        else {
+            next()
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}

@@ -13,6 +13,11 @@ import {
     CartesianGrid,
     ResponsiveContainer,
 } from 'recharts';
+import {
+    DragDropContext,
+    Droppable,
+    Draggable
+} from 'react-beautiful-dnd';
 
 export default function AllSyllabus() {
     const { auth } = useAuth();
@@ -61,6 +66,20 @@ export default function AllSyllabus() {
         }
     };
 
+    const handleDragEnd = (result) => {
+        const { source, destination } = result;
+        if (!destination) return;
+
+        const updatedSubjects = Array.from(teacher.subject);
+        const [moved] = updatedSubjects.splice(source.index, 1);
+        updatedSubjects.splice(destination.index, 0, moved);
+
+        setTeacher((prev) => ({
+            ...prev,
+            subject: updatedSubjects
+        }));
+    };
+
     return (
         <div className="flex min-h-screen bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100">
             <TeacherSidebar />
@@ -72,98 +91,106 @@ export default function AllSyllabus() {
                             <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600"></div>
                         </div>
                     ) : (
-                        <div className="flex flex-wrap gap-8 justify-center">
-                            {teacher?.subject &&
-                                teacher?.subject.map((ele, i) => {
-                                    const completed = ele?.completion || 0;
-                                    const pending = 100 - completed;
+                        <DragDropContext onDragEnd={handleDragEnd}>
+                            <Droppable droppableId="subjectList" direction="horizontal">
+                                {(provided) => (
+                                    <div
+                                        className="flex flex-wrap gap-8 justify-center"
+                                        ref={provided.innerRef}
+                                        {...provided.droppableProps}
+                                    >
+                                        {teacher?.subject &&
+                                            teacher.subject.map((ele, i) => {
+                                                const completed = ele?.completion || 0;
+                                                const pending = 100 - completed;
 
-                                    const chartData = [
-                                        { name: 'Complete', complete: completed, pending: 0 },
-                                        { name: 'Pending', complete: 0, pending: pending },
-                                    ];
+                                                const chartData = [
+                                                    { name: 'Complete', complete: completed, pending: 0 },
+                                                    { name: 'Pending', complete: 0, pending: pending },
+                                                ];
 
-                                    return (
-                                        <div
-                                            key={i}
-                                            className="w-[340px] bg-white rounded-3xl p-5 shadow-[0_15px_25px_rgba(0,0,0,0.2)] transform transition-all duration-300 hover:rotate-1 hover:scale-[1.03] hover:shadow-[0_25px_35px_rgba(0,0,0,0.3)]"
-                                            style={{ perspective: 1000 }}
-                                        >
-                                            {/* Header */}
-                                            <div className="flex justify-between items-center mb-3 border-b pb-2">
-                                                <div>
-                                                    <h2 className="text-indigo-700 font-bold uppercase text-sm">
-                                                        {ele?.classId?.Classname}
-                                                    </h2>
-                                                    <p className="text-pink-500 font-semibold uppercase text-xs">
-                                                        {ele?.subjectName}
-                                                    </p>
-                                                </div>
-                                                <FaUserEdit
-                                                    onClick={() => handleEditClick(ele)}
-                                                    className="text-green-600 hover:text-green-800 text-lg cursor-pointer"
-                                                />
-                                            </div>
-
-                                            {/* Title */}
-                                            <h3 className="text-center text-lg font-bold text-gray-700 mb-3">
-                                                🎯 SYLLABUS STATUS
-                                            </h3>
-
-                                            {/* Chart */}
-                                            <div className="h-44 w-full rounded-xl bg-gradient-to-br from-white to-indigo-50 shadow-inner border border-gray-200 overflow-hidden">
-                                                <ResponsiveContainer width="100%" height="100%">
-                                                    <AreaChart data={chartData}>
-                                                        <defs>
-                                                            <linearGradient id="colorComplete" x1="0" y1="0" x2="0" y2="1">
-                                                                <stop offset="5%" stopColor="#22c55e" stopOpacity={0.8} />
-                                                                <stop offset="95%" stopColor="#22c55e" stopOpacity={0.1} />
-                                                            </linearGradient>
-                                                            <linearGradient id="colorPending" x1="0" y1="0" x2="0" y2="1">
-                                                                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
-                                                                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.1} />
-                                                            </linearGradient>
-                                                        </defs>
-                                                        <XAxis dataKey="name" hide />
-                                                        <YAxis hide />
-                                                        <CartesianGrid strokeDasharray="4 4" vertical={false} />
-                                                        <Tooltip />
-                                                        <Area
-                                                            type="monotone"
-                                                            dataKey="complete"
-                                                            stroke="#22c55e"
-                                                            fill="url(#colorComplete)"
-                                                        />
-                                                        <Area
-                                                            type="monotone"
-                                                            dataKey="pending"
-                                                            stroke="#3b82f6"
-                                                            fill="url(#colorPending)"
-                                                        />
-                                                    </AreaChart>
-                                                </ResponsiveContainer>
-                                            </div>
-
-                                            {/* Completion Display */}
-                                            <div className="flex justify-around mt-3 text-sm font-semibold">
-                                                <div className="text-green-600 text-center">
-                                                    ✅ Complete
-                                                    <div className="text-2xl font-bold">{completed}%</div>
-                                                </div>
-                                                <div className="text-blue-600 text-center">
-                                                    ⏳ Pending
-                                                    <div className="text-2xl font-bold">{pending}%</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                        </div>
+                                                return (
+                                                    <Draggable key={ele._id} draggableId={ele._id} index={i}>
+                                                        {(provided) => (
+                                                            <div
+                                                                ref={provided.innerRef}
+                                                                {...provided.draggableProps}
+                                                                {...provided.dragHandleProps}
+                                                                className="w-[340px] bg-white rounded-3xl p-5 shadow-[0_15px_25px_rgba(0,0,0,0.2)] transform transition-all duration-300 hover:rotate-1 hover:scale-[1.03] hover:shadow-[0_25px_35px_rgba(0,0,0,0.3)]"
+                                                                style={{ perspective: 1000, ...provided.draggableProps.style }}
+                                                            >
+                                                                <div className="flex justify-between items-center mb-3 border-b pb-2">
+                                                                    <div>
+                                                                        <h2 className="text-indigo-700 font-bold uppercase text-sm">
+                                                                            {ele?.classId?.Classname}
+                                                                        </h2>
+                                                                        <p className="text-pink-500 font-semibold uppercase text-xs">
+                                                                            {ele?.subjectName}
+                                                                        </p>
+                                                                    </div>
+                                                                    <FaUserEdit
+                                                                        onClick={() => handleEditClick(ele)}
+                                                                        className="text-green-600 hover:text-green-800 text-lg cursor-pointer"
+                                                                    />
+                                                                </div>
+                                                                <h3 className="text-center text-lg font-bold text-gray-700 mb-3">
+                                                                    🎯 SYLLABUS STATUS
+                                                                </h3>
+                                                                <div className="h-44 w-full rounded-xl bg-gradient-to-br from-white to-indigo-50 shadow-inner border border-gray-200 overflow-hidden">
+                                                                    <ResponsiveContainer width="100%" height="100%">
+                                                                        <AreaChart data={chartData}>
+                                                                            <defs>
+                                                                                <linearGradient id="colorComplete" x1="0" y1="0" x2="0" y2="1">
+                                                                                    <stop offset="5%" stopColor="#22c55e" stopOpacity={0.8} />
+                                                                                    <stop offset="95%" stopColor="#22c55e" stopOpacity={0.1} />
+                                                                                </linearGradient>
+                                                                                <linearGradient id="colorPending" x1="0" y1="0" x2="0" y2="1">
+                                                                                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
+                                                                                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.1} />
+                                                                                </linearGradient>
+                                                                            </defs>
+                                                                            <XAxis dataKey="name" hide />
+                                                                            <YAxis hide />
+                                                                            <CartesianGrid strokeDasharray="4 4" vertical={false} />
+                                                                            <Tooltip />
+                                                                            <Area
+                                                                                type="monotone"
+                                                                                dataKey="complete"
+                                                                                stroke="#22c55e"
+                                                                                fill="url(#colorComplete)"
+                                                                            />
+                                                                            <Area
+                                                                                type="monotone"
+                                                                                dataKey="pending"
+                                                                                stroke="#3b82f6"
+                                                                                fill="url(#colorPending)"
+                                                                            />
+                                                                        </AreaChart>
+                                                                    </ResponsiveContainer>
+                                                                </div>
+                                                                <div className="flex justify-around mt-3 text-sm font-semibold">
+                                                                    <div className="text-green-600 text-center">
+                                                                        ✅ Complete
+                                                                        <div className="text-2xl font-bold">{completed}%</div>
+                                                                    </div>
+                                                                    <div className="text-blue-600 text-center">
+                                                                        ⏳ Pending
+                                                                        <div className="text-2xl font-bold">{pending}%</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                                );
+                                            })}
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                        </DragDropContext>
                     )}
                 </div>
             </div>
-
-            {/* Modal */}
             {showModal && editSubject && (
                 <div className="fixed inset-0 bg-[#00000069] bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-white rounded-2xl p-6 w-96 shadow-2xl border-2 border-blue-300">

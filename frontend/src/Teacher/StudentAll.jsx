@@ -40,6 +40,7 @@ export default function TeacherStudentList() {
                 'http://localhost:8000/api/v3/student/students/by-class-list',
                 { classIds }
             );
+            console.log(res.data)
             setStudents(res.data.data);
             setFilteredStudents(res.data.data);
         } catch (error) {

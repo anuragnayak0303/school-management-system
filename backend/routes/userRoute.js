@@ -8,7 +8,7 @@ import {
   passwordmatch,
   registerController,
 } from "../controllers/userContoller.js";
-import { isAdmin, isSignIn, isTeacher } from "../middlewares/authMiddeware.js";
+import { isAdmin, isSignIn, IsStudent, isTeacher } from "../middlewares/authMiddeware.js";
 
 const router = express.Router();
 
@@ -38,9 +38,10 @@ router.get("/admin-protected", isSignIn, isAdmin, (req, res) => {
 router.get("/teacher-protected", isSignIn, isTeacher, (req, res) => {
   res.status(200).json({ ok: true });
 });
-// router.get("/user-protected", isSignIn, (req, res) => {
-//   res.status(200).json({ ok: true });
-// });
+
+router.get("/user-protected", isSignIn, IsStudent, (req, res) => {
+  res.status(200).json({ ok: true });
+});
 
 
 

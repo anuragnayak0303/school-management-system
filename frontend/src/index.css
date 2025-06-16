@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */
 
 
 /* ✅ Fix Tailwind's oklch() issue for html2canvas */
@@ -34,3 +34,10 @@
     --tw-text-opacity: 1 !important;
   }
 }
+
+
+/* breakpoints={{
+  640: { slidesPerView: 1.2 },
+  768: { slidesPerView: 2.2 },
+  1024: { slidesPerView: 3 },
+}} */

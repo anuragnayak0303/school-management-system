@@ -66,6 +66,12 @@ export default function StudentAttendance() {
           `http://localhost:8000/api/v3/student/byClass/${selectedClass}`
         );
 
+        if (data.length === 0) {
+          toast.error('No students found for the selected class.');
+          setAttendance([]);
+          return;
+        }
+
         const studentData = data.map((student) => ({
           ...student,
           status: '',

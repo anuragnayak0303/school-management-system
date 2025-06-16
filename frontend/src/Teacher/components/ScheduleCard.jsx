@@ -11,8 +11,20 @@ export default function ScheduleCard() {
 
   const getEvents = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/api/v8/event/all");
-      setEvents(data);
+      const { data } = await axios.get(`http://localhost:8000/api/v8/event/all`);
+
+      // 📅 Today's date at midnight (00:00:00)
+      const todayMidnight = new Date();
+      todayMidnight.setHours(0, 0, 0, 0);
+
+      // ✅ Filter out past events
+      const upcomingEvents = data.filter(event => {
+        const eventDate = new Date(event.startDate);
+        eventDate.setHours(0, 0, 0, 0); // Ensure time is removed
+        return eventDate >= todayMidnight;
+      });
+
+      setEvents(upcomingEvents);
     } catch (error) {
       console.error("Failed to fetch events:", error);
     }
@@ -116,9 +128,8 @@ export default function ScheduleCard() {
               >
                 {day ? (
                   <div
-                    className={`w-7 h-7 flex items-center justify-center rounded-full hover:bg-blue-100 transition ${
-                      isToday ? "bg-blue-600 text-white font-semibold" : ""
-                    }`}
+                    className={`w-7 h-7 flex items-center justify-center rounded-full hover:bg-blue-100 transition ${isToday ? "bg-blue-600 text-white font-semibold" : ""
+                      }`}
                   >
                     {day}
                   </div>
@@ -133,7 +144,7 @@ export default function ScheduleCard() {
 
       {/* Events */}
       <h3 className="font-semibold text-gray-800 text-base mb-3">Upcoming Events</h3>
-      <div className="overflow-y-auto max-h-[300px] pr-1">
+      <div className="overflow-y-auto max-h-[400px] pr-1">
         {events && events.length > 0 ? (
           events.map((e, i) => (
             <div

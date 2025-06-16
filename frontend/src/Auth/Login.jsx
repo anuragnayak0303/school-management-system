@@ -41,12 +41,14 @@ export default function Login() {
         );
 
         toast.success(res?.data?.message);
-console.log(res?.data)
+        console.log(res?.data)
         // Redirect based on role
         if (res?.data?.user?.role === "Admin") {
           navigate("/school/admin/dashboard");
         } else if (res?.data?.user?.role === "Teacher") {
           navigate("/school/teacher/dashboard");
+        } else if (res?.data?.user?.role === "Student") {
+          navigate("/school/student/dashboard");
         }
 
         window.location.reload();

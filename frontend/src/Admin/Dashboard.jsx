@@ -1,3 +1,4 @@
+// Enhanced Admin Dashboard with Better Styling and Animations
 import { useEffect, useState } from "react";
 import {
   LineChart,
@@ -18,8 +19,8 @@ import toast from "react-hot-toast";
 import { useAuth } from "../context/auth";
 import AdminSheduleCard from "./components/AdminSheduleCard";
 import RecentEvent from "./components/RecentEvent";
+import AttendanceGraph from "./components/AttendanceGraph";
 
-// Dummy data
 const studentVisitData = [
   { year: "2021", visits: 1200 },
   { year: "2022", visits: 2100 },
@@ -44,136 +45,97 @@ const classWiseAdmissions = [
   { year: "2025", Class1: 200, Class2: 170, Class3: 140 },
 ];
 
-// 🔗 Quick Links Data
 const quickLinks = [
-  {
-    label: "Calendar",
-    icon: "🗓️",
-    bg: "bg-green-100",
-    color: "text-green-600",
-  },
-  {
-    label: "Exam Result",
-    icon: "📘",
-    bg: "bg-blue-100",
-    color: "text-blue-600",
-  },
-  {
-    label: "Attendance",
-    icon: "📝",
-    bg: "bg-yellow-100",
-    color: "text-yellow-600",
-  },
-  {
-    label: "Fees",
-    icon: "💰",
-    bg: "bg-cyan-100",
-    color: "text-cyan-600",
-  },
-  {
-    label: "Home Works",
-    icon: "📋",
-    bg: "bg-red-100",
-    color: "text-red-600",
-  },
-  {
-    label: "Reports",
-    icon: "📄",
-    bg: "bg-sky-100",
-    color: "text-sky-600",
-  },
+  { label: "Calendar", icon: "🗓️", bg: "bg-green-100", color: "text-green-600" },
+  { label: "Exam Result", icon: "📘", bg: "bg-blue-100", color: "text-blue-600" },
+  { label: "Attendance", icon: "📝", bg: "bg-yellow-100", color: "text-yellow-600" },
+  { label: "Fees", icon: "💰", bg: "bg-cyan-100", color: "text-cyan-600" },
+  { label: "Home Works", icon: "📋", bg: "bg-red-100", color: "text-red-600" },
+  { label: "Reports", icon: "📄", bg: "bg-sky-100", color: "text-sky-600" },
 ];
 
-// 🔧 Quick Links Card
-const QuickLinksCard =  () => {
-  return (
-    <div className="bg-white h-[55vh] rounded shadow-md p-5 w-full max-w-[400px]">
-      <h2 className="text-lg font-semibold text-gray-700 mb-4">Quick Links</h2>
-      <div className="grid grid-cols-3 gap-4">
-        {quickLinks.map((item, idx) => (
-          <div
-            key={idx}
-            className={`flex flex-col items-center justify-center rounded-lg p-4 transition hover:scale-105 cursor-pointer ${item.bg}`}
-          >
-            <div className={`text-3xl ${item.color}`}>{item.icon}</div>
-            <div className="mt-2 text-sm font-medium text-gray-700 text-center">
-              {item.label}
-            </div>
-          </div>
-        ))}
-      </div>
+const Loader = () => (
+  <div className="flex justify-center items-center h-60">
+    <div className="w-12 h-12 border-4 border-indigo-600 border-dashed rounded-full animate-spin"></div>
+  </div>
+);
+
+const QuickLinksCard = () => (
+  <div className="bg-white rounded-2xl shadow-xl p-5 w-full max-w-md animate-fade-in">
+    <h2 className="text-lg font-semibold text-gray-700 mb-4">Quick Links</h2>
+    <div className="grid grid-cols-3 gap-4">
+      {quickLinks.map((item, idx) => (
+        <div
+          key={idx}
+          className={`flex flex-col items-center justify-center rounded-xl p-4 hover:scale-105 cursor-pointer transition transform duration-300 ease-in-out ${item.bg}`}
+        >
+          <div className={`text-3xl ${item.color}`}>{item.icon}</div>
+          <div className="mt-2 text-sm font-medium text-gray-700 text-center">{item.label}</div>
+        </div>
+      ))}
     </div>
-  );
-};
+  </div>
+);
 
-// Summary Card
 const SummaryCard = ({ imgSrc, title, total, active, inactive, badgeColor }) => {
-  const lightBg = badgeColor.replace("bg-", "bg-opacity-10 ").concat(" ", badgeColor);
+  const lightBg = badgeColor.replace("bg-", "bg-opacity-10 ") + " " + badgeColor;
 
   return (
-    <div className="bg-white rounded shadow-sm w-full transition hover:shadow-md duration-300 border border-gray-100">
-      <div className="flex justify-between items-center p-4">
+    <div className="bg-white rounded-2xl shadow-lg border hover:shadow-2xl p-4 transition duration-300 animate-fade-in">
+      <div className="flex justify-between items-center">
         <div className={`rounded-full p-3 ${lightBg}`}>
           <img src={imgSrc} alt={title} className="w-8 h-8 object-contain" />
         </div>
-        <div className="flex flex-col items-end text-right">
-          <div className="text-xl font-semibold text-gray-900">{total}</div>
+        <div className="text-right">
+          <div className="text-xl font-bold text-gray-800">{total}</div>
           <div className="text-sm text-gray-500">{title}</div>
         </div>
-        <div className={`text-xs font-semibold h-5 text-white px-2 py-0.5 rounded-full ${badgeColor}`}>
+        <div className={`text-xs font-bold text-white px-2 py-0.5 rounded-full ${badgeColor}`}>
           {((inactive / total) * 100).toFixed(1)}%
         </div>
       </div>
-      <div className="border-t border-gray-200" />
-      <div className="flex justify-between text-sm text-gray-600 px-4 py-3">
-        <span>
-          Active: <span className="font-bold text-green-600">{active}</span>
-        </span>
+      <div className="flex justify-between text-sm text-gray-600 mt-4">
+        <span>Active: <span className="font-bold text-green-600">{active}</span></span>
         <span className="text-gray-400">|</span>
-        <span>
-          Inactive: <span className="font-bold text-red-500">{inactive.toString().padStart(2, "0")}</span>
-        </span>
+        <span>Inactive: <span className="font-bold text-red-500">{inactive.toString().padStart(2, "0")}</span></span>
       </div>
     </div>
   );
 };
 
-// 📊 Main Dashboard Component
 export default function Dashboard() {
   const [marqueeText, setMarqueeText] = useState("Welcome to the School Management Dashboard");
   const [inputValue, setInputValue] = useState("");
+  const [loading, setLoading] = useState(false);
   const { auth } = useAuth();
 
   const handleMarqueeSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(
-        `http://localhost:8000/api/marquee/add`,
-        { text: inputValue },
-        {
-          headers: { Authorization: `Bearer ${auth?.token}` },
-        }
-      );
+      setLoading(true);
+      await axios.post(`http://localhost:8000/api/marquee/add`, { text: inputValue }, { headers: { Authorization: `Bearer ${auth?.token}` } });
       toast.success("Added successfully");
+      setMarqueeText(inputValue);
+      setInputValue("");
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to add marquee text");
+    } finally {
+      setLoading(false);
     }
-    setMarqueeText(inputValue);
-    setInputValue("");
   };
 
   return (
     <div className="flex">
       <Sidebar />
-      <div className="ml-0 md:ml-64 w-full min-h-screen bg-gray-50">
+      <div className="ml-0 md:ml-64 w-full min-h-screen bg-gradient-to-br from-slate-100 to-indigo-100">
         <MainHeader />
 
         <div className="p-4 sm:p-6">
           <div className="text-sm text-gray-500 mb-2">Admin &gt; Dashboard</div>
-          <h1 className="text-2xl font-bold mb-6 text-gray-800">Dashboard</h1>
+          <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard</h1>
 
-          {/* Marquee */}
-          <div className="bg-white rounded-lg shadow p-5 mb-6 max-w-xl">
+          {/* Marquee Text Input */}
+          <div className="bg-white rounded-xl shadow p-5 mb-6 max-w-xl animate-fade-in">
             <h2 className="text-lg font-semibold text-gray-700 mb-2">Set Marquee Text</h2>
             <form onSubmit={handleMarqueeSubmit} className="flex gap-2">
               <input
@@ -183,61 +145,38 @@ export default function Dashboard() {
                 onChange={(e) => setInputValue(e.target.value)}
                 className="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
-              <button
-                type="submit"
-                className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"
-              >
+              <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">
                 Submit
               </button>
             </form>
           </div>
 
+          <marquee className="text-xl font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded shadow mb-6">
+            {marqueeText}
+          </marquee>
+
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-4">
-            <SummaryCard
-              imgSrc="https://preskool.dreamstechnologies.com/html/template/assets/img/icons/student.svg"
-              title="Total Students"
-              total={3654}
-              active={3643}
-              inactive={11}
-              badgeColor="bg-red-500"
-            />
-            <SummaryCard
-              imgSrc="https://preskool.dreamstechnologies.com/html/template/assets/img/icons/teacher.svg"
-              title="Total Teachers"
-              total={284}
-              active={254}
-              inactive={30}
-              badgeColor="bg-blue-500"
-            />
-            <SummaryCard
-              imgSrc="https://preskool.dreamstechnologies.com/html/template/assets/img/icons/staff.svg"
-              title="Total Staff"
-              total={162}
-              active={161}
-              inactive={2}
-              badgeColor="bg-yellow-500"
-            />
-            <SummaryCard
-              imgSrc="https://preskool.dreamstechnologies.com/html/template/assets/img/icons/subject.svg"
-              title="Total Subjects"
-              total={82}
-              active={81}
-              inactive={1}
-              badgeColor="bg-green-500"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+            {loading ? <Loader /> : (
+              <>
+                <SummaryCard imgSrc="https://preskool.dreamstechnologies.com/html/template/assets/img/icons/student.svg" title="Total Students" total={3654} active={3643} inactive={11} badgeColor="bg-red-500" />
+                <SummaryCard imgSrc="https://preskool.dreamstechnologies.com/html/template/assets/img/icons/teacher.svg" title="Total Teachers" total={284} active={254} inactive={30} badgeColor="bg-blue-500" />
+                <SummaryCard imgSrc="https://preskool.dreamstechnologies.com/html/template/assets/img/icons/staff.svg" title="Total Staff" total={162} active={161} inactive={2} badgeColor="bg-yellow-500" />
+                <SummaryCard imgSrc="https://preskool.dreamstechnologies.com/html/template/assets/img/icons/subject.svg" title="Total Subjects" total={82} active={81} inactive={1} badgeColor="bg-green-500" />
+              </>
+            )}
           </div>
 
-          {/* Admin Schedule + Quick Links */}
-          <div className=" flex justify-between">
+          {/* Cards Row */}
+          <div className="flex flex-col lg:flex-row gap-4 mt-6">
             <AdminSheduleCard />
-            <RecentEvent/>
+            <RecentEvent />
             <QuickLinksCard />
           </div>
 
           {/* Charts */}
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-4">
-            <div className="bg-white rounded-lg shadow-md p-5">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
+            <div className="bg-white rounded-2xl shadow-md p-5">
               <h2 className="text-lg font-semibold text-gray-700 mb-4">Student Visits per Year</h2>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={studentVisitData}>
@@ -249,8 +188,7 @@ export default function Dashboard() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-
-            <div className="bg-white rounded-lg shadow-md p-5">
+            <div className="bg-white rounded-2xl shadow-md p-5">
               <h2 className="text-lg font-semibold text-gray-700 mb-4">Student Admissions per Year</h2>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={studentAdmissionData}>
@@ -265,8 +203,8 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Class-Wise Admission */}
-          <div className="mt-6 bg-white rounded-lg shadow-md p-5">
+          {/* Class Wise Admissions */}
+          <div className="mt-6 bg-white rounded-2xl shadow-md p-5">
             <h2 className="text-lg font-semibold text-gray-700 mb-4">Class-wise Admissions per Year</h2>
             <ResponsiveContainer width="100%" height={350}>
               <BarChart data={classWiseAdmissions}>
@@ -281,6 +219,23 @@ export default function Dashboard() {
               </BarChart>
             </ResponsiveContainer>
           </div>
+
+          {/* Attendance Chart */}
+          <div className="w-full mt-5">
+            <div className="flex flex-col lg:flex-row gap-6">
+              {/* Teacher Attendance Section */}
+              <div className="w-full lg:w-1/2 bg-white rounded-2xl shadow-xl p-6 animate-fade-in border border-gray-200">
+                <h2 className="text-xl font-semibold text-gray-800 mb-4">👨‍🏫 Teacher Attendance Overview</h2>
+                {/* <TeacherAttendenc /> */}
+              </div>
+
+              {/* Student Attendance Graph */}
+              <div className="w-full lg:w-1/2">
+                <AttendanceGraph />
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
