@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
   display: none;
-} */
+}
 
 
 /* ✅ Fix Tailwind's oklch() issue for html2canvas */
@@ -41,3 +41,45 @@
   768: { slidesPerView: 2.2 },
   1024: { slidesPerView: 3 },
 }} */
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse-slow {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 2s linear infinite;
+}
+
+.animate-spin-reverse-slow {
+  animation: spin-reverse-slow 2s linear infinite;
+}
+
+@keyframes spin-once {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.animate-spin-slow-once{
+  animation: spin-once 1s linear;
+}

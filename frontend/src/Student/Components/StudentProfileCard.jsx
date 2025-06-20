@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
+import { AuthStudentContext } from '../../context/StudentAuth';
 
 export default function StudentProfileCard() {
+
+    const { student } = useContext(AuthStudentContext)
+    
     return (
         <div className="w-full rounded bg-[#202C4B] p-4 shadow-lg text-white relative">
             <div className="flex items-start space-x-4">
                 <img
-                    src="https://via.placeholder.com/60x80"
+                    src={student?.userId?.profileImage ? `http://localhost:8000/${student?.userId?.profileImage}` : 'https://avatar.iran.liara.run/public/44'}
                     alt="Student"
                     className="w-16 h-20 object-cover rounded-md border border-white"
                 />
                 <div>
                     <span className="bg-[#EEF3FF] text-blue-700 text-xs px-2 py-0.5 rounded-md font-semibold">
-                        #ST1234546
+                        {student?.admissionNumber}
                     </span>
-                    <h2 className="text-lg font-bold mt-1">Angelo Riana</h2>
+                    <h2 className="text-lg font-bold mt-1">{student?.userId?.name}</h2>
                     <p className="text-sm text-gray-300 mt-0.5">
-                        Class : III, C | Roll No : 36545
+                        {student?.class?.Classname} | Roll No : {student?.rollNumber}
                     </p>
                 </div>
             </div>

@@ -45,6 +45,8 @@ import AttendencAllList from "./Teacher/AttendencAllList";
 import Assignment from "./Teacher/Assignment";
 import StudentProtected from "./Student/Routes/StudentProtected";
 import StudentDashBoard from "./Student/StudentDashBoard";
+import StudentLeave from "./Student/STUDENTLEAVE";
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -117,7 +119,8 @@ function App() {
 
           {/* Student Protected */}
           <Route path="/school/student/" element={<StudentProtected />}>
-            <Route path="dashboard" element={<StudentDashBoard/>} />
+            <Route path="dashboard" element={<StudentDashBoard />} />
+            <Route path="leave-request" element={<StudentLeave />} />
           </Route>
 
         </Routes>

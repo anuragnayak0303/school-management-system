@@ -20,6 +20,14 @@ import { useAuth } from "../context/auth";
 import AdminSheduleCard from "./components/AdminSheduleCard";
 import RecentEvent from "./components/RecentEvent";
 import AttendanceGraph from "./components/AttendanceGraph";
+import { FaUserPlus } from "react-icons/fa";
+import AdminAttendanceCard from "./components/AdminAttendanceCard";
+import QuickLinksCard from "./components/QuickLinksCard";
+import PerformanceCard from "./components/PerformanceCard";
+import FeesBarChart from "./components/FeesBarChart";
+import LeaveRequestsCard from "./components/LeaveRequestsCard";
+import TopSubjectsCard from "./components/TopSubjectsCard";
+import StudentActivityCard from "./components/StudentActivityCard";
 
 const studentVisitData = [
   { year: "2021", visits: 1200 },
@@ -60,28 +68,13 @@ const Loader = () => (
   </div>
 );
 
-const QuickLinksCard = () => (
-  <div className="bg-white rounded-2xl shadow-xl p-5 w-full max-w-md animate-fade-in">
-    <h2 className="text-lg font-semibold text-gray-700 mb-4">Quick Links</h2>
-    <div className="grid grid-cols-3 gap-4">
-      {quickLinks.map((item, idx) => (
-        <div
-          key={idx}
-          className={`flex flex-col items-center justify-center rounded-xl p-4 hover:scale-105 cursor-pointer transition transform duration-300 ease-in-out ${item.bg}`}
-        >
-          <div className={`text-3xl ${item.color}`}>{item.icon}</div>
-          <div className="mt-2 text-sm font-medium text-gray-700 text-center">{item.label}</div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
+
 
 const SummaryCard = ({ imgSrc, title, total, active, inactive, badgeColor }) => {
   const lightBg = badgeColor.replace("bg-", "bg-opacity-10 ") + " " + badgeColor;
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border hover:shadow-2xl p-4 transition duration-300 animate-fade-in">
+    <div className="bg-gray-50 rounded shadow-md border border-gray-300 hover:shadow-2xl p-4 transition duration-300 animate-fade-in">
       <div className="flex justify-between items-center">
         <div className={`rounded-full p-3 ${lightBg}`}>
           <img src={imgSrc} alt={title} className="w-8 h-8 object-contain" />
@@ -132,28 +125,17 @@ export default function Dashboard() {
 
         <div className="p-4 sm:p-6">
           <div className="text-sm text-gray-500 mb-2">Admin &gt; Dashboard</div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard</h1>
-
-          {/* Marquee Text Input */}
-          <div className="bg-white rounded-xl shadow p-5 mb-6 max-w-xl animate-fade-in">
-            <h2 className="text-lg font-semibold text-gray-700 mb-2">Set Marquee Text</h2>
-            <form onSubmit={handleMarqueeSubmit} className="flex gap-2">
-              <input
-                type="text"
-                placeholder="Enter marquee message"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                className="flex-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              />
-              <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">
-                Submit
-              </button>
-            </form>
+          <div className="w-full p-4 flex justify-between items-center ">
+            <h1 className="text-2xl font-bold text-gray-800 mb-6">Admin Dashboard</h1>
+            <button className="flex items-center space-x-2.5 p-1.5 cursor-pointer bg-rose-500 text-white font-semibold rounded"><FaUserPlus /> <span className="text-xs">Add New Student</span></button>
           </div>
 
-          <marquee className="text-xl font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded shadow mb-6">
-            {marqueeText}
-          </marquee>
+          <div className="w-full h-[15vh] rounded bg-[#202C4B] border border-[#202C4B] flex items-center mb-4">
+            <div className="w-2/4 h-auto px-4 py-1.5 text-white space-y-3">
+              <h1 className="text-2xl font-semibold ">Welcome Back, Mr. Herald</h1>
+              <p>Have a Good day at work</p>
+            </div>
+          </div>
 
           {/* Summary Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
@@ -166,76 +148,41 @@ export default function Dashboard() {
               </>
             )}
           </div>
-
-          {/* Cards Row */}
-          <div className="flex flex-col lg:flex-row gap-4 mt-6">
+          <div className="flex w-flex h-auto flex-col lg:flex-row gap-4  mt-5" >
             <AdminSheduleCard />
-            <RecentEvent />
-            <QuickLinksCard />
-          </div>
-
-          {/* Charts */}
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
-            <div className="bg-white rounded-2xl shadow-md p-5">
-              <h2 className="text-lg font-semibold text-gray-700 mb-4">Student Visits per Year</h2>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={studentVisitData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="year" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="visits" stroke="#4F46E5" strokeWidth={2} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="bg-white rounded-2xl shadow-md p-5">
-              <h2 className="text-lg font-semibold text-gray-700 mb-4">Student Admissions per Year</h2>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={studentAdmissionData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="year" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="admissions" fill="#10B981" />
-                </BarChart>
-              </ResponsiveContainer>
+            <AdminAttendanceCard />
+            <div className=" w-full lg:w-[33%] h-full ">
+              <QuickLinksCard />
+              <PerformanceCard />
             </div>
           </div>
+          <div className="w-full h-auto  mt-5 lg:flex justify-between">
+            <div className="w-full lg:w-[65%] h-[42vh] ">
+              {/* student Graph */}
+              <FeesBarChart />
+            </div>
+            <div className="w-full mt-4 lg:mt-0 lg:w-[33%] h-[42vh] ">
+              <LeaveRequestsCard />
+            </div>
 
-          {/* Class Wise Admissions */}
-          <div className="mt-6 bg-white rounded-2xl shadow-md p-5">
-            <h2 className="text-lg font-semibold text-gray-700 mb-4">Class-wise Admissions per Year</h2>
-            <ResponsiveContainer width="100%" height={350}>
-              <BarChart data={classWiseAdmissions}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="year" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="Class1" fill="#3B82F6" name="Class 1" />
-                <Bar dataKey="Class2" fill="#F59E0B" name="Class 2" />
-                <Bar dataKey="Class3" fill="#10B981" name="Class 3" />
-              </BarChart>
-            </ResponsiveContainer>
           </div>
 
-          {/* Attendance Chart */}
-          <div className="w-full mt-5">
-            <div className="flex flex-col lg:flex-row gap-6">
-              {/* Teacher Attendance Section */}
-              <div className="w-full lg:w-1/2 bg-white rounded-2xl shadow-xl p-6 animate-fade-in border border-gray-200">
-                <h2 className="text-xl font-semibold text-gray-800 mb-4">👨‍🏫 Teacher Attendance Overview</h2>
-                {/* <TeacherAttendenc /> */}
+          <div className="w-full h-auto  lg:flex justify-between">
+            <div className="w-full lg:w-[31%] mt-5 h-[57vh] ">
+              <TopSubjectsCard />
+            </div>
+            <div className="w-full lg:w-[31%] mt-5 h-[57vh] ">
+              <StudentActivityCard />
+            </div>
+            <div className="w-full lg:w-[34%] flex h-[57vh] mt-5 border justify-between">
+              <div className="w-[200px] lg:w-[169px] h-full border border-amber-300">
+
               </div>
+              <div className="w-[200px] lg:w-[169px] h-full border border-amber-800">
 
-              {/* Student Attendance Graph */}
-              <div className="w-full lg:w-1/2">
-                <AttendanceGraph />
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

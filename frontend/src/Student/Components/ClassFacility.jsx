@@ -1,20 +1,56 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { FaAngleLeft, FaChevronRight } from "react-icons/fa6";
-
-const teachers = [
-  { name: 'Teresa', subject: 'Math', img: 'https://preskool.dreamstechnologies.com/html/template/assets/img/teachers/teacher-01.jpg' },
-  { name: 'Daniel', subject: 'Science', img: 'https://preskool.dreamstechnologies.com/html/template/assets/img/teachers/teacher-02.jpg' },
-  { name: 'Sophia', subject: 'English', img: 'https://preskool.dreamstechnologies.com/html/template/assets/img/teachers/teacher-03.jpg' },
-  { name: 'Michael', subject: 'History', img: 'https://preskool.dreamstechnologies.com/html/template/assets/img/teachers/teacher-04.jpg' },
-  { name: 'Emily', subject: 'Biology', img: 'https://preskool.dreamstechnologies.com/html/template/assets/img/teachers/teacher-05.jpg' },
-  { name: 'John', subject: 'Physics', img: 'https://preskool.dreamstechnologies.com/html/template/assets/img/teachers/teacher-06.jpg' },
-];
+import { AuthStudentContext } from '../../context/StudentAuth';
+import axios from 'axios';
+import { useAuth } from '../../context/auth';
 
 export default function ClassFacility() {
+  const { auth } = useAuth();
+  const { student } = useContext(AuthStudentContext);
+  const [Subject, setSubject] = useState([]);
+  const [subjectIds, setSubjectIds] = useState([]);
+  const [teachers, setTeachers] = useState([]);
+
+  const GetSubject = async () => {
+    try {
+      const { data } = await axios.get(`http://localhost:8000/api/v2/subject/ClassId/${student?.class?._id}`);
+      setSubject(data);
+      const ids = data.map(subject => subject._id);
+      setSubjectIds(ids);
+    } catch (error) {
+      console.error("Error fetching subjects:", error);
+    }
+  };
+
+  const fetchTeachersBySubjects = async () => {
+    try {
+      const { data } = await axios.post("http://localhost:8000/api/v2/subject/by-subjects", {
+        subjectIds,
+      });
+      setTeachers(data);
+    } catch (err) {
+      console.error("Error fetching teachers:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (student?.class?._id) GetSubject();
+  }, [student, auth]);
+
+  useEffect(() => {
+    if (subjectIds.length > 0) fetchTeachersBySubjects();
+  }, [subjectIds]);
+
+  const getTeacherBySubjectId = (subjectId) => {
+    return teachers.find(teacher =>
+      teacher.subject.some(s => s._id === subjectId)
+    );
+  };
+
   return (
     <div className="w-full bg-white shadow-md border border-gray-300 rounded overflow-hidden">
       {/* Header */}
@@ -32,44 +68,69 @@ export default function ClassFacility() {
 
       {/* Swiper Carousel */}
       <div className="w-full px-3 py-3">
-        <Swiper
-          modules={[Navigation]}
-          spaceBetween={15}
-          slidesPerView={4}
-          navigation={{
-            nextEl: '.swiper-button-next-custom',
-            prevEl: '.swiper-button-prev-custom',
-          }}
-          loop={true}
-          breakpoints={{
-            320: { slidesPerView: 1 },
-            640: { slidesPerView: 2 },
-            768: { slidesPerView: 3 },
-            1024: { slidesPerView: 4 },
-          }}
-        >
-          {teachers.map((teacher, index) => (
-            <SwiperSlide key={index}>
-              <div className="w-full h-[100px] border bg-gray-50 shadow rounded border-gray-300 px-4 py-2 flex flex-col justify-between">
-                <div className="flex items-end space-x-2.5">
-                  <img src={teacher.img} alt={teacher.name} className="w-[40px] h-[40px] rounded" />
-                  <div className="space-y-0.5">
-                    <p className="text-sm font-semibold">{teacher.name}</p>
-                    <p className="text-sm text-gray-500 font-semibold">{teacher.subject}</p>
+        {teachers.length === 0 ? (
+          <p className="text-center text-sm text-gray-500">No teachers assigned yet.</p>
+        ) : (
+          <Swiper
+            modules={[Navigation]}
+            spaceBetween={15}
+            slidesPerView={Math.min(Subject.length, 4)}
+            navigation={{
+              nextEl: '.swiper-button-next-custom',
+              prevEl: '.swiper-button-prev-custom',
+            }}
+            loop={Subject.length > 4}
+            breakpoints={{
+              320: { slidesPerView: 1 },
+              640: { slidesPerView: 2 },
+              768: { slidesPerView: 3 },
+              1024: { slidesPerView: 4 },
+            }}
+          >
+            {Subject.map((subject, index) => {
+              const teacher = getTeacherBySubjectId(subject._id);
+              const teacherImg = teacher?.userId?.profileImage;
+              const teacherName = teacher?.userId?.name || "Teacher";
+              const shortSubjectName =
+                subject.subjectName?.length > 13
+                  ? subject.subjectName.slice(0, 13) + "..."
+                  : subject.subjectName;
+
+              return (
+                <SwiperSlide key={index}>
+                  <div className="w-full h-[100px] border bg-gray-50 shadow rounded border-gray-300 px-4 py-2 flex flex-col justify-between">
+                    <div className="flex items-end space-x-2.5">
+                      <img
+                        src={teacherImg ? `http://localhost:8000/${teacherImg}` : "https://avatar.iran.liara.run/public/44"}
+                        alt={teacherName}
+                        className="w-[40px] h-[40px] rounded object-cover"
+                      />
+                      <div className="space-y-0.5">
+                        <p
+                          className="text-sm font-semibold"
+                          title={subject.subjectName}
+                        >
+                          {shortSubjectName}
+                        </p>
+                        <p className="text-sm text-gray-500 font-semibold">
+                          {teacherName}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <button className="text-[12px] font-semibold w-24 rounded h-7 border border-gray-300 bg-white transition transform hover:bg-gray-100 active:scale-95">
+                        Email
+                      </button>
+                      <button className="text-[12px] font-semibold w-24 rounded h-7 border border-gray-300 bg-white transition transform hover:bg-gray-100 active:scale-95">
+                        Chat
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div className="flex justify-between">
-                  <button className="text-[12px] font-semibold w-24 rounded h-7 border border-gray-300 bg-white transition transform hover:bg-gray-100 active:scale-95">
-                    Email
-                  </button>
-                  <button className="text-[12px] font-semibold w-24 rounded h-7 border border-gray-300 bg-white transition transform hover:bg-gray-100 active:scale-95">
-                    Chat
-                  </button>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        )}
       </div>
     </div>
   );

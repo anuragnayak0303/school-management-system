@@ -137,6 +137,15 @@ export const GetDataAll = async (req, res) => {
     }
 }
 
+export const GetDataById = async (req, res) => {
+    try {
+        const data = await StudentAdmission.findOne({ userId: req.user }).populate("userId").populate("class")
+        res.send(data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const GetStudentByClassID = async (req, res) => {
 
     try {

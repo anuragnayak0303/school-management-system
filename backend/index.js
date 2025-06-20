@@ -21,6 +21,7 @@ import attendanceRoute from "./routes/attendanceRoutes.js";
 import studentAttendencrouter from "./routes/studentattendanceRoutes.js";
 import Eventrouter from "./routes/eventRoutes.js";
 import Assignmentrouter from "./routes/assignmentRoutes.js";
+import StuLeaverouter from "./routes/StudentleaveRoutes.js";
 
 // INSTANCE OF EXPRESS
 const app = express();
@@ -53,6 +54,7 @@ app.use("/api/attendance", attendanceRoute);                // Address routes
 app.use("/api/v8/student/attendance", studentAttendencrouter)
 app.use("/api/v8/event", Eventrouter)
 app.use("/api/v9/assignments", Assignmentrouter)
+app.use("/api/v10/student-leave", StuLeaverouter)
 
 // NEW ROUTE: Get Client's Public IP
 app.get("/api/get-ip", (req, res) => {

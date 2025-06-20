@@ -1,10 +1,11 @@
 import express from 'express';
-import { createAttendance, deleteAttendance, getAllAttendance, getAttendanceById, getAttendanceByQuery, getAttendanceBySubjectIds, getTodayAttendanceByClassAndSubject, updateAttendance } from '../controllers/attendanceController.js';
+import { createAttendance, deleteAttendance, getAllAttendance, getAttendanceById, getAttendanceByQuery, getAttendanceByStudentId, getAttendanceBySubjectIds, getTodayAttendanceByClassAndSubject, updateAttendance } from '../controllers/attendanceController.js';
 
 
 const studentAttendencrouter = express.Router();
 // http://localhost:8000/api/v8/student/attendance/add
 studentAttendencrouter.post('/add', createAttendance);
+studentAttendencrouter.get('/student/:studentId', getAttendanceByStudentId);
 studentAttendencrouter.get('/today/by-class-subject', getTodayAttendanceByClassAndSubject);
 studentAttendencrouter.get('/get', getAllAttendance);
 studentAttendencrouter.get('/search', getAttendanceByQuery); // use ?teacherId=&classId=&date=

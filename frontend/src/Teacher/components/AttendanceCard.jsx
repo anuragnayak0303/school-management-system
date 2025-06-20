@@ -8,12 +8,11 @@ const days = ["M", "T", "W", "T", "F", "S", "S"];
 export default function AttendanceCard({ history }) {
   const { dayStatus, attendanceData, dateRangeText } = useMemo(() => {
     const startOfWeek = dayjs().startOf("week").add(1, "day"); // Monday
-    const today = dayjs();
     const thisWeekDates = Array.from({ length: 7 }, (_, i) =>
       startOfWeek.add(i, "day")
     );
 
-    const dayStatusArray = new Array(7).fill("absent"); // default
+    const dayStatusArray = new Array(7).fill("absent");
     const counts = {
       Present: 0,
       Absent: 0,
@@ -28,7 +27,6 @@ export default function AttendanceCard({ history }) {
 
       if (dayIndex !== -1 && dayIndex !== 6) {
         const hour = entryTime.hour();
-
         if (hour >= 10 && hour < 11) {
           dayStatusArray[dayIndex] = "present";
           counts.Present++;
@@ -43,7 +41,7 @@ export default function AttendanceCard({ history }) {
       if (idx === 6) {
         dayStatusArray[idx] = "sunday";
       } else if (dayjs().isBefore(date, "day")) {
-        dayStatusArray[idx] = "future"; // mark as future
+        dayStatusArray[idx] = "future";
       } else if (dayStatusArray[idx] === "absent") {
         counts.Absent++;
       }
@@ -111,7 +109,7 @@ export default function AttendanceCard({ history }) {
         ))}
       </div>
 
-      <div className="w-full h-48">
+      <div className="relative w-full h-48">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie

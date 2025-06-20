@@ -191,4 +191,48 @@ export const getAttendanceBySubjectIds = async (req, res) => {
   }
 };
 
+// Get attendance by student ID
+export const getAttendanceByStudentId = async (req, res) => {
+  try {
+    const { studentId } = req.params;
+    if (!studentId) {
+      return res.status(400).json({ error: 'Student ID is required' });
+    }
+
+    const attendanceRecords = await Attendance.find({
+      'attendance.studentId': studentId,
+    })
+      .populate({
+        path: 'teacherId',
+        populate: {
+          path: 'userId',
+          select: 'name',
+        },
+      }) // Only get teacher's name
+      .populate('classId', 'Classname') // Assuming 'className' exists
+      .populate('subjects', 'subjectName') // Assuming subject has a name field
+      .populate('attendance.studentId', 'studentName'); // Optional: To double-check student info
+
+    // Filter only the attendance status for the given student
+    const filteredAttendance = attendanceRecords.map(record => {
+      const studentAttendance = record.attendance.find(
+        a => a.studentId._id.toString() === studentId
+      );
+      return {
+        date: record.date,
+        class: record.classId.Classname,
+        teacher: record.teacherId?.userId?.name,
+        subjects: record.subjects.map(sub => sub.subjectName),
+        status: studentAttendance?.status || 'Not Marked',
+      };
+    });
+  
+    res.status(200).send(filteredAttendance);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Something went wrong' });
+  }
+};
+
+
 

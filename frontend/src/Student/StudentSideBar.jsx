@@ -72,8 +72,8 @@ const StudentSideBar = () => {
     <button
       onClick={() => handleNavigation(to)}
       className={`w-full text-left flex items-center gap-3 px-4 py-2 rounded transition-all ${location.pathname === to
-          ? "bg-gray-200 text-blue-600"
-          : "text-gray-700 hover:bg-gray-100"
+        ? "bg-gray-200 text-blue-600"
+        : "text-gray-700 hover:bg-gray-100"
         }`}
     >
       {icon} {label}
@@ -84,8 +84,8 @@ const StudentSideBar = () => {
     <button
       onClick={() => handleNavigation(to)}
       className={`block w-full text-left pl-6 py-2 text-sm rounded ${location.pathname === to
-          ? "text-orange-600 font-medium bg-gray-200"
-          : "text-gray-600 hover:text-blue-600 hover:bg-gray-100"
+        ? "text-orange-600 font-medium bg-gray-200"
+        : "text-gray-600 hover:text-blue-600 hover:bg-gray-100"
         }`}
     >
       {label}
@@ -229,7 +229,7 @@ const StudentSideBar = () => {
           />
 
           <NavItem
-            to="/school/teacher/leave_application"
+            to="/school/student/leave-request"
             icon={<FaRegFileAlt size={20} />}
             label="Leave Application"
           />

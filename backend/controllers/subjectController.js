@@ -19,7 +19,7 @@ export const addSubject = async (req, res) => {
         Class.Subjects.push(classId)
 
         const savedSubject = await newSubject.save();
-        await Class.save
+        await Class.save()
 
         res.status(201).json(savedSubject);
     } catch (error) {
@@ -87,10 +87,11 @@ export const deleteMultipleSubjects = async (req, res) => {
 
 export const ClassSubject = async (req, res) => {
     try {
-        const subjects = await Subject.find({ classId: req.params.id })
+        
+        const subjects = await Subject.find({ classId: req.params.id }) 
         res.status(200).json(subjects);
     } catch (error) {
-
+        // console.log(error)
     }
 }
 
@@ -125,3 +126,34 @@ export const AddSyllabusPersent = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 }
+
+// controllers/teacher/getTeachersBySubjects.js
+import TeacherDetail from "../models/TeacherDetail.js"
+export const getTeachersBySubjects = async (req, res) => {
+  try {
+    const { subjectIds } = req.body; // array of subject ObjectIds
+
+    if (!subjectIds || !Array.isArray(subjectIds) || subjectIds.length === 0) {
+      return res.status(400).json({ message: "Subject IDs array is required." });
+    }
+
+    // Find all teachers who have at least one matching subject
+    const teachers = await TeacherDetail.find({ subject: { $in: subjectIds } })
+      .populate("userId")
+      .populate("Class", "name")
+      .populate("subject", "name code")
+      .populate("address")
+      .exec();
+
+    if (!teachers || teachers.length === 0) {
+      return res.status(404).json({ message: "No teachers found for the given subjects." });
+    }
+
+    res.status(200).json(teachers);
+
+  } catch (error) {
+    console.error("Error fetching teachers by subject list:", error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
+

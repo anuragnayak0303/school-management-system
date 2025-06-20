@@ -4,14 +4,17 @@ import "./index.css";
 import App from "./App.jsx";
 import { AuthProvider } from "./context/auth.jsx";
 import { LoadingProvider } from "./context/LoadingProvider .jsx";
+import StudentAuth from "./context/StudentAuth.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <LoadingProvider>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </LoadingProvider>
+    <AuthProvider>
+      <StudentAuth>
+        <LoadingProvider>
+          <App />
+        </LoadingProvider>
+      </StudentAuth>
+    </AuthProvider>
 
   </StrictMode>
 );
