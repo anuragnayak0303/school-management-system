@@ -7,6 +7,7 @@ import PunchInCard from "./components/PunchInCard";
 import AttendanceCard from "./components/AttendanceCard";
 import { useAuth } from "../context/auth";
 import axios from "axios";
+import StudentMarksTable from "./components/StudentMarksTable";
 
 export default function TeacherDashboard() {
   const { auth } = useAuth();
@@ -15,7 +16,6 @@ export default function TeacherDashboard() {
   const [punchTime, setPunchTime] = useState(null);
   const [history, setHistory] = useState([]);
 
-  
   const fetchDetails = async () => {
     try {
       const { data } = await axios.get(
@@ -95,8 +95,7 @@ export default function TeacherDashboard() {
       <TeacherSideBar />
       <div className="ml-0 md:ml-64 flex-grow flex flex-col min-h-screen">
         <MainHeader />
-        <div className="p-4 max-w-7xl w-full ">
-          {/* Welcome Banner */}
+        <div className="p-4 max-w-7xl w-full">
           <div className="w-full h-[17vh] flex items-center rounded-md p-4 bg-blue-600 justify-between mb-4">
             <div className="text-white font-semibold space-y-1.5">
               <h1 className="text-2xl">Good Morning {auth?.user?.name}</h1>
@@ -109,7 +108,6 @@ export default function TeacherDashboard() {
             />
           </div>
 
-          {/* Dashboard Section */}
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex flex-col w-full md:w-[70%] gap-4">
               <TeacherProfileOverview data={auth?.user} teacher={teacher} />
@@ -125,6 +123,24 @@ export default function TeacherDashboard() {
               </div>
             </div>
             <ScheduleCard calendarDays={calendarDays} />
+          </div>
+
+          {/* Student Marks Section */}
+          <div className="w-full mt-6 bg-white rounded-lg border border-gray-200 shadow-sm">
+            <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+              <h2 className="text-sm font-semibold text-gray-800">Student Marks</h2>
+              <div className="flex gap-2 text-sm text-gray-600">
+                <span className="flex items-center gap-1 cursor-pointer">
+                  <i className="fa fa-calendar" /> All Classes
+                </span>
+                <span className="flex items-center gap-1 cursor-pointer">
+                  <i className="fa fa-calendar" /> All Sections
+                </span>
+              </div>
+            </div>
+            <div className="p-2">
+              <StudentMarksTable />
+            </div>
           </div>
         </div>
       </div>

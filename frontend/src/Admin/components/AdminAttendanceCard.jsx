@@ -9,13 +9,24 @@ ChartJS.register(ArcElement, Tooltip);
 export default function AdminAttendanceCard() {
   const [activeTab, setActiveTab] = useState("students");
   const [attendanceData, setAttendanceData] = useState(null);
+  const [totalTeacherCount, settotalteacher] = useState()
   const nav = useNavigate()
+  const getData = async () => {
+    try {
+      const { data } = await axios.get(`http://localhost:8000/api/teachers/get`)
+      settotalteacher(data?.length)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   useEffect(() => {
+    getData()
     const fetchAttendance = async () => {
       try {
         const { data } = await axios.get("http://localhost:8000/api/attendance/");
-
-        const total = 20;
+        console.log(data)
+        const total = totalTeacherCount
+        console.log(typeof totalTeacherCount)
         const today = new Date().toISOString().split("T")[0];
         console.log(today)
         const getStatusCounts = () => {
@@ -67,7 +78,7 @@ export default function AdminAttendanceCard() {
     };
 
     fetchAttendance();
-  }, []);
+  }, [totalTeacherCount]);
 
   console.log(attendanceData)
 
@@ -93,11 +104,12 @@ export default function AdminAttendanceCard() {
   };
 
   const presentPercent = current?.total
-    ? ((current?.present + current?.late / current?.total) * 100).toFixed(1)
+    ? (((current?.present + current?.late) / current?.total) * 100).toFixed(1)
     : "0.0";
 
+  console.log(((current?.present + current?.late / current?.total) * 100).toFixed(1))
   return (
-    <div className="lg:w-[33%] bg-gray-50 rounded shadow-md border border-gray-300 w-full h-[75vh] animate-fade-in flex flex-col justify-between">
+    <div className="lg:w-[33%] bg-gray-50 rounded shadow-md border border-gray-300 w-full  animate-fade-in flex flex-col justify-between">
       {/* Header */}
       <div className="flex justify-between items-center border-b border-b-gray-300 px-4 py-3">
         <h3 className="text-sm font-semibold text-gray-700">Attendance</h3>

@@ -1,5 +1,4 @@
-// src/pages/Components/PerformanceCard.jsx
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     Chart as ChartJS,
     LineElement,
@@ -12,39 +11,54 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { FaCalendarAlt } from 'react-icons/fa';
+import axios from 'axios';
+import { AuthStudentContext } from '../../context/StudentAuth';
 
-ChartJS.register(
-    LineElement,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    Tooltip,
-    Legend,
-    Filler
-);
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, Filler);
 
 export default function PerformanceCard() {
-    const labels = ['Quarter 1', 'Quarter 2', 'Half yearly', 'Model', 'Final'];
+    const [examLabels, setExamLabels] = useState([]);
+    const [averageScores, setAverageScores] = useState([]);
+    const { student } = useContext(AuthStudentContext)
+
+    const fetchPerformanceData = async () => {
+        try {
+            const { data } = await axios.get(`http://localhost:8000/api/v11/exam/student/${student?._id}`);
+
+            console.log(data)
+            const labels = [];
+            const scores = [];
+
+            data?.data?.forEach(entry => {
+                const totalObtained = entry.marks.reduce((sum, mark) => sum + mark.markObtained, 0);
+                const subjectCount = entry.marks.length;
+                const avg = subjectCount > 0 ? totalObtained / subjectCount : 0;
+
+                labels.push(entry.examName);
+                scores.push(Number(avg.toFixed(2)));
+            });
+
+            setExamLabels(labels);
+            setAverageScores(scores);
+        } catch (err) {
+            console.error('Failed to load performance data:', err);
+        }
+    };
+
+    useEffect(() => {
+        if (student?._id) fetchPerformanceData();
+    }, [student]);
 
     const data = {
-        labels,
+        labels: examLabels,
         datasets: [
             {
-                label: 'Avg. Exam Score',
-                data: [75, 70, 66, 70, 75],
+                label: 'Average Marks',
+                data: averageScores,
                 fill: true,
                 backgroundColor: 'rgba(66, 133, 244, 0.1)',
                 borderColor: '#4285f4',
                 pointBackgroundColor: '#4285f4',
-                tension: 0.4,
-            },
-            {
-                label: 'Avg. Attendance',
-                data: [85, 78, 75, 78, 86],
-                fill: true,
-                backgroundColor: 'rgba(0, 200, 180, 0.1)',
-                borderColor: '#00C8B4',
-                pointBackgroundColor: '#00C8B4',
                 tension: 0.4,
             },
         ],
@@ -65,22 +79,13 @@ export default function PerformanceCard() {
         },
         scales: {
             y: {
-                min: 65,
-                max: 90,
-                ticks: {
-                    color: '#6B7280',
-                },
-                grid: {
-                    display: false,
-                },
+                beginAtZero: true,
+                ticks: { color: '#6B7280' },
+                grid: { display: false },
             },
             x: {
-                ticks: {
-                    color: '#6B7280',
-                },
-                grid: {
-                    display: false,
-                },
+                ticks: { color: '#6B7280' },
+                grid: { display: false },
             },
         },
     };

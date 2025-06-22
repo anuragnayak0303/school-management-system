@@ -6,7 +6,7 @@ import LeaveRequestModel from '../models/LeaveRequestModel.js';
 -------------------------------------------------------------------*/
 export const createLeaveRequest = async (req, res) => {
   try {
-    const { from, to, reason ,student } = req.body;
+    const { from, to, reason, student } = req.body;
 
     // Basic validation
     if (!from || !to || !reason)
@@ -31,7 +31,14 @@ export const createLeaveRequest = async (req, res) => {
 -------------------------------------------------------------------*/
 export const getAllLeaveRequests = async (_req, res) => {
   try {
-    const leaves = await LeaveRequestModel.find().sort({ createdAt: -1 });
+    const leaves = await LeaveRequestModel.find().sort({ createdAt: -1 })
+      .populate({
+        path: 'student',
+        populate: {
+          path: 'userId',
+          select: 'name email profileImage',
+        },
+      })
     res.json(leaves);
   } catch (err) {
     console.log(err)
@@ -44,7 +51,7 @@ export const getAllLeaveRequests = async (_req, res) => {
 -------------------------------------------------------------------*/
 export const getLeaveRequestById = async (req, res) => {
   try {
-    const leave = await LeaveRequest.findById(req.params.id);
+    const leave = await LeaveRequestModel.findById(req.params.id);
     if (!leave) return res.status(404).json({ message: "Leave not found" });
     res.json(leave);
   } catch (err) {
@@ -57,12 +64,13 @@ export const getLeaveRequestById = async (req, res) => {
 -------------------------------------------------------------------*/
 export const updateLeaveStatus = async (req, res) => {
   try {
+
     const { status } = req.body; // "approved" | "rejected"
 
     if (!["approved", "rejected"].includes(status))
       return res.status(400).json({ message: "Invalid status value" });
 
-    const leave = await LeaveRequest.findByIdAndUpdate(
+    const leave = await LeaveRequestModel.findByIdAndUpdate(
       req.params.id,
       { status, decisionAt: new Date() },
       { new: true }
@@ -71,6 +79,7 @@ export const updateLeaveStatus = async (req, res) => {
     if (!leave) return res.status(404).json({ message: "Leave not found" });
     res.json(leave);
   } catch (err) {
+    console.log(err)
     res.status(500).json({ message: "Failed to update leave status" });
   }
 };
@@ -80,10 +89,21 @@ export const updateLeaveStatus = async (req, res) => {
 -------------------------------------------------------------------*/
 export const deleteLeaveRequest = async (req, res) => {
   try {
-    const deleted = await LeaveRequest.findByIdAndDelete(req.params.id);
+    const deleted = await LeaveRequestModel.findByIdAndDelete(req.params.id);
     if (!deleted) return res.status(404).json({ message: "Leave not found" });
     res.json({ message: "Leave request deleted" });
   } catch (err) {
     res.status(500).json({ message: "Failed to delete leave request" });
+  }
+};
+
+
+export const getLeaveByStudent = async (req, res) => {
+  try {
+    const leave = await LeaveRequestModel.find({ student: req.params.id });
+    if (!leave) return res.status(404).json({ message: "Leave not found" });
+    res.json(leave);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch leave request" });
   }
 };

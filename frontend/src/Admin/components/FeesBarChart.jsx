@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   AreaChart,
   Area,
@@ -20,6 +20,37 @@ const data = [
 ];
 
 export default function StudentAdmissionChart() {
+
+  //   const [data, setData] = useState([]);
+  // const [totalAdmissions, setTotalAdmissions] = useState(0);
+
+  // useEffect(() => {
+  //   const fetchAdmissions = async () => {
+  //     try {
+  //       const res = await axios.get("http://localhost:8000/api/v1/students/admissions-per-year");
+  //       const apiData = res.data; // Expected format: [{ year: "2020", admissions: 150 }, ...]
+
+  //       // Generate last 6 years (previous 5 + current)
+  //       const currentYear = new Date().getFullYear();
+  //       const years = Array.from({ length: 6 }, (_, i) => String(currentYear - 5 + i));
+
+  //       // Build full data with default 0 if year missing in API response
+  //       const admissionsMap = Object.fromEntries(apiData.map(item => [item.year, item.admissions]));
+  //       const filledData = years.map((year) => ({
+  //         year,
+  //         admissions: admissionsMap[year] || 0,
+  //       }));
+
+  //       setData(filledData);
+  //       const total = filledData.reduce((acc, item) => acc + item.admissions, 0);
+  //       setTotalAdmissions(total);
+  //     } catch (error) {
+  //       console.error("Error fetching admissions:", error);
+  //     }
+  //   };
+
+  //   fetchAdmissions();
+  // }, []);
   return (
     <div className="bg-gray-50 border border-gray-300 shadow-md rounded w-full h-full">
       {/* Header */}

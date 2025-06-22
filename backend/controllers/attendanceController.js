@@ -29,7 +29,14 @@ export const getAllAttendance = async (req, res) => {
       .populate('teacherId')
       .populate('classId')
       .populate('subjects')
-      .populate('attendance.studentId');
+      .populate({
+        path: 'attendance.studentId',
+        populate: {
+          path: 'userId',
+          select: 'name',
+          options: { strictPopulate: false },
+        }
+      })
 
     res.status(200).json(records);
   } catch (error) {
@@ -195,6 +202,7 @@ export const getAttendanceBySubjectIds = async (req, res) => {
 export const getAttendanceByStudentId = async (req, res) => {
   try {
     const { studentId } = req.params;
+    
     if (!studentId) {
       return res.status(400).json({ error: 'Student ID is required' });
     }
@@ -226,7 +234,7 @@ export const getAttendanceByStudentId = async (req, res) => {
         status: studentAttendance?.status || 'Not Marked',
       };
     });
-  
+
     res.status(200).send(filteredAttendance);
   } catch (err) {
     console.error(err);

@@ -201,8 +201,15 @@
 
 /* Wiggle animation for cockroaches */
 @keyframes wiggle {
-  0%, 100% { transform: rotate(-10deg); }
-  50% { transform: rotate(10deg); }
+
+  0%,
+  100% {
+    transform: rotate(-10deg);
+  }
+
+  50% {
+    transform: rotate(10deg);
+  }
 }
 
 .animate-wiggle {
@@ -211,8 +218,13 @@
 
 /* Cockroaches running to the right */
 @keyframes run-away {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(100vw); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(100vw);
+  }
 }
 
 .animate-run-away {
@@ -221,8 +233,13 @@
 
 /* Oggy running after them */
 @keyframes oggy-run {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(80vw); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(80vw);
+  }
 }
 
 .animate-oggy-run {
@@ -230,8 +247,15 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 
@@ -244,6 +268,35 @@
   scrollbar-width: none;
 } */
 
-.kjhsdgsdh::-webkit-scrollbar{
+.kjhsdgsdh::-webkit-scrollbar {
   width: 50%;
+}
+
+
+@keyframes spin3D {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+
+@keyframes spin3DReverse {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateX(-360deg) rotateY(-360deg);
+  }
+}
+
+.animate-spin3D {
+  animation: spin3D 1.2s linear infinite;
+}
+
+.animate-spin3DReverse {
+  animation: spin3DReverse 1.2s linear infinite;
 }

@@ -23,6 +23,7 @@ import { LoadingContext } from "../context/LoadingProvider ";
 
 const Sidebar = () => {
   const [academicOpen, setAcademicOpen] = useState(false);
+  const [attendanceOpen, setAttendanceOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -150,6 +151,28 @@ const Sidebar = () => {
             )}
           </div>
 
+          {/* Section: Attendance */}
+          <div className="px-4">
+            <p className="text-xs text-gray-500 uppercase mb-2">Attendance</p>
+            <button
+              onClick={() => setAttendanceOpen(!attendanceOpen)}
+              className={`w-full flex items-center justify-between px-2 py-2 rounded-lg transition 
+                ${attendanceOpen ? "text-blue-700 bg-blue-50" : "text-gray-700 hover:bg-gray-100"}`}
+            >
+              <span className="flex items-center gap-2">
+                <FaClipboardList size={16} />
+                Attendance
+              </span>
+              {attendanceOpen ? <FiChevronUp size={16} /> : <FiChevronDown size={16} />}
+            </button>
+            {attendanceOpen && (
+              <div className="mt-2 ml-4 border-l border-gray-200 pl-3 space-y-1">
+                <SubItem to="/school/admin/attendance/student" label="Student Attendance" />
+                <SubItem to="/school/admin/attendance/teacher" label="Teacher Attendance" />
+              </div>
+            )}
+          </div>
+
           {/* Section: User Registration */}
           <div className="px-4">
             <p className="text-xs text-gray-500 uppercase mb-2">User Registration</p>
@@ -176,7 +199,8 @@ const Sidebar = () => {
           {/* Section: Management */}
           <div className="px-4">
             <p className="text-xs text-gray-500 uppercase mb-2">Management</p>
-            <NavItem to="/school/admin/leave-requser" icon={<FaLevelDownAlt size={16} />} label="Leave Request" />
+            <NavItem to="/school/admin/teacher-leave-request" icon={<FaLevelDownAlt size={16} />} label="Teacher Request" />
+            <NavItem to="/school/admin/student-leave-request" icon={<FaLevelDownAlt size={16} />} label="Student Leave" />
             <NavItem to="/school/admin/notice-board" icon={<FaFile size={16} />} label="Notice Board" />
           </div>
 

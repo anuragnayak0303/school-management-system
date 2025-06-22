@@ -9,15 +9,17 @@ import {
   FaFileAlt,
   FaSourcetree,
   FaBell,
+  FaUserPlus,
 } from "react-icons/fa";
+import { IoSettings } from "react-icons/io5";
 
 const quickLinks = [
   { label: "Notice Board", icon: <FaBell />, bg: "bg-green-100", iconColor: "text-green-600", link: "/school/admin/notice-board" },
-  { label: "Exam Result", icon: <FaBook />, bg: "bg-red-100", iconColor: "text-red-600" },
-  { label: "Attendance", icon: <FaClipboardList />, bg: "bg-yellow-100", iconColor: "text-yellow-600" },
-  { label: "Fees", icon: <FaMoneyBillWave />, bg: "bg-cyan-100", iconColor: "text-cyan-600" },
+  { label: "Add Student", icon: <FaUserPlus />, bg: "bg-red-100", iconColor: "text-red-600", link: '/school/admin/admission_from' },
+  { label: "Attendance", icon: <FaClipboardList />, bg: "bg-yellow-100", iconColor: "text-yellow-600", link: '/school/admin/attendance/student' },
+  { label: "Settings", icon: <IoSettings />, bg: "bg-cyan-100", iconColor: "text-cyan-600", link: '/school/admin/admin/setting/profile' },
   { label: "Home Works", icon: <FaClipboard />, bg: "bg-pink-100", iconColor: "text-pink-600" },
-  { label: "Reports", icon: <FaFileAlt />, bg: "bg-sky-100", iconColor: "text-sky-600" },
+  { label: "All Subject", icon: <FaFileAlt />, bg: "bg-sky-100", iconColor: "text-sky-600" },
 ];
 
 export default function QuickLinksCard() {

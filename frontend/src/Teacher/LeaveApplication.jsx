@@ -34,6 +34,7 @@ export default function LeaveApplication() {
         try {
             const { data } = await axios.get(`http://localhost:8000/api/v2/employees/leave/my/${teacherId}`);
             setLeaves(data);
+            console.log(data)
         } catch (error) {
             console.error("Error fetching leave data", error);
         }

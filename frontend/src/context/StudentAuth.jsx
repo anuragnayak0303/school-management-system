@@ -15,6 +15,7 @@ export default function StudentAuth({ children }) {
           Authorization: `Bearer ${auth?.token}`,
         },
       });
+      console.log(data)
       setStudent(data); // ✅ Store the student data
     } catch (error) {
       console.error('Student fetch error:', error);
@@ -26,7 +27,7 @@ export default function StudentAuth({ children }) {
   }, [auth]);
 
   return (
-    <AuthStudentContext.Provider value={{student}}>
+    <AuthStudentContext.Provider value={{ student }}>
       {children}
     </AuthStudentContext.Provider>
   );

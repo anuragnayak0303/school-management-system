@@ -12,6 +12,7 @@ import html2canvas from 'html2canvas';
 import { useLocation } from 'react-router-dom';
 import TeacherDashboard from '../Teacher/TeacherDashbaord';
 import TeacherSidebar from '../Teacher/TeacherSideBar';
+import StudentSideBar from '../Student/StudentSideBar';
 
 export default function NoticeBoard() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -64,19 +65,21 @@ export default function NoticeBoard() {
   return (
     <div className="flex">
       {
-        location.pathname.startsWith('/school/teacher/') ? <TeacherSidebar /> : <Sidebar />
+        location.pathname.startsWith('/school/teacher/') ? <TeacherSidebar /> : location.pathname.startsWith('/school/student/') ? <StudentSideBar /> : <Sidebar />
       }
       <div className="ml-0 md:ml-64 w-full min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
         <MainHeader />
         <div className="p-4 sm:p-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-xl mb-6 shadow-lg border-l-4 border-blue-500">
             <h1 className="text-2xl font-bold text-gray-800">Notice Board</h1>
-            <button
-              onClick={() => setShowModal(true)}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition duration-300 text-sm font-medium"
-            >
-              + Add new
-            </button>
+            {
+              !location.pathname.startsWith('/school/student') && <button
+                onClick={() => setShowModal(true)}
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition duration-300 text-sm font-medium"
+              >
+                + Add new
+              </button>
+            }
           </div>
 
           {/* {events.length > 0 && (
@@ -129,7 +132,7 @@ export default function NoticeBoard() {
                 </div>
 
                 {hoveredIndex === index && (
-                  <div className="flex items-center space-x-3">
+                  <div className={`flex items-center space-x-3 ${location.pathname.startsWith('/school/student/') && " hidden "}`}>
                     <div onClick={() => setShowEditModal()} className="w-6 h-6 flex justify-center items-center rounded border border-gray-300 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer">
                       <FiEdit />
                     </div>

@@ -3,7 +3,7 @@ import { addSubject, AddSyllabusPersent, ClassSubject, deleteMultipleSubjects, g
 
 
 const subjectRoutes = express.Router();
-// /api/v2/subject/ClassId/
+// http://localhost:8000/api/v2/subject/ClassId/:id
 subjectRoutes.post("/add", addSubject);
 subjectRoutes.get('/all', getAllSubjects);
 subjectRoutes.get('/ClassId/:id', ClassSubject);

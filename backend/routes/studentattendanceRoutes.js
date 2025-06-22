@@ -3,7 +3,7 @@ import { createAttendance, deleteAttendance, getAllAttendance, getAttendanceById
 
 
 const studentAttendencrouter = express.Router();
-// http://localhost:8000/api/v8/student/attendance/add
+// http://localhost:8000/api/v8/student/attendance/student/
 studentAttendencrouter.post('/add', createAttendance);
 studentAttendencrouter.get('/student/:studentId', getAttendanceByStudentId);
 studentAttendencrouter.get('/today/by-class-subject', getTodayAttendanceByClassAndSubject);

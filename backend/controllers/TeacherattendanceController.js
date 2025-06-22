@@ -54,7 +54,13 @@ export const getAttendanceByUser = async (req, res) => {
 
 export const getAttendance = async (req, res) => {
   try {
-    const records = await TeacherAttendance.find()
+    const records = await TeacherAttendance.find().populate({
+      path: 'userId',
+      populate: {
+        path: 'userId',
+        select: 'name email profileImage',
+      },
+    })
     res.status(200).json(records);
   } catch (error) {
     res.status(500).json({ message: "Error fetching attendance", error });

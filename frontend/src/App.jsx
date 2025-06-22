@@ -46,6 +46,13 @@ import Assignment from "./Teacher/Assignment";
 import StudentProtected from "./Student/Routes/StudentProtected";
 import StudentDashBoard from "./Student/StudentDashBoard";
 import StudentLeave from "./Student/STUDENTLEAVE";
+import StudentLeaveforAdmin from "./Admin/StudentLeave";
+import TeacherAttendance from "./Admin/TeacherAttendance";
+import StudentAttendanceByAdmin from "./Admin/StudentAttendanceByAdmin";
+import Attendance from "./Student/Atendance";
+import StudentDetails from "./Student/StudentDetails";
+import AssignMentStudent from "./Student/AssignMentStudent";
+import MarkResult from "./Teacher/MarkResult";
 
 
 function App() {
@@ -82,7 +89,9 @@ function App() {
             <Route path="edit_teacher/:id" element={<EditTeacher />} />
             <Route path="view_teacher/:id" element={<ViewTeacher />} />
             <Route path="all_users" element={<AllUsers />} />
-            <Route path="leave-requser" element={<LeavRequesr />} />
+            <Route path="teacher-leave-request" element={<LeavRequesr />} />
+            <Route path="attendance/student" element={<StudentAttendanceByAdmin />} />
+            <Route path="student-leave-request" element={<StudentLeaveforAdmin />} />
             <Route path="create_staff" element={<CreateStaff />} />
             <Route path="notice-board" element={<NoticeBoard />} />
             <Route path="admin/setting" element={<Setting />}>
@@ -106,6 +115,7 @@ function App() {
             <Route path="students" element={<TeacherStudentLIst />} />
             <Route path="assignments" element={<Assignment />} />
             <Route path="notice-board" element={<NoticeBoard />} />
+            <Route path="add-result" element={<MarkResult />} />
             <Route path="leave_application" element={<LeaveApplication />} />
             <Route path="setting" element={<Setting />}>
               <Route index element={<Navigate to="profile" />} />
@@ -120,7 +130,16 @@ function App() {
           {/* Student Protected */}
           <Route path="/school/student/" element={<StudentProtected />}>
             <Route path="dashboard" element={<StudentDashBoard />} />
+            <Route path="attendance" element={<Attendance />} />
             <Route path="leave-request" element={<StudentLeave />} />
+            <Route path="details" element={<StudentDetails />} />
+            <Route path="notice-board" element={<NoticeBoard />} />
+            <Route path="assignments" element={<AssignMentStudent />} />
+            <Route path="setting" element={<Setting />}>
+              <Route index element={<Navigate to="profile" />} />
+              <Route path="profile" element={<ProfileSettings />} />
+              <Route path="security" element={<SecuritySettings />} />
+            </Route>
           </Route>
 
         </Routes>

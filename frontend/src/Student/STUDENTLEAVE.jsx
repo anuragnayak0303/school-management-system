@@ -33,7 +33,7 @@ export default function StudentLeave() {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get("http://localhost:8000/api/v10/student-leave/");
+        const { data } = await axios.get(`http://localhost:8000/api/v10/student-leave/${student?._id}`);
         setRequests(Array.isArray(data) ? data : data ? [data] : []);
       } catch (err) {
         console.error(err);
@@ -42,7 +42,7 @@ export default function StudentLeave() {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [student]);
 
   const update = (e) =>
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));

@@ -1,5 +1,5 @@
 import express from "express";
-import { applyLeave, deleteLeave, getAllLeaves, updateLeaveStatus } from "../controllers/leaveController.js";
+import { applyLeave, deleteLeave, getAllLeave, getAllLeaves, updateLeaveStatus } from "../controllers/leaveController.js";
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ router.post("/apply", applyLeave);
 router.get("/all", getAllLeaves);
 
 // Admin
-router.get("/my/:id", getAllLeaves);
+router.get("/my/:id", getAllLeave);
 
 router.put("/status/:id", updateLeaveStatus);
 // /api/v2/employees/leave/apply/delete/

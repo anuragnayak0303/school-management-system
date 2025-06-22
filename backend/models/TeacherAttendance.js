@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const attendanceSchema = new mongoose.Schema(
   {
     userId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'TeacherDetail',
       required: true,
     },
     punchInTime: {

@@ -28,39 +28,10 @@ import FeesBarChart from "./components/FeesBarChart";
 import LeaveRequestsCard from "./components/LeaveRequestsCard";
 import TopSubjectsCard from "./components/TopSubjectsCard";
 import StudentActivityCard from "./components/StudentActivityCard";
+import BestPerformerCard from "./components/BestPerformerCard";
+import StarStudentCard from "./components/StarStudentCard";
 
-const studentVisitData = [
-  { year: "2021", visits: 1200 },
-  { year: "2022", visits: 2100 },
-  { year: "2023", visits: 3000 },
-  { year: "2024", visits: 2500 },
-  { year: "2025", visits: 3600 },
-];
 
-const studentAdmissionData = [
-  { year: "2021", admissions: 850 },
-  { year: "2022", admissions: 1350 },
-  { year: "2023", admissions: 1800 },
-  { year: "2024", admissions: 2200 },
-  { year: "2025", admissions: 2650 },
-];
-
-const classWiseAdmissions = [
-  { year: "2021", Class1: 120, Class2: 100, Class3: 90 },
-  { year: "2022", Class1: 140, Class2: 110, Class3: 95 },
-  { year: "2023", Class1: 160, Class2: 120, Class3: 110 },
-  { year: "2024", Class1: 180, Class2: 150, Class3: 125 },
-  { year: "2025", Class1: 200, Class2: 170, Class3: 140 },
-];
-
-const quickLinks = [
-  { label: "Calendar", icon: "🗓️", bg: "bg-green-100", color: "text-green-600" },
-  { label: "Exam Result", icon: "📘", bg: "bg-blue-100", color: "text-blue-600" },
-  { label: "Attendance", icon: "📝", bg: "bg-yellow-100", color: "text-yellow-600" },
-  { label: "Fees", icon: "💰", bg: "bg-cyan-100", color: "text-cyan-600" },
-  { label: "Home Works", icon: "📋", bg: "bg-red-100", color: "text-red-600" },
-  { label: "Reports", icon: "📄", bg: "bg-sky-100", color: "text-sky-600" },
-];
 
 const Loader = () => (
   <div className="flex justify-center items-center h-60">
@@ -124,11 +95,11 @@ export default function Dashboard() {
         <MainHeader />
 
         <div className="p-4 sm:p-6">
-          <div className="text-sm text-gray-500 mb-2">Admin &gt; Dashboard</div>
-          <div className="w-full p-4 flex justify-between items-center ">
+          <div className="text-sm text-gray-500 mb-5">Admin &gt; Dashboard</div>
+          {/* <div className="w-full p-4 flex justify-between items-center ">
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Admin Dashboard</h1>
-            <button className="flex items-center space-x-2.5 p-1.5 cursor-pointer bg-rose-500 text-white font-semibold rounded"><FaUserPlus /> <span className="text-xs">Add New Student</span></button>
-          </div>
+            <button className="flex items-center space-x-2.5 p-1.5 cursor-pointer bg-rose-500 text-white font-semibold rounded"><span className="text-xs">Add New Student</span></button>
+          </div> */}
 
           <div className="w-full h-[15vh] rounded bg-[#202C4B] border border-[#202C4B] flex items-center mb-4">
             <div className="w-2/4 h-auto px-4 py-1.5 text-white space-y-3">
@@ -148,39 +119,35 @@ export default function Dashboard() {
               </>
             )}
           </div>
-          <div className="flex w-flex h-auto flex-col lg:flex-row gap-4  mt-5" >
+          <div className="flex w-flex  flex-col lg:flex-row gap-4  mt-5" >
             <AdminSheduleCard />
             <AdminAttendanceCard />
-            <div className=" w-full lg:w-[33%] h-full ">
+            <div className=" w-full h-full lg:w-[33%]  ">
               <QuickLinksCard />
               <PerformanceCard />
             </div>
           </div>
-          <div className="w-full h-auto  mt-5 lg:flex justify-between">
-            <div className="w-full lg:w-[65%] h-[42vh] ">
+          <div className="w-full   mt-5 lg:flex justify-between">
+            <div className="w-full lg:w-[65%] ">
               {/* student Graph */}
               <FeesBarChart />
             </div>
-            <div className="w-full mt-4 lg:mt-0 lg:w-[33%] h-[42vh] ">
+            <div className="w-full mt-4 lg:mt-0 lg:w-[33%] ">
               <LeaveRequestsCard />
             </div>
 
           </div>
 
-          <div className="w-full h-auto  lg:flex justify-between">
+          <div className="w-full lg:flex justify-between">
             <div className="w-full lg:w-[31%] mt-5 h-[57vh] ">
               <TopSubjectsCard />
             </div>
             <div className="w-full lg:w-[31%] mt-5 h-[57vh] ">
               <StudentActivityCard />
             </div>
-            <div className="w-full lg:w-[34%] flex h-[57vh] mt-5 border justify-between">
-              <div className="w-[200px] lg:w-[169px] h-full border border-amber-300">
-
-              </div>
-              <div className="w-[200px] lg:w-[169px] h-full border border-amber-800">
-
-              </div>
+            <div className="w-full lg:w-[34%] flex h-[57vh] mt-5  justify-between">
+              <BestPerformerCard />
+              <StarStudentCard />
             </div>
           </div>
         </div>

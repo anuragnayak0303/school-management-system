@@ -125,7 +125,7 @@ const TeacherSidebar = () => {
             <div className="ml-2">
               <SubItem to="/school/teacher/students" label="All Students" />
               <SubItem to="/school/teacher/assignments" label="Assignments" />
-              <SubItem to="/school/teacher/grades" label="Gradebook" />
+              {/* <SubItem to="/school/teacher/grades" label="Gradebook" /> */}
             </div>
           )}
 
@@ -137,9 +137,9 @@ const TeacherSidebar = () => {
           />
 
           <NavItem
-            to="/school/teacher/my_timetable"
+            to="/school/teacher/add-result"
             icon={<FaCalendarAlt size={18} />}
-            label="My Timetable"
+            label="Set Mark"
           />
 
           <NavItem
