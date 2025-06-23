@@ -100,6 +100,8 @@ export default function AddEventModal({ onClose }) {
                 <option value="">Select</option>
                 <option value="Meeting">Meeting</option>
                 <option value="Holiday">Holiday</option>
+                <option value="Event">Holiday</option>
+                <option value="Exam">Holiday</option>
                 <option value="Activity">Activity</option>
               </select>
             </div>

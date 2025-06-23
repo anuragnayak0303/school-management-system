@@ -6,6 +6,7 @@ import { createStudentMark, deleteStudentMark, getAllMarks, getMarksByStudent, u
 const Markrouter = express.Router();
 // http://localhost:8000/api/v11/exam/add
 // http://localhost:8000/api/v11/exam/student
+//http://localhost:8000/api/v11/exam/all
 Markrouter.post("/add", createStudentMark);
 Markrouter.get("/all", getAllMarks);
 Markrouter.get("/student/:id", getMarksByStudent);

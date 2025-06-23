@@ -34,6 +34,7 @@ export default function NoticeBoardCard() {
   const getEvents = async () => {
     try {
       const { data } = await axios.get(`http://localhost:8000/api/v8/event/all`);
+      console.log(data)
       setNotices(data);
     } catch (error) {
       console.error("Failed to fetch events:", error);
@@ -76,7 +77,7 @@ export default function NoticeBoardCard() {
                 {/* title and date */}
                 <div>
                   <p className="text-[12px] font-medium text-gray-700 leading-tight">{notice.title}</p>
-                  <p className="text-[12px] text-gray-500">Added on : {new Date(notice.date).toLocaleDateString()}</p>
+                  <p className="text-[12px] text-gray-500">{notice?.message}</p>
                 </div>
               </div>
             );

@@ -4,7 +4,7 @@ import { isSignIn } from '../middlewares/authMiddeware.js'
 
 const MarqueeRoute = expres.Router()
 // http://localhost:8000/api/marquee/add
-MarqueeRoute.post('/add', isSignIn, marquee)
+MarqueeRoute.post('/add',  marquee)
 MarqueeRoute.get('/get', GetMarquee)
 
 

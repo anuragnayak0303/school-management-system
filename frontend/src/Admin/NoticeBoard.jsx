@@ -131,6 +131,8 @@ export default function NoticeBoard() {
                   </div>
                 </div>
 
+                <p className='w h-full text-xs font-bold flex justify-center items-center '>{notice?.message}</p>
+
                 {hoveredIndex === index && (
                   <div className={`flex items-center space-x-3 ${location.pathname.startsWith('/school/student/') && " hidden "}`}>
                     <div onClick={() => setShowEditModal()} className="w-6 h-6 flex justify-center items-center rounded border border-gray-300 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer">

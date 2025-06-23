@@ -33,11 +33,11 @@ export const addClassController = async (req, res) => {
 //  getAllDepartmentsController
 export const getAllClassController = async (req, res) => {
     try {
-        const Classes = await ClassModel.find();
+        const Classes = await ClassModel.find().populate("")
         res.status(200).json(Classes
         )
     } catch (error) {
-        req.status(500).json({
+        res.status(500).json({
             success: false,
             message: "error while getting departments...",
             error

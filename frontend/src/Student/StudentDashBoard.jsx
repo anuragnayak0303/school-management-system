@@ -59,7 +59,6 @@ export default function StudentDashBoard() {
               <ClassFacility />
             </div>
           </div>
-
           {/* Bottom Section */}
           <div className="w-full mt-5 flex flex-col md:flex-row gap-5">
             <div className="w-full md:w-1/3">

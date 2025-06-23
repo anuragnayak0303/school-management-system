@@ -84,7 +84,7 @@ export const getAllMarks = async (req, res) => {
   try {
     const marks = await StudentMark.find()
       .populate("studentId", "name rollNo")
-      .populate("classId", "name")
+      .populate("classId")
       .populate("marks.subjectId", "subjectName");
     res.status(200).json({ success: true, data: marks });
   } catch (error) {

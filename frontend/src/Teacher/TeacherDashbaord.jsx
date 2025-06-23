@@ -138,7 +138,7 @@ export default function TeacherDashboard() {
                 </span>
               </div>
             </div>
-            <div className="p-2">
+            <div className="">
               <StudentMarksTable />
             </div>
           </div>

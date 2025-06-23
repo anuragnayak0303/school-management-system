@@ -1,158 +1,155 @@
-import React, { useState } from "react";
-import { FaAngleDown, FaCalendarAlt } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
-const students = [
-  {
-    id: "35013",
-    name: "Janet",
-    class: "III",
-    section: "A",
-    marks: 89,
-    cgpa: 4.2,
-    status: "Pass",
-    avatar: "https://randomuser.me/api/portraits/women/65.jpg",
-  },
-  {
-    id: "35013",
-    name: "Joann",
-    class: "IV",
-    section: "B",
-    marks: 88,
-    cgpa: 3.2,
-    status: "Pass",
-    avatar: "https://randomuser.me/api/portraits/women/85.jpg",
-  },
-  {
-    id: "35011",
-    name: "Kathleen",
-    class: "II",
-    section: "A",
-    marks: 69,
-    cgpa: 4.5,
-    status: "Pass",
-    avatar: "https://randomuser.me/api/portraits/women/24.jpg",
-  },
-  {
-    id: "35010",
-    name: "Gifford",
-    class: "I",
-    section: "B",
-    marks: 21,
-    cgpa: 4.5,
-    status: "Pass",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-  },
-  {
-    id: "35009",
-    name: "Lisa",
-    class: "II",
-    section: "B",
-    marks: 31,
-    cgpa: 3.9,
-    status: "Fail",
-    avatar: "https://randomuser.me/api/portraits/women/12.jpg",
-  },
+// ✅ Optional loader
+const Loader = () => (
+  <div className="flex justify-center items-center h-48">
+    <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-green-500"></div>
+  </div>
+);
+
+// ✅ Sample fallback chart data
+const fakeChartData = [
+  { label: "Class I", pass: 12, fail: 18 },
+  { label: "Class II", pass: 28, fail: 2 },
+  { label: "Class III", pass: 14, fail: 22},
+  { label: "Class IV", pass: 30, fail: 0 },
+  { label: "Class V", pass: 3, fail: 27},
 ];
 
-export default function StudentMarksTable() {
-  const [selectedClass, setSelectedClass] = useState("All Classes");
-  const [selectedSection, setSelectedSection] = useState("All Sections");
+const Card = ({ title, children }) => (
+  <div className="rounded-lg bg-white shadow dark:bg-gray-900 p-5">
+    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
+      {title}
+    </h3>
+    {children}
+  </div>
+);
 
-  const filtered = students.filter(
-    (s) =>
-      (selectedClass === "All Classes" || s.class === selectedClass) &&
-      (selectedSection === "All Sections" || s.section === selectedSection)
-  );
+export default function StudentMarksTable() {
+  const [examData, setExamData] = useState([]);
+  const [selectedExam, setSelectedExam] = useState("");
+  const [chartData, setChartData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // ✅ Commented out real fetch (keep for future)
+  /*
+  useEffect(() => {
+    axios.get("http://localhost:8000/api/v2/class/all").then((res) => {
+      // handle if needed
+    });
+
+    axios.get("http://localhost:8000/api/v11/exam/all").then((res) => {
+      const currentYear = new Date().getFullYear();
+      const data = Array.isArray(res.data.data)
+        ? res.data.data.filter(
+            (exam) => new Date(exam.createdAt).getFullYear() === currentYear
+          )
+        : [];
+      setExamData(data);
+
+      if (data.length) {
+        const sorted = [...data].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setSelectedExam(sorted[0].examName);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!selectedExam) return;
+    setLoading(true);
+    axios.get("http://localhost:8000/api/v11/exam/all").then((res) => {
+      const raw = Array.isArray(res.data.data) ? res.data.data : [];
+      const marks = raw.filter((mark) => mark.examName === selectedExam);
+
+      const grouped = {};
+      marks.forEach((mark) => {
+        const className = mark.classId?.Classname || "Unknown";
+        const pass = grouped[className]?.pass || 0;
+        const fail = grouped[className]?.fail || 0;
+
+        const totalMarks = Array.isArray(mark.marks)
+          ? mark.marks.reduce((acc, curr) => acc + curr.markObtained, 0)
+          : 0;
+        const avg = mark.marks?.length ? totalMarks / mark.marks.length : 0;
+        const isPass = avg >= 33;
+
+        grouped[className] = {
+          label: className,
+          pass: isPass ? pass + 1 : pass,
+          fail: isPass ? fail : fail + 1,
+        };
+      });
+
+      const result = Object.values(grouped);
+      setChartData(result);
+      setLoading(false);
+    });
+  }, [selectedExam]);
+  */
+
+  // ✅ Show fake data initially
+  useEffect(() => {
+    setTimeout(() => {
+      setChartData(fakeChartData);
+      setLoading(false);
+    }, 1000);
+  }, []);
 
   return (
-    <div className="w-full h-full bg-white rounded overflow-hidden">
-      {/* Header */}
-      <div className="flex justify-between items-center px-4 py-3 border-b bg-gradient-to-r from-blue-600 to-blue-400 text-white">
-        <h2 className="font-semibold text-base">Student Marks</h2>
-        <div className="flex gap-3 text-sm items-center">
-          {/* Class Filter */}
-          <button
-            onClick={() =>
-              setSelectedClass((prev) =>
-                prev === "All Classes" ? "I" : "All Classes"
-              )
-            }
-            className="flex items-center gap-1 bg-white text-blue-700 px-3 py-1 rounded-full border shadow-sm hover:bg-blue-100 transition"
-          >
-            <FaCalendarAlt className="text-sm" />
-            {selectedClass}
-            <FaAngleDown className="text-xs" />
-          </button>
-
-          {/* Section Filter */}
-          <button
-            onClick={() =>
-              setSelectedSection((prev) =>
-                prev === "All Sections" ? "A" : "All Sections"
-              )
-            }
-            className="flex items-center gap-1 bg-white text-blue-700 px-3 py-1 rounded-full border shadow-sm hover:bg-blue-100 transition"
-          >
-            <FaCalendarAlt className="text-sm" />
-            {selectedSection}
-            <FaAngleDown className="text-xs" />
-          </button>
-        </div>
+    <Card title="Pass vs Fail • Student Exam List">
+      <div className="mb-4">
+        <label className="text-sm font-medium mr-2">Select Exam:</label>
+        <select
+          className="border rounded px-2 py-1 text-sm"
+          value={selectedExam}
+          onChange={(e) => setSelectedExam(e.target.value)}
+        >
+          <option value="">-- Select Exam --</option>
+          {(Array.isArray(examData) ? examData : []).map((exam, idx) => (
+            <option key={idx} value={exam.examName}>
+              {exam.examName}
+            </option>
+          ))}
+        </select>
       </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm text-left">
-          <thead className="bg-blue-100 text-blue-800">
-            <tr>
-              <th className="py-2 px-4 font-medium">ID</th>
-              <th className="py-2 px-4 font-medium">Name</th>
-              <th className="py-2 px-4 font-medium">Class</th>
-              <th className="py-2 px-4 font-medium">Section</th>
-              <th className="py-2 px-4 font-medium">Marks %</th>
-              <th className="py-2 px-4 font-medium">CGPA</th>
-              <th className="py-2 px-4 font-medium">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((student, idx) => (
-              <tr
-                key={idx}
-                className="border-b border-b-gray-300 hover:bg-gray-50 transition-all"
-              >
-                <td className="py-3 px-4">{student.id}</td>
-                <td className="py-3 px-4 flex items-center gap-3">
-                  <img
-                    src={student.avatar}
-                    alt={student.name}
-                    className="w-8 h-8 rounded-full object-cover border"
-                  />
-                  <span className="text-gray-800 font-medium">
-                    {student.name}
-                  </span>
-                </td>
-                <td className="py-3 px-4">{student.class}</td>
-                <td className="py-3 px-4">{student.section}</td>
-                <td className="py-3 px-4 text-blue-600 font-semibold">
-                  {student.marks}%
-                </td>
-                <td className="py-3 px-4 text-indigo-600">{student.cgpa}</td>
-                <td className="py-3 px-4">
-                  <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold shadow-sm ${
-                      student.status === "Pass"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-700"
-                    }`}
-                  >
-                    {student.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <ResponsiveContainer width="100%" height={250}>
+          <AreaChart data={chartData} margin={{ top: 10, right: 5, left: 0, bottom: 0 }}>
+            <defs>
+              <linearGradient id="gradPass" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#10b981" stopOpacity={0.4} />
+                <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="gradFail" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#ef4444" stopOpacity={0.4} />
+                <stop offset="95%" stopColor="#ef4444" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+
+            <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
+            <XAxis dataKey="label" className="text-xs" />
+            <YAxis className="text-xs" />
+            <Tooltip contentStyle={{ background: "#ffffff", borderRadius: "0.5rem" }} labelStyle={{ fontSize: "0.75rem" }} />
+            <Area type="monotone" dataKey="pass" stroke="#10b981" fillOpacity={1} fill="url(#gradPass)" strokeWidth={2} />
+            <Area type="monotone" dataKey="fail" stroke="#ef4444" fillOpacity={1} fill="url(#gradFail)" strokeWidth={2} />
+          </AreaChart>
+        </ResponsiveContainer>
+      )}
+    </Card>
   );
 }

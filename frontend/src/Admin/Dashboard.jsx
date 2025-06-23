@@ -30,6 +30,7 @@ import TopSubjectsCard from "./components/TopSubjectsCard";
 import StudentActivityCard from "./components/StudentActivityCard";
 import BestPerformerCard from "./components/BestPerformerCard";
 import StarStudentCard from "./components/StarStudentCard";
+import StudentMarksTable from "../Teacher/components/StudentMarksTable";
 
 
 
@@ -137,7 +138,22 @@ export default function Dashboard() {
             </div>
 
           </div>
-
+          <div className="w-full mt-6 bg-white rounded-lg border border-gray-200 shadow-sm">
+            <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+              <h2 className="text-sm font-semibold text-gray-800">Student Marks</h2>
+              <div className="flex gap-2 text-sm text-gray-600">
+                <span className="flex items-center gap-1 cursor-pointer">
+                  <i className="fa fa-calendar" /> All Classes
+                </span>
+                <span className="flex items-center gap-1 cursor-pointer">
+                  <i className="fa fa-calendar" /> All Sections
+                </span>
+              </div>
+            </div>
+            <div className="">
+              <StudentMarksTable />
+            </div>
+          </div>
           <div className="w-full lg:flex justify-between">
             <div className="w-full lg:w-[31%] mt-5 h-[57vh] ">
               <TopSubjectsCard />
@@ -150,6 +166,8 @@ export default function Dashboard() {
               <StarStudentCard />
             </div>
           </div>
+
+
         </div>
       </div>
     </div>

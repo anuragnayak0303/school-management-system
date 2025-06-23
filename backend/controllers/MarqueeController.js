@@ -3,7 +3,7 @@ import Marqueemodel from "../models/Marquee.js"
 export const marquee = async (req, res) => {
     try {
         const { text } = req.body
-        const user = await Marqueemodel.findOne({ userId: req.user })
+        const user = await Marqueemodel.findOne()
         if (!user) {
             const Text = new Marqueemodel({
                 text,
