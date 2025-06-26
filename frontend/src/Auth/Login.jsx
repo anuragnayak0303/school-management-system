@@ -1,24 +1,25 @@
+// src/pages/Login.jsx
+
 import React, { useState } from "react";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import { data, useNavigate } from "react-router-dom";
-import login_img from '../assets/login.png'
+import { useNavigate } from "react-router-dom";
+import { FaEnvelope, FaLock } from "react-icons/fa";
+import schoolIllustration from "../assets/ChatGPT Image Jun 24, 2025, 11_51_52 AM.png"; // ✅ your custom image
+
 export default function Login() {
   const navigate = useNavigate();
-
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
   const togglePassword = () => setShowPassword(!showPassword);
-
-  const roles = ["Admin", "Teacher", "Student", "Staff"];
+  const roles = ["Admin", "Teacher", "Student"];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!role) {
       toast.error("Please select a role");
       return;
@@ -28,28 +29,19 @@ export default function Login() {
       const res = await axios.post("http://localhost:8000/api/v2/user/login", {
         email,
         password,
-        role, // Pass role in the request
+        role,
       });
 
       if (res?.data?.success) {
         localStorage.setItem(
           "auth",
-          JSON.stringify({
-            user: res?.data?.user,
-            token: res?.data?.token,
-          })
+          JSON.stringify({ user: res?.data?.user, token: res?.data?.token })
         );
-
         toast.success(res?.data?.message);
-        console.log(res?.data)
-        // Redirect based on role
-        if (res?.data?.user?.role === "Admin") {
-          navigate("/school/admin/dashboard");
-        } else if (res?.data?.user?.role === "Teacher") {
-          navigate("/school/teacher/dashboard");
-        } else if (res?.data?.user?.role === "Student") {
-          navigate("/school/student/dashboard");
-        }
+
+        if (res?.data?.user?.role === "Admin") navigate("/school/admin/dashboard");
+        else if (res?.data?.user?.role === "Teacher") navigate("/school/teacher/dashboard");
+        else if (res?.data?.user?.role === "Student") navigate("/school/student/dashboard");
 
         window.location.reload();
       }
@@ -59,56 +51,55 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="h-screen  w-full flex flex-col md:flex-row bg-gradient-to-br from-blue-100 via-pink-100 to-purple-100 px-4 py-5">
       <Toaster />
-      <div className="flex w-full max-w-5xl bg-white rounded-xl shadow-lg overflow-hidden animate-fade-in">
-        {/* Left image */}
-        <div className="hidden md:block md:w-1/2">
+
+      <div className="w-full rounded-md flex  ">
+        {/* Left Side: Image */}
+        <div className="hidden lg:block w-full md:w-1/2 h-[300px] rounded-md md:h-auto">
           <img
-            src='https://media.istockphoto.com/id/1011441292/photo/login-written-on-an-old-typewriter.jpg?s=1024x1024&w=is&k=20&c=R-EECNShcfjAJofLxggBjgY9X1sf1AF2QTGI0ctqu3w='
-            alt="Login"
-            className="object-cover h-full w-full"
+            src={schoolIllustration}
+            alt="School with students"
+            className="w-full h-full object-cover rounded-s-md animate-fade-in"
           />
         </div>
 
-        {/* Right form */}
-        <div className="w-full md:w-1/2 p-8 sm:p-12">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">
-            Welcome Back 👋
-          </h2>
+        {/* Right Side: Login Form */}
+        <div className="w-full md:w-1/2 lg:rounded-e-md bg-white/70 backdrop-blur-xl flex flex-col justify-center p-10 md:p-16 shadow-xl">
+          <h2 className="text-3xl font-extrabold text-gray-800 mb-2">Welcome Back 👋</h2>
+          <p className="text-gray-600 mb-6">Login to access your school dashboard</p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address
-              </label>
-              <input
-                type="email"
-                value={email}
 
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="example@mail.com"
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+            {/* Email */}
+            <div className="relative">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Email Address</label>
+              <div className="relative">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  placeholder="example@mail.com"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl shadow-inner outline-0 focus:ring-2 focus:ring-blue-400 transition"
+                />
+                <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
+              </div>
             </div>
 
             {/* Password */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-              </label>
+            <div className="relative">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Password</label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
-
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  placeholder="Enter your password"
-                  className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="••••••••"
+                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-xl shadow-inner outline-0 focus:ring-2 focus:ring-purple-400 transition"
                 />
+                <FaLock className="absolute left-3 top-3 text-gray-400" />
                 <button
                   type="button"
                   onClick={togglePassword}
@@ -121,49 +112,45 @@ export default function Login() {
 
             {/* Role Selection */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Select Role
-              </label>
-              <div className="grid grid-cols-2 gap-3">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Select Role</label>
+              <div className="grid grid-cols-3 gap-2">
                 {roles.map((r) => (
                   <label
                     key={r}
-                    className={`flex items-center gap-2 px-4 py-2 border rounded cursor-pointer transition ${role === r
-                      ? "bg-blue-100 border-blue-500"
-                      : "border-gray-300"
+                    className={`flex justify-center items-center px-3 py-2 border rounded-xl text-sm cursor-pointer transition font-medium ${role === r
+                        ? "bg-purple-200 border-purple-500 text-purple-800"
+                        : "border-gray-300"
                       }`}
                   >
                     <input
                       type="radio"
                       name="role"
                       value={r}
-                      onDoubleClick={() => setRole()}
                       checked={role === r}
                       onChange={() => setRole(r)}
-                      className="form-radio text-blue-500"
+                      className="hidden"
                     />
-                    <span className="text-gray-700">{r}</span>
+                    {r}
                   </label>
                 ))}
               </div>
             </div>
 
-            {/* Submit */}
+            {/* Submit Button */}
             <div>
               <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition"
+                className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold py-2 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transform transition-all duration-300"
               >
                 Login
               </button>
             </div>
           </form>
 
-          <div className="mt-4 text-sm text-center text-gray-500">
+          {/* Register Link */}
+          <div className="mt-6 text-sm text-center text-gray-600">
             Don’t have an account?{" "}
-            <a href="/register" className="text-blue-600 hover:underline">
-              Register
-            </a>
+            <a href="/register" className="text-blue-600 hover:underline font-medium">Register</a>
           </div>
         </div>
       </div>

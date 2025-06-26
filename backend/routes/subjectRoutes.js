@@ -1,10 +1,10 @@
 import express from "express";
-import { addSubject, AddSyllabusPersent, ClassSubject, deleteMultipleSubjects, getAllSubjects, getTeachersBySubjects, updateSubject } from "../controllers/subjectController.js";
+import {  addSubjects, AddSyllabusPersent, ClassSubject, deleteMultipleSubjects, getAllSubjects, getTeachersBySubjects, updateSubject } from "../controllers/subjectController.js";
 
 
 const subjectRoutes = express.Router();
-// http://localhost:8000/api/v2/subject/ClassId/:id
-subjectRoutes.post("/add", addSubject);
+// http://localhost:8000/api/v2/subject/add
+subjectRoutes.post("/add", addSubjects);
 subjectRoutes.get('/all', getAllSubjects);
 subjectRoutes.get('/ClassId/:id', ClassSubject);
 subjectRoutes.post("/by-subjects", getTeachersBySubjects)

@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const SubjectSearchFilter = ({ search, setSearch, filterClass, setFilterClass, classList }) => {
+  useEffect(() => {
+    setFilterClass(classList[0]._id)
+  }, [])
+
   return (
     <div className="flex flex-col sm:flex-row gap-4 mb-4">
       <input
@@ -15,7 +19,6 @@ const SubjectSearchFilter = ({ search, setSearch, filterClass, setFilterClass, c
         onChange={(e) => setFilterClass(e.target.value)}
         className="px-4 py-2 border rounded-md outline-0 bg-white border-gray-200 w-full sm:w-1/2 text-sm"
       >
-        <option value="">All Classes</option>
         {classList.map((cls) => (
           <option key={cls._id} value={cls._id}>
             {cls.Classname}

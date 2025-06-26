@@ -21,9 +21,9 @@ const Loader = () => (
 const fakeChartData = [
   { label: "Class I", pass: 12, fail: 18 },
   { label: "Class II", pass: 28, fail: 2 },
-  { label: "Class III", pass: 14, fail: 22},
+  { label: "Class III", pass: 14, fail: 22 },
   { label: "Class IV", pass: 30, fail: 0 },
-  { label: "Class V", pass: 3, fail: 27},
+  { label: "Class V", pass: 3, fail: 27 },
 ];
 
 const Card = ({ title, children }) => (
@@ -42,62 +42,62 @@ export default function StudentMarksTable() {
   const [loading, setLoading] = useState(true);
 
   // ✅ Commented out real fetch (keep for future)
-  /*
-  useEffect(() => {
-    axios.get("http://localhost:8000/api/v2/class/all").then((res) => {
-      // handle if needed
-    });
 
-    axios.get("http://localhost:8000/api/v11/exam/all").then((res) => {
-      const currentYear = new Date().getFullYear();
-      const data = Array.isArray(res.data.data)
-        ? res.data.data.filter(
-            (exam) => new Date(exam.createdAt).getFullYear() === currentYear
-          )
-        : [];
-      setExamData(data);
+  // useEffect(() => {
+  //   axios.get("http://localhost:8000/api/v2/class/all").then((res) => {
+  //     // handle if needed
+  //   });
 
-      if (data.length) {
-        const sorted = [...data].sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
-        setSelectedExam(sorted[0].examName);
-      }
-    });
-  }, []);
+  //   axios.get("http://localhost:8000/api/v11/exam/all").then((res) => {
+  //     const currentYear = new Date().getFullYear();
+  //     const data = Array.isArray(res.data.data)
+  //       ? res.data.data.filter(
+  //         (exam) => new Date(exam.createdAt).getFullYear() === currentYear
+  //       )
+  //       : [];
+  //     setExamData(data);
 
-  useEffect(() => {
-    if (!selectedExam) return;
-    setLoading(true);
-    axios.get("http://localhost:8000/api/v11/exam/all").then((res) => {
-      const raw = Array.isArray(res.data.data) ? res.data.data : [];
-      const marks = raw.filter((mark) => mark.examName === selectedExam);
+  //     if (data.length) {
+  //       const sorted = [...data].sort(
+  //         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  //       );
+  //       setSelectedExam(sorted[0].examName);
+  //     }
+  //   });
+  // }, []);
 
-      const grouped = {};
-      marks.forEach((mark) => {
-        const className = mark.classId?.Classname || "Unknown";
-        const pass = grouped[className]?.pass || 0;
-        const fail = grouped[className]?.fail || 0;
+  // useEffect(() => {
+  //   if (!selectedExam) return;
+  //   setLoading(true);
+  //   axios.get("http://localhost:8000/api/v11/exam/all").then((res) => {
+  //     const raw = Array.isArray(res.data.data) ? res.data.data : [];
+  //     const marks = raw.filter((mark) => mark.examName === selectedExam);
 
-        const totalMarks = Array.isArray(mark.marks)
-          ? mark.marks.reduce((acc, curr) => acc + curr.markObtained, 0)
-          : 0;
-        const avg = mark.marks?.length ? totalMarks / mark.marks.length : 0;
-        const isPass = avg >= 33;
+  //     const grouped = {};
+  //     marks.forEach((mark) => {
+  //       const className = mark.classId?.Classname || "Unknown";
+  //       const pass = grouped[className]?.pass || 0;
+  //       const fail = grouped[className]?.fail || 0;
 
-        grouped[className] = {
-          label: className,
-          pass: isPass ? pass + 1 : pass,
-          fail: isPass ? fail : fail + 1,
-        };
-      });
+  //       const totalMarks = Array.isArray(mark.marks)
+  //         ? mark.marks.reduce((acc, curr) => acc + curr.markObtained, 0)
+  //         : 0;
+  //       const avg = mark.marks?.length ? totalMarks / mark.marks.length : 0;
+  //       const isPass = avg >= 33;
 
-      const result = Object.values(grouped);
-      setChartData(result);
-      setLoading(false);
-    });
-  }, [selectedExam]);
-  */
+  //       grouped[className] = {
+  //         label: className,
+  //         pass: isPass ? pass + 1 : pass,
+  //         fail: isPass ? fail : fail + 1,
+  //       };
+  //     });
+
+  //     const result = Object.values(grouped);
+  //     setChartData(result);
+  //     setLoading(false);
+  //   });
+  // }, [selectedExam]);
+
 
   // ✅ Show fake data initially
   useEffect(() => {

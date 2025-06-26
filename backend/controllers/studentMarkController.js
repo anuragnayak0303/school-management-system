@@ -96,7 +96,25 @@ export const getAllMarks = async (req, res) => {
 export const getMarksByStudent = async (req, res) => {
   try {
     const { id } = req.params;
-    const marks = await StudentMark.find({ studentId: id })
+    const marks = await StudentMark.find({ classId: id })
+      .populate({
+        path: "studentId",
+        populate: {
+          path: "userId"
+        }
+      })
+      .populate("classId")
+      .populate("marks.subjectId")
+    res.status(200).json({ success: true, data: marks });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error fetching student marks", error });
+  }
+};
+export const getMarksByClass = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id)
+    const marks = await StudentMark.find({ classId: id })
       .populate({
         path: "studentId",
         populate: {
@@ -132,3 +150,5 @@ export const deleteStudentMark = async (req, res) => {
     res.status(500).json({ success: false, message: "Delete failed", error });
   }
 };
+
+

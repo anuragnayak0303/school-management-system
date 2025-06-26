@@ -1,4 +1,7 @@
 import ClassModel from "../models/Class.js"
+import StudentAdmission from "../models/StudentAdmission.js"
+import Subject from "../models/Subject.js"
+import TeacherDetail from "../models/TeacherDetail.js"
 
 
 export const addClassController = async (req, res) => {
@@ -77,16 +80,33 @@ export const updateClassCotroller = async (req, res) => {
 // deleteDepartmentController
 export const DeleteClassCotroller = async (req, res) => {
     try {
-        await ClassModel.findByIdAndDelete({ _id: req.params.id })
+        const classId = req.params.id;
+
+        const [subjectLinked, studentLinked, teacherLinked] = await Promise.all([
+            Subject.findOne({ classId }),
+            StudentAdmission.findOne({ class: classId }),
+            TeacherDetail.findOne({ Class: classId }),
+        ]);
+
+        if (subjectLinked || studentLinked || teacherLinked) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Cannot delete this class because it is currently linked with subjects, students, or teachers. Please remove all associations before deletion.",
+            });
+        }
+
+        await ClassModel.findByIdAndDelete(classId);
+
         res.status(200).json({
             success: true,
-            message: "Class deleted!"
-        })
+            message: "The class has been successfully deleted.",
+        });
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Error while deleting department...",
-            error
-        })
+            message: "An error occurred while deleting the class.",
+            error,
+        });
     }
-}
+};

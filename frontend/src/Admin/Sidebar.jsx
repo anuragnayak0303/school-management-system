@@ -147,6 +147,7 @@ const Sidebar = () => {
               <div className="mt-2 ml-4 border-l border-gray-200 pl-3 space-y-1">
                 <SubItem to="/school/admin/academy/subject" label="Subject" />
                 <SubItem to="/school/admin/academy/all_classess" label="All Classes" />
+                <SubItem to="/school/admin/academy/all_result" label="Result" />
               </div>
             )}
           </div>
@@ -168,7 +169,7 @@ const Sidebar = () => {
             {attendanceOpen && (
               <div className="mt-2 ml-4 border-l border-gray-200 pl-3 space-y-1">
                 <SubItem to="/school/admin/attendance/student" label="Student Attendance" />
-                <SubItem to="/school/admin/attendance/teacher" label="Teacher Attendance" />
+                {/* <SubItem to="/school/admin/attendance/teacher" label="Teacher Attendance" /> */}
               </div>
             )}
           </div>

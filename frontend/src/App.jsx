@@ -53,6 +53,7 @@ import Attendance from "./Student/Atendance";
 import StudentDetails from "./Student/StudentDetails";
 import AssignMentStudent from "./Student/AssignMentStudent";
 import MarkResult from "./Teacher/MarkResult";
+import AllStudentMark from "./Admin/AllStudentMark";
 
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="academy/subject" element={<CourseManagement />} />
             <Route path="academy/all_classess" element={<AllClassess />} />
+            <Route path="academy/all_result" element={<AllStudentMark/>} />
             <Route path="vister_admission_list" element={<VisterAdmission />} />
             <Route path="ert-list" element={<ERTlist />} />
             <Route path="admission_from" element={<StudentAdmissionList />} />
