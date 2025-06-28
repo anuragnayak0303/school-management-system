@@ -145,8 +145,8 @@ const Sidebar = () => {
             </button>
             {academicOpen && (
               <div className="mt-2 ml-4 border-l border-gray-200 pl-3 space-y-1">
-                <SubItem to="/school/admin/academy/subject" label="Subject" />
                 <SubItem to="/school/admin/academy/all_classess" label="All Classes" />
+                <SubItem to="/school/admin/academy/subject" label="Al Subject" />
                 <SubItem to="/school/admin/academy/all_result" label="Result" />
               </div>
             )}

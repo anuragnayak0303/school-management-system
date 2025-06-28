@@ -8,127 +8,111 @@ import axios from 'axios';
 export default function EditTeacher() {
     const { id } = useParams();
     const formRef = useRef();
+    const navigate = useNavigate();
+
     const [teacherDetails, setTeacherDetails] = useState({});
     const [allClasses, setAllClasses] = useState([]);
     const [classSubjectData, setClassSubjectData] = useState([]);
     const [allSubjectsByClass, setAllSubjectsByClass] = useState({});
-    const nav = useNavigate()
+
     useEffect(() => {
         fetchInitialData();
     }, [id]);
 
     const fetchInitialData = async () => {
-        await Promise.all([getClasses(), getSingleData()]);
+        await Promise.all([loadClasses(), loadTeacherData()]);
     };
 
-    const getClasses = async () => {
+    const loadClasses = async () => {
         try {
-            const { data } = await axios.get("http://localhost:8000/api/v2/class/all");
+            const { data } = await axios.get('http://localhost:8000/api/v2/class/all');
             setAllClasses(data);
         } catch {
-            toast.error("Error fetching classes");
+            toast.error('Error fetching classes');
         }
     };
 
-    const getSingleData = async () => {
+    const loadTeacherData = async () => {
         try {
             const { data } = await axios.get(`http://localhost:8000/api/teachers/getSingle/${id}`);
             setTeacherDetails(data);
 
-            const grouped = data.subject?.reduce((acc, subj) => {
+            const grouped = (data.subject || []).reduce((acc, subj) => {
                 acc[subj.classId] = acc[subj.classId] || [];
                 acc[subj.classId].push(subj._id);
                 return acc;
             }, {});
 
-            const classData = Object.entries(grouped || {}).map(([classId, subjects]) => ({
-                classId,
-                subjects
-            }));
+            setClassSubjectData(Object.entries(grouped).map(([classId, subjects]) => ({
+                classId, subjects
+            })));
 
-            setClassSubjectData(classData);
-
-            const allSubjects = await Promise.all(
-                Object.keys(grouped || {}).map(classId =>
-                    axios.get(`http://localhost:8000/api/v2/subject/ClassId/${classId}`)
-                        .then(res => ({ classId, subjects: res.data }))
-                )
+            const subjectRequests = Object.keys(grouped).map(classId =>
+                axios.get(`http://localhost:8000/api/v2/subject/ClassId/${classId}`)
+                    .then(res => ({ classId, subjects: res.data }))
             );
+            const results = await Promise.all(subjectRequests);
 
-            const subjectsByClass = allSubjects.reduce((acc, item) => {
-                acc[item.classId] = item.subjects;
+            const sbc = results.reduce((acc, r) => {
+                acc[r.classId] = r.subjects;
                 return acc;
             }, {});
+            setAllSubjectsByClass(sbc);
 
-            setAllSubjectsByClass(subjectsByClass);
         } catch {
-            toast.error("Failed to load teacher details");
+            toast.error('Failed to load teacher details');
         }
     };
 
-    const handleClassChange = async (e) => {
-        const selectedId = e.target.value;
-        if (!selectedId || classSubjectData.some(cls => cls.classId === selectedId)) return;
+    const handleClassChange = async e => {
+        const classId = e.target.value;
+        if (!classId || classSubjectData.some(c => c.classId === classId)) return;
 
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v2/subject/ClassId/${selectedId}`);
-            setAllSubjectsByClass(prev => ({ ...prev, [selectedId]: data }));
-            setClassSubjectData(prev => [...prev, { classId: selectedId, subjects: [] }]);
+            const { data } = await axios.get(`http://localhost:8000/api/v2/subject/ClassId/${classId}`);
+            setAllSubjectsByClass(prev => ({ ...prev, [classId]: data }));
+            setClassSubjectData(prev => [...prev, { classId, subjects: [] }]);
         } catch {
-            toast.error("Failed to load subjects");
+            toast.error('Failed to load subjects');
         }
     };
 
     const handleSubjectChange = (classId, subjectId, checked) => {
         setClassSubjectData(prev =>
-            prev.map(cls =>
-                cls.classId === classId
-                    ? {
-                        ...cls,
-                        subjects: checked
-                            ? [...cls.subjects, subjectId]
-                            : cls.subjects.filter(id => id !== subjectId)
-                    }
-                    : cls
+            prev.map(c =>
+                c.classId === classId
+                    ? { ...c, subjects: checked ? [...c.subjects, subjectId] : c.subjects.filter(sid => sid !== subjectId) }
+                    : c
             )
         );
     };
 
-    const removeClass = (classId) => {
-        setClassSubjectData(prev => prev.filter(cls => cls.classId !== classId));
+    const removeClass = classId => {
+        setClassSubjectData(prev => prev.filter(c => c.classId !== classId));
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
-        const form = formRef.current;
-        const formData = new FormData(form);
-
+        const formData = new FormData(formRef.current);
         formData.append('classes', JSON.stringify(classSubjectData));
 
-        const bankFields = ["accountName", "accountNumber", "bankName", "ifscCode", "branchName"];
-        bankFields.forEach(field => {
-            const value = form[field]?.value;
-            if (value) {
-                formData.append(`bankDetails[${field}]`, value);
-            }
+        ['accountName', 'accountNumber', 'bankName', 'ifscCode', 'branchName'].forEach(field => {
+            const val = formRef.current[field]?.value;
+            if (val) formData.append(`bankDetails[${field}]`, val);
         });
 
         try {
             const res = await axios.put(`http://localhost:8000/api/teachers/edit/${id}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-
             if (res.status === 200) {
-                toast.success("Teacher updated successfully!");
-                setTimeout(() => {
-                    nav('/school/admin/all_teacher')
-                }, 2000);
+                toast.success('Teacher updated successfully!');
+                setTimeout(() => navigate('/school/admin/all_teacher'), 1500);
             } else {
-                toast.error("⚠️ Update failed.");
+                toast.error('Update failed.');
             }
-        } catch (e) {
-            console.error(e);
-            toast.error("❌ Failed to update teacher.");
+        } catch {
+            toast.error('Failed to update teacher.');
         }
     };
     return (
@@ -139,7 +123,7 @@ export default function EditTeacher() {
                 <MainHeader />
                 <div className="p-4 sm:p-6">
                     <div className="text-sm text-gray-500 mb-2">Admin &gt; Edit Teacher</div>
-                    <div className="flex justify-between items-center bg-white p-4 rounded-md mb-6 shadow-sm">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-4 rounded-xl mb-6 shadow-lg border-l-4 border-blue-500">
                         <h1 className="text-xl font-bold text-gray-800">Edit Teacher</h1>
                         <NavLink to={'/school/admin/all_teacher'} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
                             All Teachers
@@ -148,12 +132,12 @@ export default function EditTeacher() {
 
                     <form ref={formRef} onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">
                         {/* Personal Details */}
-                        <div className="bg-white rounded-lg shadow-md">
-                            <h2 className="text-xl bg-indigo-200 p-4 font-bold rounded-t-lg">Personal Details</h2>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-6 pb-6">
+                        <div className="bg-white rounded border border-gray-300 shadow-md">
+                            <h2 className="text-xl bg-indigo-200 p-4 font-bold">Personal Details</h2>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-6 pt-6 pb-6">
                                 <div>
                                     <label className="block text-sm font-medium mb-1">Upload Photo</label>
-                                    <input name="photo" type="file" accept="image/*" className="block w-full text-sm text-gray-700" />
+                                    <input name="photo" type="file" accept="image/*" className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white shadow-md focus:outline-0" />
                                 </div>
                                 {[
                                     { name: "teacherId", label: "Teacher ID", type: "text", maxLength: 13, defaultValue: teacherDetails.teacherId },
@@ -178,7 +162,7 @@ export default function EditTeacher() {
                                             type={field.type}
                                             maxLength={field.maxLength}
                                             defaultValue={field.defaultValue}
-                                            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+                                            className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white shadow-md focus:outline-0"
                                         />
                                     </div>
                                 ))}
@@ -186,48 +170,74 @@ export default function EditTeacher() {
                         </div>
 
                         {/* Class & Subject Details */}
-                        <div className="bg-white rounded-xl shadow-md">
-                            <h2 className="bg-indigo-200 rounded-t-xl px-4 py-2 font-semibold text-blue-800">Class & Subject Details</h2>
+                        <div className="bg-white rounded border border-gray-300 shadow-md">
+                            <h2 className="text-xl bg-indigo-200 p-4 font-bold rounded">
+                                Class & Subject Details
+                            </h2>
                             <div className="p-4 space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium mb-1">Add Class</label>
+                                    <label className="text-sm font-medium block mb-1">Add Class</label>
                                     <select onChange={handleClassChange} className="w-full border border-gray-300 rounded-md px-3 py-2">
                                         <option value="">-- Select a class --</option>
-                                        {allClasses.map(cls => (
-                                            <option key={cls._id} value={cls._id}>
-                                                {classSubjectData.some(c => c.classId === cls._id) ? "✓ " : ""}
-                                                {cls.Classname}
+                                        {allClasses.map(c => (
+                                            <option key={c._id} value={c._id}>
+                                                {classSubjectData.some(x => x.classId === c._id) ? '✓ ' : ''}{c.Classname}
                                             </option>
                                         ))}
                                     </select>
                                 </div>
-                                {classSubjectData.map((cls, idx) => (
-                                    <div key={idx} className="bg-gray-100 rounded p-4 mb-2">
-                                        <div className="flex justify-between items-center mb-2">
-                                            <h3 className="font-semibold text-blue-600">
-                                                Class: {allClasses.find(c => c._id === cls.classId)?.Classname || cls.classId}
+
+                                {classSubjectData.map((cls, idx) => {
+                                    const subjects = allSubjectsByClass[cls.classId] || [];
+                                    return (
+                                        <div key={idx} className="relative bg-white shadow-xl rounded-lg border-2 border-indigo-300 p-6">
+                                            <h3 className="absolute -top-4 left-4 bg-indigo-600 text-white px-4 py-1 rounded-md shadow text-sm font-semibold">
+                                                Class {allClasses.find(c => c._id === cls.classId)?.Classname}
                                             </h3>
-                                            <button type="button" onClick={() => removeClass(cls.classId)} className="text-red-500 text-sm">Remove</button>
+                                            <button
+                                                type="button"
+                                                onClick={() => removeClass(cls.classId)}
+                                                className="absolute top-2 right-3 text-red-500 text-sm hover:underline"
+                                            >
+                                                Remove
+                                            </button>
+                                            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                                                {subjects.map(s => {
+                                                    const assigned = s.define_teacher;
+                                                    const isCurrent = assigned === id;
+                                                    const disabled = assigned && !isCurrent;
+                                                    const checked = cls.subjects.includes(s._id);
+
+                                                    return (
+                                                        <label
+                                                            key={s._id}
+                                                            className={`flex items-center space-x-2 text-sm border px-3 py-2 rounded-md shadow-sm ${disabled ? 'bg-red-50 border-red-300 text-red-600' : 'bg-blue-50 border-blue-300'
+                                                                }`}
+                                                        >
+                                                            <input
+                                                                type="checkbox"
+                                                                disabled={disabled}
+                                                                checked={checked}
+                                                                onChange={() => {
+                                                                    if (disabled) toast.error('Subject already assigned to another teacher');
+                                                                    else handleSubjectChange(cls.classId, s._id, !checked);
+                                                                }}
+                                                            />
+                                                            <span className={disabled ? 'line-through' : ''}>{s.subjectName}</span>
+                                                            {isCurrent && <span className="text-green-600 text-xs ml-auto">✔️ Yours</span>}
+                                                        </label>
+                                                    );
+                                                })}
+                                            </div>
                                         </div>
-                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                                            {(allSubjectsByClass[cls.classId] || []).map(subject => (
-                                                <label key={subject._id} className="flex items-center gap-2 text-sm">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={cls.subjects.includes(subject._id)}
-                                                        onChange={(e) => handleSubjectChange(cls.classId, subject._id, e.target.checked)}
-                                                    />
-                                                    {subject.subjectName}
-                                                </label>
-                                            ))}
-                                        </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </div>
 
                         {/* Gender, Status, Blood */}
-                        <div className="bg-white rounded-xl shadow-md">
+                        <div className="bg-white rounded border border-gray-300 shadow-md">
+                            <h2 className="bg-indigo-200 rounded px-4 py-2 font-semibold text-blue-800">Gander and Some Other Details</h2>
                             <div className="grid grid-cols-1 md:grid-cols-3 p-4 gap-4">
                                 {[
                                     { name: "gender", label: "Gender", type: "select", options: ["Male", "Female"] },
@@ -262,8 +272,8 @@ export default function EditTeacher() {
                         </div>
 
                         {/* Bank Details */}
-                        <div className="bg-white rounded-xl shadow-md">
-                            <h2 className="bg-indigo-200 rounded-t-xl px-4 py-2 font-semibold text-blue-800">Bank Details</h2>
+                        <div className="bg-white rounded border border-gray-300 shadow-md">
+                            <h2 className="bg-indigo-200 rounded px-4 py-2 font-semibold text-blue-800">Bank Details</h2>
                             <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {[
                                     { name: "accountName", label: "Account Holder Name", defaultValue: teacherDetails.bankDetails?.accountName },

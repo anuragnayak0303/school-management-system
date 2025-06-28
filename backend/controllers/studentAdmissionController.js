@@ -49,7 +49,7 @@ export const submitAdmission = async (req, res) => {
             guardianRelation = '',
             fullAddress = ''
         } = req.body;
-
+        console.log(req.file)
         // console.log(req.body)
         // Check required fields
         if (!admissionNumber || !rollNumber || !firstName || !lastName || !email || !className) {
@@ -63,14 +63,14 @@ export const submitAdmission = async (req, res) => {
         }
 
         // Handle photo uploads
-        const getFilePath = (field) => req.files?.[field]?.[0]?.filename || "";
+        // const getFilePath = (field) => ;
 
         const user = new userModel({
             name: `${firstName} ${lastName}`,
             email,
             password: await hashedPassword(rollNumber),
             role: "Student",
-            profileImage: getFilePath("photo") // ensure front-end uses name="photo"
+            profileImage: req.file?.filename || "" // ensure front-end uses name="photo"
         });
         await user.save();
 
@@ -100,14 +100,12 @@ export const submitAdmission = async (req, res) => {
                 email: fatherEmail,
                 phone: fatherPhone,
                 occupation: fatherOccupation,
-                photo: getFilePath("fatherPhoto")
             },
             mother: {
                 name: motherName,
                 email: motherEmail,
                 phone: motherPhone,
                 occupation: motherOccupation,
-                photo: getFilePath("motherPhoto")
             },
         });
 
@@ -141,6 +139,15 @@ export const GetDataById = async (req, res) => {
     try {
         const data = await StudentAdmission.findOne({ userId: req.user }).populate("userId").populate("class")
         res.send(data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+export const GetDataByIdforAdmin = async (req, res) => {
+    try {
+        const data = await StudentAdmission.findOne({ _id: req.params.id }).populate("userId")
+        res.send(data)
+        console.log(req.params.id)
     } catch (error) {
         console.log(error)
     }

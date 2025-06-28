@@ -316,3 +316,85 @@
 .animate-slideDown {
   animation: slideDown 0.4s ease-out forwards;
 }
+
+@keyframes scale-up {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scale-up {
+  animation: scale-up 0.2s ease-out forwards;
+}
+
+@keyframes scale-up {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-up {
+  animation: scale-up 0.2s ease-out;
+}
+
+
+
+@keyframes bounce-delay-0 {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes bounce-delay-1 {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes bounce-delay-2 {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-bounce-delay-0 {
+  animation: bounce-delay-0 1s ease-in-out infinite;
+}
+
+.animate-bounce-delay-1 {
+  animation: bounce-delay-1 1s ease-in-out infinite;
+}
+
+.animate-bounce-delay-2 {
+  animation: bounce-delay-2 1s ease-in-out infinite;
+}

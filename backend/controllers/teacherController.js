@@ -6,6 +6,7 @@ import Addressmodel from "../models/adressmodel.js";
 import TeacherDetail from "../models/TeacherDetail.js";
 import userModel from "../models/userModel.js";
 import { hashedPassword } from "../utils/utils.js";
+import Subject from "../models/Subject.js";
 
 // Multer storage for photo upload
 const storage = multer.diskStorage({
@@ -47,10 +48,10 @@ export const addTeacher = async (req, res) => {
             ifscCode,
             branchName,
         } = req.body;
-        // console.log(req.body)
+
         const fullAddress = req.body.address;
 
-        // Handle classes input (classId + subjects[])
+        // Handle classes and subjects
         let Class = [];
         let subject = [];
 
@@ -72,7 +73,7 @@ export const addTeacher = async (req, res) => {
         console.log("Parsed Class IDs:", Class);
         console.log("Parsed Subject IDs:", subject);
 
-        // Check if email or teacher ID exists
+        // Check for existing email or teacher ID
         const existingUser = await userModel.findOne({ email });
         const existingTeacherId = await TeacherDetail.findOne({ teacherId });
 
@@ -84,7 +85,7 @@ export const addTeacher = async (req, res) => {
             return res.status(400).json({ success: false, message: "Teacher ID already exists" });
         }
 
-        // Create User
+        // Create new user
         const user = new userModel({
             name: `${firstName} ${lastName}`,
             email,
@@ -94,7 +95,7 @@ export const addTeacher = async (req, res) => {
         });
         await user.save();
 
-        // Create Address
+        // Create address
         const addressDoc = new Addressmodel({
             userId: user._id,
             address: fullAddress,
@@ -102,7 +103,7 @@ export const addTeacher = async (req, res) => {
         });
         await addressDoc.save();
 
-        // Create Teacher
+        // Create teacher document
         const teacher = new TeacherDetail({
             userId: user._id,
             teacherId: "DSP" + teacherId,
@@ -129,14 +130,28 @@ export const addTeacher = async (req, res) => {
                 branchName,
             },
         });
-        await teacher.save();
+
+        const SaveTeacher = await teacher.save();
+
+        // 🔁 Update each subject with teacher reference
+        if (subject.length > 0) {
+            await Promise.all(subject.map(async (subId) => {
+                await Subject.findByIdAndUpdate(
+                    subId,
+                    { $addToSet: { define_teacher: SaveTeacher._id } }, // Add teacher ID only if not already present
+                    { new: true }
+                );
+            }));
+        }
 
         res.status(201).json({ success: true, message: "Teacher added successfully" });
+
     } catch (err) {
         console.error("Add Teacher Error:", err);
         res.status(500).json({ success: false, message: "Failed to add teacher" });
     }
 };
+
 
 
 // Get All Teachers
@@ -162,6 +177,26 @@ export const GetSigleData = async (req, res) => {
             .populate("address")
             .populate("Class")
             .populate("subject");
+        // console.log(data)
+        res.send(data);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Failed to fetch teacher");
+    }
+};
+export const GetSigleData2 = async (req, res) => {
+    try {
+        const data = await TeacherDetail.findById(req.params.id)
+            .populate("userId")
+            .populate("address")
+            .populate("Class")
+            .populate({
+                path: "subject",
+                populate: {
+                    path: "classId",
+                    model: "Department" // replace with your actual class model name if different
+                }
+            });
         // console.log(data)
         res.send(data);
     } catch (error) {
@@ -300,7 +335,16 @@ export const updateTeacher = async (req, res) => {
             branchName,
         };
 
-        await teacher.save();
+        const SaveTeacher = await teacher.save();
+        if (subject.length > 0) {
+            await Promise.all(subject.map(async (subId) => {
+                await Subject.findByIdAndUpdate(
+                    subId,
+                    { $addToSet: { define_teacher: SaveTeacher._id } }, // Add teacher ID only if not already present
+                    { new: true }
+                );
+            }));
+        }
 
         return res.status(200).json({ success: true, message: "Teacher updated successfully" });
     } catch (err) {

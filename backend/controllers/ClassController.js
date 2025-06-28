@@ -33,6 +33,15 @@ export const addClassController = async (req, res) => {
     }
 }
 
+export const GetNo_0f_Student = async (req, res) => {
+    try {
+        const Class =await ClassModel.findById(req.params.id)
+        res.send(Class)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 //  getAllDepartmentsController
 export const getAllClassController = async (req, res) => {
     try {

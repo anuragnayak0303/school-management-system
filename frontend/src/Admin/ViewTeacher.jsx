@@ -11,7 +11,7 @@ export default function ViewTeacher() {
 
     const getSingleData = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/teachers/getSingle/${id}`);
+            const { data } = await axios.get(`http://localhost:8000/api/teachers/getSingle2/${id}`);
             setTeacherDetails(data);
             console.log(data)
         } catch (error) {
@@ -132,7 +132,7 @@ export default function ViewTeacher() {
                                                 className="border border-gray-200 rounded-lg p-4 bg-gray-50"
                                             >
                                                 <p className="text-sm font-medium text-gray-700 mb-1">
-                                                    Subject: <span className="text-gray-900">{cls.subjectName}</span>
+                                                    Subject: <span className="text-gray-900">{cls.subjectName} <span className='text-green-600'>{`(Class ${cls?.classId?.Classname})`}</span></span>
                                                 </p>
                                             </div>
                                         ))}

@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 
 export default function StudentAdmissionForm() {
   const formRef = useRef();
+  const rollNumberRef = useRef(); // ➕ Roll number input ref
   const [photoPreview, setPhotoPreview] = useState(null);
   const [AllClass, setAllClass] = useState([]);
 
@@ -55,6 +56,28 @@ export default function StudentAdmissionForm() {
     getClasses();
   }, []);
 
+  // ➕ New: Auto-fill roll number when class is selected
+  const handleClassChange = async (e) => {
+    const classId = e.target.value;
+    const form = formRef.current;
+
+    if (!classId) return;
+
+    try {
+      const { data } = await axios.get(`http://localhost:8000/api/v2/class/student_no/${classId}`);
+      const nextRoll = data.Student_Of_no + 1;
+      const formattedRoll = nextRoll < 10 ? `0${nextRoll}` : `${nextRoll}`;
+
+      if (form) {
+        form.rollNumber.value = formattedRoll;
+        rollNumberRef.current?.focus();
+      }
+    } catch (err) {
+      console.error('Error fetching student count:', err);
+      toast.error('Unable to auto-generate roll number.');
+    }
+  };
+
   const textInputs = [
     { name: 'admissionNumber', label: 'Admission Number' },
     { name: 'rollNumber', label: 'Roll Number' },
@@ -62,13 +85,12 @@ export default function StudentAdmissionForm() {
     { name: 'lastName', label: 'Last Name' },
     { name: 'primaryContact', label: 'Primary Contact Number' },
     { name: 'email', label: 'Email Address' },
-
   ];
 
   const dateInputs = [
     { name: 'admissionDate', label: 'Admission Date' },
     { name: 'dateOfBirth', label: 'Date of Birth' },
-    { name: 'academicYear', label: 'Academic Year', },
+    { name: 'academicYear', label: 'Academic Year' },
   ];
 
   const dropdowns = [
@@ -86,61 +108,64 @@ export default function StudentAdmissionForm() {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="flex flex-col md:flex-row bg-gray-50 min-h-screen">
       <Toaster />
       <Sidebar />
-      <main className="md:ml-64 w-full">
+      <main className="w-full md:ml-64">
         <MainHeader />
-        <form ref={formRef} onSubmit={handleSubmit} className="p-6 sm:p-10">
+        <form ref={formRef} onSubmit={handleSubmit} className="p-4 sm:p-10">
           <div className="text-sm text-indigo-600 mb-4">Admin &gt; Student</div>
-          <div className="bg-white p-8 rounded-2xl shadow-2xl">
-            <h1 className="text-3xl font-extrabold text-indigo-800 mb-8">Student Admission Form</h1>
 
+          {/* Admission Info */}
+          <div className="bg-white p-6 rounded-lg shadow-md mb-10 border border-gray-300">
+            <h1 className="text-2xl font-bold text-indigo-800 mb-6">Student Admission Form</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
               {/* Photo Upload */}
-              <div className="sm:col-span-1">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Upload Photo</label>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Passport Size Photo</label>
                 <label
                   htmlFor="photo"
-                  className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-indigo-300 rounded-xl bg-indigo-50 hover:bg-indigo-100 cursor-pointer transition"
+                  className="flex flex-col items-center justify-center w-32 h-32 border-2 border-dashed border-indigo-300 rounded-xl bg-indigo-50 hover:bg-indigo-100 transition-all duration-300 ease-in-out cursor-pointer mx-auto"
                 >
                   {photoPreview ? (
-                    <img src={photoPreview} alt="Preview" className="w-24 h-24 object-cover rounded-full border" />
+                    <img src={photoPreview} alt="Preview" className="w-24 h-24 object-cover rounded-full border shadow-md" />
                   ) : (
-                    <div className="text-center">
-                      <svg className="w-10 h-10 text-indigo-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="text-center text-indigo-600 text-xs">
+                      <svg className="w-6 h-6 mb-1 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16V4m0 0l4 4m-4-4l-4 4m10 12v-4m0 0l4 4m-4-4l-4 4" />
                       </svg>
-                      <p className="text-sm font-semibold text-indigo-600">Click to upload</p>
-                      <p className="text-xs text-gray-500">PNG, JPG, JPEG (max 2MB)</p>
+                      <p className="font-semibold">Upload</p>
+                      <p className="text-gray-500">Max 2MB</p>
                     </div>
                   )}
                   <input type="file" name="photo" id="photo" accept="image/*" className="hidden" onChange={handlePhotoChange} />
                 </label>
               </div>
 
-              {/* Text Fields */}
+              {/* Text Inputs */}
               {textInputs.map(({ name, label }, i) => (
                 <div key={i}>
                   <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
                   <input
                     name={name}
-                    type={name == 'email' ? 'email' :'text'}
-                    maxLength={name == 'primaryContact' ? 10 : ''}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    type={name === 'email' ? 'email' : 'text'}
+                    ref={name === 'rollNumber' ? rollNumberRef : null}
+                    maxLength={name === 'primaryContact' ? 10 : undefined}
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring focus:ring-indigo-400 outline-none shadow-sm"
                     required
                   />
                 </div>
               ))}
 
-              {/* Date Fields */}
+              {/* Date Inputs */}
               {dateInputs.map(({ name, label }, i) => (
                 <div key={i}>
                   <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
                   <input
                     name={name}
                     type="date"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring focus:ring-indigo-400 outline-none shadow-sm text-gray-700"
                     required
                   />
                 </div>
@@ -152,12 +177,14 @@ export default function StudentAdmissionForm() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
                   <select
                     name={name}
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    onChange={name === 'class' ? handleClassChange : undefined}
+
+                    className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:ring focus:ring-indigo-400 outline-none shadow-sm"
                     required
                   >
                     <option value="">Select {label}</option>
                     {options.map((option, j) => (
-                      <option key={j} value={label === 'Class' ? option._id : option}>
+                      <option  key={j} value={label === 'Class' ? option._id : option}>
                         {label === 'Class' ? option?.Classname : option}
                       </option>
                     ))}
@@ -167,8 +194,8 @@ export default function StudentAdmissionForm() {
             </div>
           </div>
 
-          {/* Parents Info */}
-          <div className="mt-10 bg-white p-8 rounded-2xl shadow-2xl">
+          {/* Parent Info */}
+          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
             <h2 className="text-2xl font-bold text-indigo-800 mb-6">Parents & Guardian Information</h2>
             {parentFields.map(({ role, fields }, i) => (
               <div key={i} className="mb-10">
@@ -182,7 +209,7 @@ export default function StudentAdmissionForm() {
                       <input
                         type="text"
                         name={`${role.toLowerCase()}${field}`}
-                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring focus:ring-indigo-400 outline-none shadow-sm"
                       />
                     </div>
                   ))}
@@ -192,7 +219,7 @@ export default function StudentAdmissionForm() {
 
             <button
               type="submit"
-              className="w-full sm:w-auto mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-xl transition duration-300"
+              className="mt-4 w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-lg transition duration-300 shadow-md"
             >
               Submit Admission
             </button>

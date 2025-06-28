@@ -16,6 +16,10 @@ const subjectSchema = new mongoose.Schema({
     ref: "Department",
     required: true,
   },
+  define_teacher: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "TeacherDetail",
+  },
   subjectCode: {
     type: String,
     required: false,

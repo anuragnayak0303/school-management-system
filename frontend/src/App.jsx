@@ -54,6 +54,7 @@ import StudentDetails from "./Student/StudentDetails";
 import AssignMentStudent from "./Student/AssignMentStudent";
 import MarkResult from "./Teacher/MarkResult";
 import AllStudentMark from "./Admin/AllStudentMark";
+import ViewStudentDetails from "./Admin/ViewStudentDetails";
 
 
 function App() {
@@ -84,7 +85,7 @@ function App() {
             <Route path="ert-list" element={<ERTlist />} />
             <Route path="admission_from" element={<StudentAdmissionList />} />
             <Route path="time-table" element={<TimeTable />} />
-
+            <Route path="view-students/:id" element={<ViewStudentDetails />} />
             <Route path="all_student" element={<AllStudent />} />
             <Route path="all_teacher" element={<AllTeacherList />} />
             <Route path="add_teacher" element={<AddTeacher />} />
