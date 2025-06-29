@@ -91,13 +91,13 @@ export default function AllStudent() {
       : parts[0][0][0].toUpperCase() + parts[parts.length - 1][0].toUpperCase();
   };
 
-  const ActionDropdown = ({id}) => (
+  const ActionDropdown = ({ id }) => (
     <div
       ref={actionMenuRef}
       className="absolute right-0 top-9 w-auto flex space-x-3 px-3 py-2 bg-white shadow-md rounded border border-gray-200 z-50 animate-fade-in"
     >
       <NavLink to={`/school/admin/view-students/${id}`} className='text-sm font-semibold cursor-pointer'>view</NavLink>
-      <div className='text-sm font-semibold cursor-pointer'>Edit</div>
+      <NavLink to={`/school/admin/edit_student/${id}`} className='text-sm font-semibold cursor-pointer'>Edit</NavLink>
       <div className='text-sm font-semibol text-red-600 cursor-pointer'>Delete</div>
     </div>
   );

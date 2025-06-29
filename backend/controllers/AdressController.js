@@ -31,7 +31,7 @@ export const saveAddress = async (req, res) => {
       countryCode,
       image,
     } = req.body;
-   
+
 
     const Address = await Addressmodel.findOne({ userId: req.user });
 
@@ -88,12 +88,14 @@ export const saveAddress = async (req, res) => {
 
 export const getAddress = async (req, res) => {
   try {
+    console.log(req.user)
     const address = await Addressmodel.findOne({ userId: req.user }).populate(
       "userId"
     );
     if (!address) return res.status(404).json({ message: "Address not found" });
     res.status(200).json(address);
   } catch (err) {
+    console.log(err)
     res.status(500).json({ error: err.message });
   }
 };

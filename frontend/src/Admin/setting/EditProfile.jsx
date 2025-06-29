@@ -8,9 +8,10 @@ import toast from "react-hot-toast";
 
 export default function EditPfofile({ onVerified }) {
   const { auth } = useAuth();
+  console.log(auth)
   const [UserData, setuserdat] = useState({
-    name: "",
-    email: "",
+    name: "" || auth?.user?.name,
+    email: "" || auth?.user?.email,
     address: "",
     phone: "",
     state: "",
@@ -29,10 +30,11 @@ export default function EditPfofile({ onVerified }) {
             Authorization: `Bearer ${auth?.token}`,
           },
         });
+        console.log(data)
         setuserdat({
           ...UserData,
-          name: data?.userId.name,
-          email: data?.userId.email,
+          name: data?.userId.name || auth?.user?.name,
+          email: data?.userId.email || auth?.user?.email,
           address: data?.address,
           phone: data?.phone,
           state: data?.state,
@@ -85,7 +87,7 @@ export default function EditPfofile({ onVerified }) {
       toast.success(data.message);
       setTimeout(() => {
         onVerified();
-      },1000);
+      }, 1000);
     } catch (error) {
       console.log(error);
     }
@@ -105,11 +107,10 @@ export default function EditPfofile({ onVerified }) {
             <div className="w-[70px] h-[70px] rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl overflow-hidden">
               {imagePreview || UserData?.image !== "" ? (
                 <img
-                  src={`${
-                    imagePreview
-                      ? imagePreview
-                      : `http://localhost:8000/${UserData?.image}`
-                  }`}
+                  src={`${imagePreview
+                    ? imagePreview
+                    : `http://localhost:8000/${UserData?.image}`
+                    }`}
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
@@ -161,6 +162,7 @@ export default function EditPfofile({ onVerified }) {
               <input
                 type="tel"
                 name="phone"
+                maxLength={10}
                 value={UserData.phone}
                 onChange={handleChenge}
                 className="w-full border rounded px-3 border-gray-300 outline-0 py-2 text-sm"

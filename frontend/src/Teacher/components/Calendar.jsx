@@ -24,7 +24,7 @@ export default function Calendar() {
     }
 
     return (
-        <div className="bg-white bg-opacity-90 backdrop-blur-lg rounded-3xl shadow-2xl p-6">
+        <div className="bg-white border border-gray-300 backdrop-blur-lg rounded-sm shadow-md p-6">
             <h3 className="text-xl font-bold mb-4 text-purple-600">
                 🗓️ {monthNames[currentMonth]} {currentYear}
             </h3>

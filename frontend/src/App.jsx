@@ -55,6 +55,8 @@ import AssignMentStudent from "./Student/AssignMentStudent";
 import MarkResult from "./Teacher/MarkResult";
 import AllStudentMark from "./Admin/AllStudentMark";
 import ViewStudentDetails from "./Admin/ViewStudentDetails";
+import EditStudentDetail from "./Admin/EditStudentDetail";
+import WebsiteSettingsContainer from "./Admin/setting/WebsiteSettingsContainer";
 
 
 function App() {
@@ -80,7 +82,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="academy/subject" element={<CourseManagement />} />
             <Route path="academy/all_classess" element={<AllClassess />} />
-            <Route path="academy/all_result" element={<AllStudentMark/>} />
+            <Route path="academy/all_result" element={<AllStudentMark />} />
             <Route path="vister_admission_list" element={<VisterAdmission />} />
             <Route path="ert-list" element={<ERTlist />} />
             <Route path="admission_from" element={<StudentAdmissionList />} />
@@ -90,6 +92,7 @@ function App() {
             <Route path="all_teacher" element={<AllTeacherList />} />
             <Route path="add_teacher" element={<AddTeacher />} />
             <Route path="edit_teacher/:id" element={<EditTeacher />} />
+            <Route path="edit_student/:id" element={<EditStudentDetail />} />
             <Route path="view_teacher/:id" element={<ViewTeacher />} />
             <Route path="all_users" element={<AllUsers />} />
             <Route path="teacher-leave-request" element={<LeavRequesr />} />
@@ -101,7 +104,8 @@ function App() {
               <Route index element={<Navigate to="profile" />} />
               <Route path="profile" element={<ProfileSettings />} />
               <Route path="security" element={<SecuritySettings />} />
-              <Route path="LogoEdit" element={<Website />} />
+              <Route path="LogoEdit" element={<WebsiteSettingsContainer />} />
+              {/* <Route path="LogoEdit" element={<Website />} /> */}
             </Route>
           </Route>
           {/*End Admin Protected Route */}

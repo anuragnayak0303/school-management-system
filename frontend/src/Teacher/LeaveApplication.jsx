@@ -34,7 +34,6 @@ export default function LeaveApplication() {
         try {
             const { data } = await axios.get(`http://localhost:8000/api/v2/employees/leave/my/${teacherId}`);
             setLeaves(data);
-            console.log(data)
         } catch (error) {
             console.error("Error fetching leave data", error);
         }
@@ -100,17 +99,17 @@ export default function LeaveApplication() {
     };
 
     return (
-        <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
+        <div className="flex flex-col md:flex-row min-h-screen bg-white">
             <TeacherSideBar />
             <div className="flex-grow w-full md:ml-64">
                 <MainHeader />
-                <div className="p-4 sm:p-6 max-w-6xl mx-auto">
+                <div className="p-6 max-w-6xl mx-auto  mt-6">
 
                     {/* Toggle Form Button */}
                     <div className="flex justify-end mb-4">
                         <button
                             onClick={() => setShowForm(!showForm)}
-                            className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 sm:px-6 sm:py-2 rounded-full shadow hover:scale-105 transition duration-300 text-sm sm:text-base"
+                            className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-full shadow-md hover:scale-105 transition duration-300"
                         >
                             {showForm ? "Cancel" : "➕ Send Leave Request"}
                         </button>
@@ -118,30 +117,30 @@ export default function LeaveApplication() {
 
                     {/* Leave Form */}
                     {showForm && (
-                        <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl mb-8">
-                            <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-800">📝 Apply for Leave</h2>
-                            <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="bg-gray-50 p-6 rounded-xl shadow-md border border-gray-300 mb-8">
+                            <h2 className="text-2xl font-semibold text-gray-800 mb-6">📝 Apply for Leave</h2>
+                            <form onSubmit={handleSubmit} className="space-y-6">
                                 {["reason", "fromDate", "toDate"].map((field, i) => (
-                                    <div key={i} className="grid grid-cols-1 sm:grid-cols-3 items-center gap-3">
-                                        <label className="text-sm sm:text-base text-gray-700 font-medium capitalize">
-                                            {field === "reason" ? "Reason" : field === "fromDate" ? "From" : "To"}
+                                    <div key={i} className="flex flex-col sm:flex-row items-center gap-4">
+                                        <label className="text-gray-700 w-full sm:w-32 capitalize font-medium">
+                                            {field === "reason" ? "Reason" : field === "fromDate" ? "From Date" : "To Date"}
                                         </label>
                                         <input
                                             type={field === "reason" ? "text" : "date"}
                                             name={field}
                                             value={form[field]}
                                             onChange={handleChange}
-                                            className="sm:col-span-2 w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+                                            className="flex-grow border border-gray-300 px-4 py-3 rounded-lg bg-white shadow-md focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all duration-300 transform hover:scale-[1.02]"
                                             required
                                         />
                                     </div>
                                 ))}
-                                <div className="flex justify-end pt-3">
+                                <div className="flex justify-end pt-4">
                                     <button
                                         type="submit"
-                                        className="bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-2 rounded-full hover:scale-105 transition-transform flex items-center gap-2 text-sm sm:text-base"
+                                        className="bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-2 rounded-full hover:scale-105 transition-transform duration-200"
                                     >
-                                        <span>Submit</span> <span>📤</span>
+                                        Submit 📤
                                     </button>
                                 </div>
                             </form>
@@ -149,28 +148,29 @@ export default function LeaveApplication() {
                     )}
 
                     {/* Filter Buttons */}
-                    <div className="mb-4 flex flex-wrap gap-2 items-center text-sm sm:text-base">
+                    <div className="mb-6 bg-gray-50 p-4 border border-gray-300 shadow-md rounded-sm flex flex-wrap gap-2 items-center text-sm sm:text-base">
                         <FaFilter className="text-gray-600" />
                         {["All", "Pending", "Approved", "Rejected"].map((status) => (
                             <button
                                 key={status}
                                 onClick={() => setFilterStatus(status)}
-                                className={`px-4 py-1 rounded-full font-medium transition ${filterStatus === status
-                                    ? "bg-blue-600 text-white shadow"
-                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                                    }`}
+                                className={`px-4 py-1 rounded-full shadow-md active:shadow-sm font-medium transition ${
+                                    filterStatus === status
+                                        ? "bg-blue-600 text-white shadow-md"
+                                        : "bg-gray-200 text-gray-700 hover:bg-gray-200"
+                                }`}
                             >
                                 {status}
                             </button>
                         ))}
                     </div>
 
-                    {/* Leave List Table */}
+                    {/* Leave Table */}
                     {filteredLeaves.length > 0 ? (
-                        <div className="mt-8 bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div className="bg-white rounded-sm border border-gray-300 shadow-md overflow-hidden">
                             <div className="overflow-x-auto">
-                                <table className="min-w-full divide-y divide-gray-200 text-sm">
-                                    <thead className="bg-gradient-to-l from-blue-100 via-purple-100 to-pink-100 text-gray-800 font-bold uppercase">
+                                <table className="min-w-full text-sm text-gray-700">
+                                    <thead className="bg-gray-100 text-gray-700 font-semibold uppercase">
                                         <tr>
                                             <th className="px-4 py-3 text-left">#</th>
                                             <th className="px-4 py-3 text-left">Reason</th>
@@ -180,27 +180,30 @@ export default function LeaveApplication() {
                                             <th className="px-4 py-3 text-center">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="bg-white divide-y divide-gray-100">
+                                    <tbody className="divide-y divide-gray-100">
                                         {filteredLeaves.map((leave, index) => (
-                                            <tr key={leave._id} className="hover:bg-gray-50">
-                                                <td className="px-4 py-3 font-medium">{index + 1}</td>
+                                            <tr key={leave._id} className="hover:bg-gray-50 transition">
+                                                <td className="px-4 py-3 font-semibold">{index + 1}</td>
                                                 <td className="px-4 py-3 capitalize">{leave.reason}</td>
                                                 <td className="px-4 py-3">{new Date(leave.fromDate).toLocaleDateString()}</td>
                                                 <td className="px-4 py-3">{new Date(leave.toDate).toLocaleDateString()}</td>
                                                 <td className="px-4 py-3">
-                                                    <span className={`inline-block text-xs font-bold px-3 py-1 rounded-full ${leave.status === "Pending"
-                                                        ? "bg-yellow-100 text-yellow-800"
-                                                        : leave.status === "Approved"
-                                                            ? "bg-green-100 text-green-800"
-                                                            : "bg-red-100 text-red-800"
-                                                        }`}>
+                                                    <span
+                                                        className={`px-3 py-1 text-xs font-bold rounded-full ${
+                                                            leave.status === "Pending"
+                                                                ? "bg-yellow-100 text-yellow-800"
+                                                                : leave.status === "Approved"
+                                                                ? "bg-green-100 text-green-800"
+                                                                : "bg-red-100 text-red-800"
+                                                        }`}
+                                                    >
                                                         {leave.status}
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3 text-center">
                                                     <button
                                                         onClick={() => handleDelete(leave._id)}
-                                                        className="text-red-500 hover:text-red-700"
+                                                        className="text-red-500 hover:text-red-700 transition"
                                                         title="Delete Leave"
                                                     >
                                                         <FaTrashAlt />

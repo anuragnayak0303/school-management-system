@@ -76,7 +76,7 @@ export default function ProfileSettings() {
             </label>
             <input
               type="text"
-              value={data?.userId?.name}
+              value={data?.userId?.name || auth?.user?.name}
               readOnly
               className="w-full rounded px-3 py-2 text-sm bg-gray-100 text-gray-700 border border-gray-300 cursor-not-allowed outline-none"
             />
@@ -98,7 +98,7 @@ export default function ProfileSettings() {
             </label>
             <input
               type="email"
-              value={data?.userId?.email}
+              value={data?.userId?.email || auth?.user?.email}
               readOnly
               className="w-full rounded px-3 py-2 text-sm bg-gray-100 text-gray-700 border border-gray-300 cursor-not-allowed outline-none"
             />

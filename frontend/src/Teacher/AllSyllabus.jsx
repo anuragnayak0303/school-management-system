@@ -19,6 +19,7 @@ import {
     Draggable
 } from 'react-beautiful-dnd';
 
+
 export default function AllSyllabus() {
     const { auth } = useAuth();
     const [teacher, setTeacher] = useState({});
@@ -81,14 +82,17 @@ export default function AllSyllabus() {
     };
 
     return (
-        <div className="flex min-h-screen bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100">
+        <div className="flex min-h-screen bg-gray-50">
             <TeacherSidebar />
-            <div className="ml-0 md:ml-64 flex-grow">
+            <div className="ml-0 md:ml-64 flex-grow bg-white">
                 <MainHeader />
                 <div className="p-6 max-w-7xl mx-auto">
                     {loading ? (
-                        <div className="flex justify-center items-center h-64">
-                            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600"></div>
+                        <div className="flex flex-col justify-center items-center h-96 space-y-6">
+                            <div className="loader-cube"></div>
+                            <p className="text-lg text-gray-600 font-medium animate-pulse">
+                                Loading, please wait…
+                            </p>
                         </div>
                     ) : (
                         <DragDropContext onDragEnd={handleDragEnd}>
@@ -116,13 +120,13 @@ export default function AllSyllabus() {
                                                                 ref={provided.innerRef}
                                                                 {...provided.draggableProps}
                                                                 {...provided.dragHandleProps}
-                                                                className="w-[340px] bg-white rounded-3xl p-5 shadow-[0_15px_25px_rgba(0,0,0,0.2)] transform transition-all duration-300 hover:rotate-1 hover:scale-[1.03] hover:shadow-[0_25px_35px_rgba(0,0,0,0.3)]"
+                                                                className="w-[340px] bg-white rounded-md p-5 shadow-[0_15px_25px_rgba(0,0,0,0.2)] transform transition-all duration-300 hover:rotate-1 hover:scale-[1.03] hover:shadow-[0_25px_35px_rgba(0,0,0,0.3)]"
                                                                 style={{ perspective: 1000, ...provided.draggableProps.style }}
                                                             >
                                                                 <div className="flex justify-between items-center mb-3 border-b pb-2">
                                                                     <div>
                                                                         <h2 className="text-indigo-700 font-bold uppercase text-sm">
-                                                                            {ele?.classId?.Classname}
+                                                                           Class {ele?.classId?.Classname}
                                                                         </h2>
                                                                         <p className="text-pink-500 font-semibold uppercase text-xs">
                                                                             {ele?.subjectName}
@@ -136,7 +140,7 @@ export default function AllSyllabus() {
                                                                 <h3 className="text-center text-lg font-bold text-gray-700 mb-3">
                                                                     🎯 SYLLABUS STATUS
                                                                 </h3>
-                                                                <div className="h-44 w-full rounded-xl bg-gradient-to-br from-white to-indigo-50 shadow-inner border border-gray-200 overflow-hidden">
+                                                                <div className="h-44 w-full rounded bg-gradient-to-br from-white to-indigo-50 shadow-inner border border-gray-200 overflow-hidden">
                                                                     <ResponsiveContainer width="100%" height="100%">
                                                                         <AreaChart data={chartData}>
                                                                             <defs>
@@ -191,6 +195,7 @@ export default function AllSyllabus() {
                     )}
                 </div>
             </div>
+
             {showModal && editSubject && (
                 <div className="fixed inset-0 bg-[#00000069] bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-white rounded-2xl p-6 w-96 shadow-2xl border-2 border-blue-300">

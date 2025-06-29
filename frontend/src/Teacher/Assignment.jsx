@@ -42,14 +42,13 @@ export default function Assignment() {
             const { data } = await axios.get(`http://localhost:8000/api/v9/assignments/get/${teacherId}`);
             const today = new Date();
             today.setHours(0, 0, 0, 0);
-
             const tomorrow = new Date(today);
             tomorrow.setDate(today.getDate() + 1);
 
             const todayList = [];
             const tomorrowList = [];
 
-            data?.assignments?.forEach(ass => {
+            data?.assignments?.forEach((ass) => {
                 const dueDate = new Date(ass.dueDate);
                 dueDate.setHours(0, 0, 0, 0);
 
@@ -63,7 +62,6 @@ export default function Assignment() {
             setTodayAssignments(todayList);
             setTomorrowAssignments(tomorrowList);
         } catch (err) {
-            console.log(err);
             toast.error("Could not load assignments");
         }
     };
@@ -83,8 +81,6 @@ export default function Assignment() {
             setFormData({ ...formData, class: value });
             const relatedSubjects = allSubjects.filter((sub) => sub?.classId?._id == value);
             setFilteredSubjects(relatedSubjects);
-        } else if (name === "subject") {
-            setFormData({ ...formData, subject: value });
         } else {
             setFormData({
                 ...formData,
@@ -129,55 +125,97 @@ export default function Assignment() {
     };
 
     return (
-        <div className="flex min-h-screen bg-gradient-to-br from-blue-200 via-white to-purple-200 animate-fade-in">
+        <div className="flex min-h-screen bg-gray-50">
             <TeacherSideBar />
             <div className="ml-0 md:ml-64 flex-grow flex flex-col min-h-screen">
                 <MainHeader />
-                <div className="p-6 flex flex-col lg:flex-row gap-6 max-w-7xl mx-auto w-full">
-                    <div className="bg-white bg-opacity-90 backdrop-blur-md rounded-3xl shadow-2xl p-10 w-full lg:w-2/3">
-                        <h2 className="text-4xl font-extrabold text-gray-800 mb-8 flex items-center gap-3">
-                            <span className="text-indigo-500 text-5xl">📝</span> Add New Assignment
+                <div className="p-6 flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto w-full animate-fade-in">
+                    {/* Assignment Form */}
+                    <div className="bg-white rounded-md shadow-md p-10 w-full lg:w-2/3 transition-transform duration-300 border border-gray-300">
+                        <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                            <span className="text-indigo-500 text-4xl">📝</span> Create Assignment
                         </h2>
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <input type="text" name="title" placeholder="Assignment Title" value={formData.title} onChange={handleChange} className="w-full px-6 py-3 border border-gray-300 rounded-2xl" />
-                            <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} rows={4} className="w-full px-6 py-3 border border-gray-300 rounded-2xl" />
+                        <form onSubmit={handleSubmit} className="space-y-5">
+                            <input
+                                type="text"
+                                name="title"
+                                placeholder="Title"
+                                value={formData.title}
+                                onChange={handleChange}
+                                className="w-full px-5 py-3 border border-gray-300 rounded-xl outline-none transition-transform transform hover:scale-[1.02] focus:scale-[1.03] focus:ring-2 focus:ring-indigo-300 shadow-md"
+                            />
+                            <textarea
+                                name="description"
+                                placeholder="Description"
+                                value={formData.description}
+                                onChange={handleChange}
+                                rows={4}
+                                className="w-full px-5 py-3 border border-gray-300 rounded-xl outline-none transition-transform transform hover:scale-[1.02] focus:scale-[1.03] focus:ring-2 focus:ring-indigo-300 shadow-md"
+                            />
                             <div className="flex gap-4">
-                                <select name="class" value={formData.class} onChange={handleChange} className="w-1/2 px-6 py-3 border border-gray-300 rounded-2xl">
-                                    <option value="">--- select Class ---</option>
+                                <select
+                                    name="class"
+                                    value={formData.class}
+                                    onChange={handleChange}
+                                    className="w-1/2 px-5 py-3 border border-gray-300 rounded-xl outline-none transition-transform transform hover:scale-[1.02] focus:scale-[1.03] focus:ring-2 focus:ring-indigo-300 shadow-md"
+                                >
+                                    <option value="">Select Class</option>
                                     {allClasses.map((cls) => (
-                                        <option key={cls._id} value={cls._id}>Class {cls?.Classname?.split(" ")[1]}</option>
+                                        <option key={cls._id} value={cls._id}>
+                                            Class {cls?.Classname?.split(" ")[1]}
+                                        </option>
                                     ))}
                                 </select>
-                                <select name="subject" value={formData.subject} onChange={handleChange} className="w-1/2 px-6 py-3 border border-gray-300 rounded-2xl">
-                                    <option value="">--- select Subject ---</option>
+                                <select
+                                    name="subject"
+                                    value={formData.subject}
+                                    onChange={handleChange}
+                                    className="w-1/2 px-5 py-3 border border-gray-300 rounded-xl outline-none transition-transform transform hover:scale-[1.02] focus:scale-[1.03] focus:ring-2 focus:ring-indigo-300 shadow-md"
+                                >
+                                    <option value="">Select Subject</option>
                                     {filteredSubjects.map((sub) => (
-                                        <option key={sub._id} value={sub._id}>{sub.subjectName}</option>
+                                        <option key={sub._id} value={sub._id}>
+                                            {sub.subjectName}
+                                        </option>
                                     ))}
                                 </select>
                             </div>
-                            <div className="flex gap-4 items-center">
-                                <input type="date" name="dueDate" value={formData.dueDate} onChange={handleChange} className="w-1/2 px-6 py-3 border border-gray-300 rounded-2xl" />
-                                <label className="flex items-center gap-3 w-1/2 cursor-pointer">
-                                    📎
+                            <div className="flex gap-4">
+                                <input
+                                    type="date"
+                                    name="dueDate"
+                                    value={formData.dueDate}
+                                    onChange={handleChange}
+                                    className="w-1/2 px-5 py-3 border border-gray-300 rounded-xl outline-none transition-transform transform hover:scale-[1.02] focus:scale-[1.03] focus:ring-2 focus:ring-indigo-300 shadow-md"
+                                />
+                                <label className="w-1/2 px-5 py-3 border border-dashed border-gray-400 rounded-xl text-center cursor-pointer bg-gray-100 hover:bg-gray-200 transition outline-none shadow-md hover:scale-[1.02] focus-within:scale-[1.03] focus-within:ring-2 focus-within:ring-indigo-300">
+                                    📎 Upload File
                                     <input type="file" name="file" onChange={handleChange} className="hidden" />
-                                    <span className="px-6 py-3 bg-gray-100 border rounded-2xl text-gray-700">Choose File</span>
                                 </label>
                             </div>
-                            <button type="submit" className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xl font-semibold px-6 py-3 rounded-2xl">
-                                🚀 Create Assignment
+                            <button
+                                type="submit"
+                                className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-3 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition hover:scale-[1.02]"
+                            >
+                                🚀 Submit Assignment
                             </button>
                         </form>
                     </div>
+
+                    {/* Sidebar: Upcoming Assignments & Calendar */}
                     <div className="w-full lg:w-1/3 space-y-6">
-                        <div className="bg-white bg-opacity-90 backdrop-blur-lg rounded-3xl shadow-2xl p-6">
+                        <div className="bg-white rounded-sm border border-gray-300 shadow-md p-6 h-[40vh] overflow-y-auto">
                             <h3 className="text-xl font-bold mb-4 text-indigo-600">📌 Upcoming Assignments</h3>
-                            <div className="space-y-6 text-sm">
+                            <div className="space-y-5 text-sm">
                                 {todayAssignments.length > 0 && (
                                     <>
-                                        <h4 className="text-lg font-bold text-green-600">📅 Today</h4>
+                                        <h4 className="text-base font-semibold text-green-600">📅 Today</h4>
                                         {todayAssignments.map((ass, i) => (
-                                            <div key={i} className="p-4 rounded-2xl bg-green-100 shadow-inner hover:scale-105">
-                                                <p className="font-semibold text-gray-800">{ass.title}</p>
+                                            <div
+                                                key={i}
+                                                className="p-4 bg-green-50 rounded-xl shadow hover:scale-105 transition-transform duration-200"
+                                            >
+                                                <p className="font-semibold text-gray-700">{ass.title}</p>
                                                 <p className="text-green-700">{ass.subject?.subjectName || "N/A"}</p>
                                                 <p className="text-gray-500">{new Date(ass.dueDate).toLocaleDateString()}</p>
                                             </div>
@@ -186,10 +224,13 @@ export default function Assignment() {
                                 )}
                                 {tomorrowAssignments.length > 0 && (
                                     <>
-                                        <h4 className="text-lg font-bold text-purple-600">📅 Tomorrow</h4>
+                                        <h4 className="text-base font-semibold text-purple-600">📅 Tomorrow</h4>
                                         {tomorrowAssignments.map((ass, i) => (
-                                            <div key={i} className="p-4 rounded-2xl bg-purple-100 shadow-inner hover:scale-105">
-                                                <p className="font-semibold text-gray-800">{ass.title}</p>
+                                            <div
+                                                key={i}
+                                                className="p-4 bg-purple-50 rounded-xl shadow hover:scale-105 transition-transform duration-200"
+                                            >
+                                                <p className="font-semibold text-gray-700">{ass.title}</p>
                                                 <p className="text-purple-700">{ass.subject?.subjectName || "N/A"}</p>
                                                 <p className="text-gray-500">{new Date(ass.dueDate).toLocaleDateString()}</p>
                                             </div>
@@ -197,7 +238,7 @@ export default function Assignment() {
                                     </>
                                 )}
                                 {todayAssignments.length === 0 && tomorrowAssignments.length === 0 && (
-                                    <p className="text-gray-500 text-sm text-center">No upcoming assignments.</p>
+                                    <p className="text-gray-500 text-center">No upcoming assignments.</p>
                                 )}
                             </div>
                         </div>

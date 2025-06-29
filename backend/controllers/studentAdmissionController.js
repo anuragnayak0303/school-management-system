@@ -145,7 +145,7 @@ export const GetDataById = async (req, res) => {
 }
 export const GetDataByIdforAdmin = async (req, res) => {
     try {
-        const data = await StudentAdmission.findOne({ _id: req.params.id }).populate("userId")
+        const data = await StudentAdmission.findOne({ _id: req.params.id }).populate("userId").populate("class")
         res.send(data)
         console.log(req.params.id)
     } catch (error) {
@@ -182,4 +182,103 @@ export const GetStudentsByClassList = async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error", error: error.message });
     }
 };
+
+
+export const updateAdmission = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const {
+            admissionNumber,
+            rollNumber,
+            firstName,
+            lastName,
+            primaryContact,
+            email,
+            admissionDate,
+            dateOfBirth,
+            academicYear,
+            class: className,
+            status,
+            gender,
+            bloodGroup,
+            religion,
+            category,
+            fatherName = '',
+            fatherEmail = '',
+            fatherPhone = '',
+            fatherOccupation = '',
+            motherName = '',
+            motherEmail = '',
+            motherPhone = '',
+            motherOccupation = '',
+            guardianName = '',
+            guardianEmail = '',
+            guardianPhone = '',
+            guardianRelation = '',
+            fullAddress = ''
+        } = req.body;
+        const admissionDoc = await StudentAdmission.findById(id).populate("userId");
+        if (!admissionDoc) {
+            return res.status(404).json({ success: false, message: "Student not found" });
+        }
+
+        const userId = admissionDoc.userId._id;
+
+        // Update user info
+        await userModel.findByIdAndUpdate(userId, {
+            name: `${firstName} ${lastName}`,
+            email,
+            profileImage: req.file?.filename || admissionDoc.userId.profileImage,
+        });
+
+        // Update address
+        await Addressmodel.findOneAndUpdate({ userId }, {
+            address: fullAddress,
+            phone: primaryContact
+        });
+
+        // Handle class change: decrease old class, increase new class count
+    
+        // Update admission details
+        await StudentAdmission.findByIdAndUpdate(id, {
+            admissionNumber,
+            rollNumber,
+            primaryContact,
+            admissionDate,
+            dateOfBirth,
+            academicYear,
+            class: className,
+            status,
+            gender,
+            bloodGroup,
+            religion,
+            category,
+            father: {
+                name: fatherName,
+                email: fatherEmail,
+                phone: fatherPhone,
+                occupation: fatherOccupation,
+            },
+            mother: {
+                name: motherName,
+                email: motherEmail,
+                phone: motherPhone,
+                occupation: motherOccupation,
+            },
+            guardian: {
+                name: guardianName,
+                email: guardianEmail,
+                phone: guardianPhone,
+                relation: guardianRelation,
+            },
+        });
+
+        res.status(200).json({ success: true, message: "Student updated successfully" });
+
+    } catch (error) {
+        console.error("Error in updateAdmission:", error);
+        res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+    }
+};
+
 
