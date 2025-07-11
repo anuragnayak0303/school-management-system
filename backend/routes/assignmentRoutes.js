@@ -11,7 +11,7 @@ Assignmentrouter.post("/create", upload.single("file"), createAssignment);
 // 8000/api/v9/assignments/get/:teacherId
 // Get assignments by class for current academic year only
 Assignmentrouter.get("/get/:teacherId", getAssignmentsByClass);
-// http://localhost:8000/api/v9/assignments/class/
+// https://school-management-system-1-jprf.onrender.com/api/v9/assignments/class/
 Assignmentrouter.get("/class/:classId", getAssignmentsByClassId);
 //8000/api/v9/assignments/getAll
 Assignmentrouter.get('/getAll', GetAllAssignment)

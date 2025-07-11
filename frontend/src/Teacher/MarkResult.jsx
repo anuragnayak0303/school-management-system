@@ -25,7 +25,7 @@ export default function MarkResult() {
 
     const GetaData = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/teachers/TeacherData/${auth?.user?.id}`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/teachers/TeacherData/${auth?.user?.id}`);
             setTeacherDetails(data);
         } catch (error) {
             toast.error('Failed to load teacher details');
@@ -34,7 +34,7 @@ export default function MarkResult() {
 
     const fetchStudentsByClass = async (classId) => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v3/student/byClass/${classId}`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v3/student/byClass/${classId}`);
             setStudents(data);
         } catch (error) {
             toast.error('Failed to fetch students');
@@ -119,7 +119,7 @@ export default function MarkResult() {
         };
 
         try {
-            const { data } = await axios.post('http://localhost:8000/api/v11/exam/add', payload);
+            const { data } = await axios.post('https://school-management-system-1-jprf.onrender.com/api/v11/exam/add', payload);
             toast.success(data?.message || 'Marks submitted!');
             setForm({
                 classId: '',

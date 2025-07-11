@@ -17,7 +17,7 @@ export default function ClassFacility() {
 
   const GetSubject = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:8000/api/v2/subject/ClassId/${student?.class?._id}`);
+      const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/subject/ClassId/${student?.class?._id}`);
       setSubject(data);
       const ids = data.map(subject => subject._id);
       setSubjectIds(ids);
@@ -28,7 +28,7 @@ export default function ClassFacility() {
 
   const fetchTeachersBySubjects = async () => {
     try {
-      const { data } = await axios.post("http://localhost:8000/api/v2/subject/by-subjects", {
+      const { data } = await axios.post("https://school-management-system-1-jprf.onrender.com/api/v2/subject/by-subjects", {
         subjectIds,
       });
       setTeachers(data);
@@ -101,7 +101,7 @@ export default function ClassFacility() {
                   <div className="w-full h-[100px] border bg-gray-50 shadow rounded border-gray-300 px-4 py-2 flex flex-col justify-between">
                     <div className="flex items-end space-x-2.5">
                       <img
-                        src={teacherImg ? `http://localhost:8000/${teacherImg}` : "https://avatar.iran.liara.run/public/44"}
+                        src={teacherImg ? `https://school-management-system-1-jprf.onrender.com/${teacherImg}` : "https://avatar.iran.liara.run/public/44"}
                         alt={teacherName}
                         className="w-[40px] h-[40px] rounded object-cover"
                       />

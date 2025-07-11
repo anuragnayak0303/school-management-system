@@ -12,20 +12,20 @@ import { isAdmin, isSignIn, IsStudent, isTeacher } from "../middlewares/authMidd
 
 const router = express.Router();
 
-// http://localhost:8000/api/v2/user/register
+// https://school-management-system-1-jprf.onrender.com/api/v2/user/register
 router.post("/register", registerController);
 
-//  http://localhost:8000/api/v2/user/login
+//  https://school-management-system-1-jprf.onrender.com/api/v2/user/login
 router.post("/login", loginController);
 
-// http://localhost:8000/api/v2/user/emailVerified
+// https://school-management-system-1-jprf.onrender.com/api/v2/user/emailVerified
 router.post("/emailVerified", isSignIn, EmailVerification);
 
-//http://localhost:8000/api/v2/user/passwordmatch
+//https://school-management-system-1-jprf.onrender.com/api/v2/user/passwordmatch
 router.post('/passwordmatch', isSignIn, passwordmatch)
 router.post('/ForgetPass', isSignIn, forgetpassowrd)
 router.get('/getsingle', isSignIn, getSigngleUser)
-// http://localhost:8000/api/v2/user/getAll
+// https://school-management-system-1-jprf.onrender.com/api/v2/user/getAll
 router.get('/getAll', getroleWiseData)
 
 
@@ -34,7 +34,7 @@ router.get('/getAll', getroleWiseData)
 router.get("/admin-protected", isSignIn, isAdmin, (req, res) => {
   res.status(200).json({ ok: true });
 });
-//http://localhost:8000/api/v2/user/teacher-protected
+//https://school-management-system-1-jprf.onrender.com/api/v2/user/teacher-protected
 router.get("/teacher-protected", isSignIn, isTeacher, (req, res) => {
   res.status(200).json({ ok: true });
 });

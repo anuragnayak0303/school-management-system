@@ -42,7 +42,7 @@ const Homepage = () => {
 
   const getMarquee = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:8000/api/marquee/get`);
+      const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/marquee/get`);
       setmarqueeText(data);
       console.log(data?.text);
     } catch (error) {

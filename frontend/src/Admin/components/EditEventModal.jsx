@@ -35,7 +35,7 @@ export default function EditEventModal({ onClose }) {
     if (file) formData.append("attachment", file);
 
     try {
-      const response = await axios.post("http://localhost:8000/api/v8/event/add", formData);
+      const response = await axios.post("https://school-management-system-1-jprf.onrender.com/api/v8/event/add", formData);
       toast.success("✅ Event created successfully!");
       onClose();
     } catch (error) {

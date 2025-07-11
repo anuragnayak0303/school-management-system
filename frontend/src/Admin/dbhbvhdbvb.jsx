@@ -26,7 +26,7 @@ export default function EditTeacher() {
 
     const loadClasses = async () => {
         try {
-            const { data } = await axios.get('http://localhost:8000/api/v2/class/all');
+            const { data } = await axios.get('https://school-management-system-1-jprf.onrender.com/api/v2/class/all');
             setAllClasses(data);
         } catch {
             toast.error('Error fetching classes');
@@ -35,7 +35,7 @@ export default function EditTeacher() {
 
     const loadTeacherData = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/teachers/getSingle/${id}`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/teachers/getSingle/${id}`);
             setTeacherDetails(data);
 
             const grouped = (data.subject || []).reduce((acc, subj) => {
@@ -49,7 +49,7 @@ export default function EditTeacher() {
             })));
 
             const subjectRequests = Object.keys(grouped).map(classId =>
-                axios.get(`http://localhost:8000/api/v2/subject/ClassId/${classId}`)
+                axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/subject/ClassId/${classId}`)
                     .then(res => ({ classId, subjects: res.data }))
             );
             const results = await Promise.all(subjectRequests);
@@ -70,7 +70,7 @@ export default function EditTeacher() {
         if (!classId || classSubjectData.some(c => c.classId === classId)) return;
 
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v2/subject/ClassId/${classId}`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/subject/ClassId/${classId}`);
             setAllSubjectsByClass(prev => ({ ...prev, [classId]: data }));
             setClassSubjectData(prev => [...prev, { classId, subjects: [] }]);
         } catch {
@@ -105,7 +105,7 @@ export default function EditTeacher() {
         });
 
         try {
-            const res = await axios.put(`http://localhost:8000/api/teachers/edit/${id}`, formData, {
+            const res = await axios.put(`https://school-management-system-1-jprf.onrender.com/api/teachers/edit/${id}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 

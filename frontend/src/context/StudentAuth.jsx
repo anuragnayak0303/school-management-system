@@ -10,7 +10,7 @@ export default function StudentAuth({ children }) {
 
   const getData = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8000/api/v3/student/getById', {
+      const { data } = await axios.get('https://school-management-system-1-jprf.onrender.com/api/v3/student/getById', {
         headers: {
           Authorization: `Bearer ${auth?.token}`,
         },

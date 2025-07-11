@@ -14,7 +14,7 @@ export default function MainHeader() {
     const fetchUser = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:8000/api/v2/user/getsingle",
+          "https://school-management-system-1-jprf.onrender.com/api/v2/user/getsingle",
           {
             headers: {
               Authorization: `Bearer ${auth?.token}`,
@@ -77,7 +77,7 @@ export default function MainHeader() {
           <li className="w-8 h-8 rounded-full bg-sky-100 flex justify-center items-center text-blue-700 font-semibold uppercase">
             {user?.profileImage ? (
               <img
-                src={`http://localhost:8000/${user.profileImage}`}
+                src={`https://school-management-system-1-jprf.onrender.com/${user.profileImage}`}
                 alt="avatar"
                 className="w-full h-full rounded-full object-cover"
               />

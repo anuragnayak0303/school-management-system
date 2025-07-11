@@ -41,12 +41,12 @@ export default function WebsiteSettings({ onEdit }) {
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/website/get");
+        const res = await axios.get("https://school-management-system-1-jprf.onrender.com/api/website/get");
         const data = res.data;
         setLogos({
-          dark: data.logos?.dark ? `http://localhost:8000/${data.logos.dark}` : null,
-          light: data.logos?.light ? `http://localhost:8000/${data.logos.light}` : null,
-          favicon: data.logos?.favicon ? `http://localhost:8000/${data.logos.favicon}` : null,
+          dark: data.logos?.dark ? `https://school-management-system-1-jprf.onrender.com/${data.logos.dark}` : null,
+          light: data.logos?.light ? `https://school-management-system-1-jprf.onrender.com/${data.logos.light}` : null,
+          favicon: data.logos?.favicon ? `https://school-management-system-1-jprf.onrender.com/${data.logos.favicon}` : null,
         });
         setHomepageLogo(data.homepageLogo || "");
         setSocialLinks(data.socialLinks || {});

@@ -12,7 +12,7 @@ export default function ViewDetails() {
 
     const getSingleData = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/teachers/TeacherData/${auth?.user?.id}`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/teachers/TeacherData/${auth?.user?.id}`);
             setTeacherDetails(data);
             console.log(data);
         } catch (error) {
@@ -44,7 +44,7 @@ export default function ViewDetails() {
                             <div className="flex items-center space-x-5">
                                 {teacherDetails?.userId?.profileImage ? (
                                     <img
-                                        src={`http://localhost:8000/${teacherDetails.userId.profileImage}`}
+                                        src={`https://school-management-system-1-jprf.onrender.com/${teacherDetails.userId.profileImage}`}
                                         alt="avatar"
                                         className="w-24 h-24 rounded-xl object-cover shadow-md"
                                     />

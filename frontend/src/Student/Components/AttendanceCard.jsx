@@ -15,7 +15,7 @@ export default function AttendanceCard() {
 
     const GetAttendance = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v8/student/attendance/student/${student?._id}`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v8/student/attendance/student/${student?._id}`);
             setAttendanceData(data);
         } catch (error) {
             console.error(error);

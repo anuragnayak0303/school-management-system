@@ -37,7 +37,7 @@ const CourseManagement = () => {
 
   const getClasses = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/api/v2/class/all");
+      const { data } = await axios.get("https://school-management-system-1-jprf.onrender.com/api/v2/class/all");
       setAllClasses(data);
     } catch (error) {
       toast.error("Failed to load classes");
@@ -46,7 +46,7 @@ const CourseManagement = () => {
 
   const getSubjects = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/api/v2/subject/all");
+      const { data } = await axios.get("https://school-management-system-1-jprf.onrender.com/api/v2/subject/all");
       setAllSubjects(data);
     } catch (error) {
       toast.error("Failed to load subjects");
@@ -77,7 +77,7 @@ const CourseManagement = () => {
   const handleDeleteSubject = async (id) => {
     if (!window.confirm("Are you sure you want to delete this subject?")) return;
     try {
-      const { data } = await axios.delete(`http://localhost:8000/api/v2/subject/delete-multiple/${id}`);
+      const { data } = await axios.delete(`https://school-management-system-1-jprf.onrender.com/api/v2/subject/delete-multiple/${id}`);
       if (data?.success) {
         toast.success(data?.message);
         getSubjects();
@@ -92,7 +92,7 @@ const CourseManagement = () => {
   const handleSubmitSubjects = async ({ classId, subjects }) => {
     try {
       if (editingSubjectId) {
-        await axios.put(`http://localhost:8000/api/v2/subject/update/${editingSubjectId}`, {
+        await axios.put(`https://school-management-system-1-jprf.onrender.com/api/v2/subject/update/${editingSubjectId}`, {
           subjects,
         });
         setEditingSubjectId("");
@@ -100,7 +100,7 @@ const CourseManagement = () => {
         setEditingSubject([]);
         toast.success("Subject(s) updated successfully");
       } else {
-        await axios.post("http://localhost:8000/api/v2/subject/add", {
+        await axios.post("https://school-management-system-1-jprf.onrender.com/api/v2/subject/add", {
           classId,
           subjects,
         });

@@ -11,7 +11,7 @@ export default function ViewStudentDetails() {
 
     const getData = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v3/student/getById/${id}`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v3/student/getById/${id}`);
             setStudent(data);
         } catch (error) {
             console.log(error);
@@ -76,7 +76,7 @@ export default function ViewStudentDetails() {
                                 <div className="p-6 md:p-8 flex flex-col md:flex-row items-center gap-6">
                                     {student.userId?.profileImage ? (
                                         <img
-                                            src={`http://localhost:8000/${student.userId?.profileImage}`}
+                                            src={`https://school-management-system-1-jprf.onrender.com/${student.userId?.profileImage}`}
                                             alt="Student"
                                             className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
                                         />

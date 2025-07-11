@@ -33,7 +33,7 @@ export default function StudentLeave() {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(`http://localhost:8000/api/v10/student-leave/${student?._id}`);
+        const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v10/student-leave/${student?._id}`);
         setRequests(Array.isArray(data) ? data : data ? [data] : []);
       } catch (err) {
         console.error(err);
@@ -76,7 +76,7 @@ export default function StudentLeave() {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/api/v10/student-leave/",
+        "https://school-management-system-1-jprf.onrender.com/api/v10/student-leave/",
         payload
       );
       toast.success("Leave request sent!");

@@ -3,7 +3,7 @@ import { GetDataAll, GetDataById, GetDataByIdforAdmin, GetStudentByClassID, GetS
 import { isSignIn } from "../middlewares/authMiddeware.js";
 const studentRoutes = express.Router();
 // http:localhost:8000/api/v3/student/add
-// http://localhost:8000/api/v3/student/getById
+// https://school-management-system-1-jprf.onrender.com/api/v3/student/getById
 studentRoutes.post("/add", StudentUpload.single('photo'), submitAdmission);
 studentRoutes.post('/students/by-class-list', GetStudentsByClassList);
 studentRoutes.get('/get', GetDataAll)

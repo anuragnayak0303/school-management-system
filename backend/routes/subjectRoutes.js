@@ -3,7 +3,7 @@ import {  addSubjects, AddSyllabusPersent, ClassSubject, deleteMultipleSubjects,
 
 
 const subjectRoutes = express.Router();
-// http://localhost:8000/api/v2/subject/add
+// https://school-management-system-1-jprf.onrender.com/api/v2/subject/add
 subjectRoutes.post("/add", addSubjects);
 subjectRoutes.get('/all', getAllSubjects);
 subjectRoutes.get('/ClassId/:id', ClassSubject);

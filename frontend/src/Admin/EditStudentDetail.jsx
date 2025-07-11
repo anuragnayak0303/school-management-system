@@ -39,7 +39,7 @@ export default function EditStudentDetail() {
     });
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/v3/student/getById/${id}`).then(res => {
+        axios.get(`https://school-management-system-1-jprf.onrender.com/api/v3/student/getById/${id}`).then(res => {
             const student = res.data;
             console.log(student)
             const [first, ...lastParts] = student.userId.name.split(' ');
@@ -70,11 +70,11 @@ export default function EditStudentDetail() {
             });
 
             if (student.userId.profileImage) {
-                setPhotoPreview(`http://localhost:8000/${student.userId.profileImage}`);
+                setPhotoPreview(`https://school-management-system-1-jprf.onrender.com/${student.userId.profileImage}`);
             }
         });
 
-        axios.get('http://localhost:8000/api/v2/class/all').then(res => setAllClass(res.data));
+        axios.get('https://school-management-system-1-jprf.onrender.com/api/v2/class/all').then(res => setAllClass(res.data));
     }, [id]);
 
     const handleChange = e => {
@@ -105,7 +105,7 @@ export default function EditStudentDetail() {
         }
 
         try {
-            await axios.put(`http://localhost:8000/api/v3/student/update/${id}`, data, {
+            await axios.put(`https://school-management-system-1-jprf.onrender.com/api/v3/student/update/${id}`, data, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             toast.success('Student updated successfully!');

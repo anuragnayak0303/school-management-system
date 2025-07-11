@@ -23,7 +23,7 @@ export default function PerformanceCard() {
 
     const fetchPerformanceData = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v11/exam/student/${student?._id}`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v11/exam/student/${student?._id}`);
 
             console.log(data)
             const labels = [];

@@ -17,7 +17,7 @@ export default function Attendance() {
         try {
             setLoading(true);
             const { data } = await axios.get(
-                `http://localhost:8000/api/v8/student/attendance/student/${student?._id}?page=${page}`
+                `https://school-management-system-1-jprf.onrender.com/api/v8/student/attendance/student/${student?._id}?page=${page}`
             );
             setAttendanceData(data|| []);
             setTotalPages(data.totalPages || 1);

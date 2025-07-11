@@ -78,7 +78,7 @@ export default function Dashboard() {
     e.preventDefault();
     try {
       setLoading(true);
-      await axios.post(`http://localhost:8000/api/marquee/add`, { text: inputValue }, { headers: { Authorization: `Bearer ${auth?.token}` } });
+      await axios.post(`https://school-management-system-1-jprf.onrender.com/api/marquee/add`, { text: inputValue }, { headers: { Authorization: `Bearer ${auth?.token}` } });
       toast.success("Added successfully");
       setMarqueeText(inputValue);
       setInputValue("");

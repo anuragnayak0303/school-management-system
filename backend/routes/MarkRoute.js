@@ -4,9 +4,9 @@ import { createStudentMark, deleteStudentMark, getAllMarks,getMarksByClass, getM
 
 
 const Markrouter = express.Router();
-// http://localhost:8000/api/v11/exam/add
-// http://localhost:8000/api/v11/exam/clasId/
-//http://localhost:8000/api/v11/exam/all
+// https://school-management-system-1-jprf.onrender.com/api/v11/exam/add
+// https://school-management-system-1-jprf.onrender.com/api/v11/exam/clasId/
+//https://school-management-system-1-jprf.onrender.com/api/v11/exam/all
 Markrouter.post("/add", createStudentMark);
 Markrouter.get("/all", getAllMarks);
 Markrouter.get("/student/:id", getMarksByStudent);

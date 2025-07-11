@@ -3,7 +3,7 @@ import { createAttendance, deleteAttendance, getAllAttendance, getAttendanceById
 
 
 const studentAttendencrouter = express.Router();
-// http://localhost:8000/api/v8/student/attendance/student/
+// https://school-management-system-1-jprf.onrender.com/api/v8/student/attendance/student/
 studentAttendencrouter.post('/add', createAttendance);
 studentAttendencrouter.get('/student/:studentId', getAttendanceByStudentId);
 studentAttendencrouter.get('/today/by-class-subject', getTodayAttendanceByClassAndSubject);
@@ -12,7 +12,7 @@ studentAttendencrouter.get('/search', getAttendanceByQuery); // use ?teacherId=&
 studentAttendencrouter.get('/:id', getAttendanceById);
 studentAttendencrouter.delete('/:id', deleteAttendance); // optional
 studentAttendencrouter.put('/:id', updateAttendance);   // optional
-// http://localhost:8000/api/v8/student/attendance/by-subjects
+// https://school-management-system-1-jprf.onrender.com/api/v8/student/attendance/by-subjects
 studentAttendencrouter.post('/by-subjects', getAttendanceBySubjectIds);
 
 export default studentAttendencrouter;

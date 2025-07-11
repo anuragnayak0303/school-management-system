@@ -27,7 +27,7 @@ export default function Assignment() {
     const fetchDetails = async () => {
         try {
             const { data } = await axios.get(
-                `http://localhost:8000/api/teachers/TeacherData/${auth?.user?.id}`
+                `https://school-management-system-1-jprf.onrender.com/api/teachers/TeacherData/${auth?.user?.id}`
             );
             setTeacher(data);
             setAllSubjects(data?.subject || []);
@@ -39,7 +39,7 @@ export default function Assignment() {
 
     const fetchAssignments = async (teacherId) => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v9/assignments/get/${teacherId}`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v9/assignments/get/${teacherId}`);
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             const tomorrow = new Date(today);
@@ -110,7 +110,7 @@ export default function Assignment() {
         if (formData.file) data.append("file", formData.file);
 
         try {
-            await axios.post("http://localhost:8000/api/v9/assignments/create", data, {
+            await axios.post("https://school-management-system-1-jprf.onrender.com/api/v9/assignments/create", data, {
                 headers: {
                     Authorization: auth?.token,
                     "Content-Type": "multipart/form-data",

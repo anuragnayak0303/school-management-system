@@ -13,7 +13,7 @@ export default function AdminAttendanceCard() {
   const nav = useNavigate()
   const getData = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:8000/api/teachers/get`)
+      const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/teachers/get`)
       settotalteacher(data?.length)
     } catch (error) {
       console.log(error)
@@ -23,7 +23,7 @@ export default function AdminAttendanceCard() {
     getData()
     const fetchAttendance = async () => {
       try {
-        const { data } = await axios.get("http://localhost:8000/api/attendance/");
+        const { data } = await axios.get("https://school-management-system-1-jprf.onrender.com/api/attendance/");
         console.log(data)
         const total = totalTeacherCount
         console.log(typeof totalTeacherCount)

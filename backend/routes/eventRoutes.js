@@ -29,9 +29,9 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage, fileFilter });
 
 // Route
-// http://localhost:8000/api/v8/event/add
+// https://school-management-system-1-jprf.onrender.com/api/v8/event/add
 Eventrouter.post('/add', upload.single('attachment'), addEvent);
-// http://localhost:8000/api/v8/event/all 
+// https://school-management-system-1-jprf.onrender.com/api/v8/event/all 
 Eventrouter.get("/all", getAllEvents);
 
 

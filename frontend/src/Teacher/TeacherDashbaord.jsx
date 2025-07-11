@@ -19,7 +19,7 @@ export default function TeacherDashboard() {
   const fetchDetails = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8000/api/teachers/TeacherData/${auth?.user?.id}`
+        `https://school-management-system-1-jprf.onrender.com/api/teachers/TeacherData/${auth?.user?.id}`
       );
       setTeacher(data);
     } catch (error) {
@@ -31,7 +31,7 @@ export default function TeacherDashboard() {
     const fetchAttendance = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8000/api/attendance/${auth?.user?.id}`
+          `https://school-management-system-1-jprf.onrender.com/api/attendance/${auth?.user?.id}`
         );
         const data = await res.json();
         setHistory(data);
@@ -60,7 +60,7 @@ export default function TeacherDashboard() {
     setPunchedIn(true);
 
     try {
-      await fetch("http://localhost:8000/api/attendance/add", {
+      await fetch("https://school-management-system-1-jprf.onrender.com/api/attendance/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: auth?.user?.id, punchInTime: now }),

@@ -14,7 +14,7 @@ export default function TodaysClassCard() {
     // Fetch subjects for the class
     const GetSubject = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v2/subject/ClassId/${student?.class?._id}`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/subject/ClassId/${student?.class?._id}`);
             setSubject(data);
             const ids = data.map(subject => subject._id);
             setSubjectIds(ids);
@@ -26,7 +26,7 @@ export default function TodaysClassCard() {
     // Fetch teachers who teach any of those subjects
     const fetchTeachersBySubjects = async () => {
         try {
-            const { data } = await axios.post("http://localhost:8000/api/v2/subject/by-subjects", {
+            const { data } = await axios.post("https://school-management-system-1-jprf.onrender.com/api/v2/subject/by-subjects", {
                 subjectIds,
             });
             setTeachers(data);
@@ -67,7 +67,7 @@ export default function TodaysClassCard() {
                     return (
                         <div key={idx} className="flex items-center justify-between bg-white p-2 rounded border border-gray-300 shadow-md">
                             <div className="flex items-center space-x-3">
-                                <img src={teacherImg ? `http://localhost:8000/${teacherImg}` : "https://avatar.iran.liara.run/public/44"} alt="teacher" className="w-10 h-11 rounded" />
+                                <img src={teacherImg ? `https://school-management-system-1-jprf.onrender.com/${teacherImg}` : "https://avatar.iran.liara.run/public/44"} alt="teacher" className="w-10 h-11 rounded" />
                                 <div>
                                     <p className="text-[12px] font-semibold text-gray-800">{Sub?.subjectName}</p>
                                     <p className="text-[10px] text-gray-500 flex items-center">

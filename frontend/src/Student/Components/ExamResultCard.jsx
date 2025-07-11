@@ -18,7 +18,7 @@ export default function ExamResultCard() {
     useEffect(() => {
         const fetchExamResults = async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/api/v11/exam/student/${student?._id}`);
+                const res = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v11/exam/student/${student?._id}`);
                 const result = res.data?.data;
 
                 if (Array.isArray(result)) {

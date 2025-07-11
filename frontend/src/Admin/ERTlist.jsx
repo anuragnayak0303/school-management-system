@@ -15,7 +15,7 @@ export default function ERTlist() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const { data } = await axios.get('http://localhost:8000/api/ert/all');
+        const { data } = await axios.get('https://school-management-system-1-jprf.onrender.com/api/ert/all');
         setStudents(data);
         setError(null);
       } catch (error) {

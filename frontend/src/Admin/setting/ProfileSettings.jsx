@@ -13,7 +13,7 @@ export default function ProfileSettings() {
   useEffect(() => {
     async function featchdata() {
       try {
-        const { data } = await axios.get(`http://localhost:8000/api/v2/get`, {
+        const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/get`, {
           headers: {
             Authorization: `Bearer ${auth?.token}`,
           },
@@ -45,7 +45,7 @@ export default function ProfileSettings() {
           <div className="w-[70px] h-[70px] rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl">
             {data?.userId?.profileImage !== "" ? (
               <img
-                src={`http://localhost:8000/${data?.userId?.profileImage}`}
+                src={`https://school-management-system-1-jprf.onrender.com/${data?.userId?.profileImage}`}
                 alt="Profile"
                 className="w-full h-full object-cover rounded-full"
               />

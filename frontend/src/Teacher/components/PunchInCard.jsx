@@ -27,7 +27,7 @@ export default function PunchInCard({ user, handlePunchIn, punchedIn, punchTime,
             <p className="text-sm text-gray-500">Welcome to your dashboard</p>
           </div>
           <img
-            src={`http://localhost:8000/${user?.image}`}
+            src={`https://school-management-system-1-jprf.onrender.com/${user?.image}`}
             alt="Profile"
             className="w-12 h-12 rounded-full border-2 border-blue-500 object-cover"
           />

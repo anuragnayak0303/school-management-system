@@ -19,7 +19,7 @@ export default function TeacherStudentList() {
     const fetchDetails = async () => {
         try {
             const { data } = await axios.get(
-                `http://localhost:8000/api/teachers/TeacherData/${auth?.user?.id}`
+                `https://school-management-system-1-jprf.onrender.com/api/teachers/TeacherData/${auth?.user?.id}`
             );
             setTeacher(data);
             if (Array.isArray(data.Class)) {
@@ -33,7 +33,7 @@ export default function TeacherStudentList() {
     const fetchStudentsByClassList = async (classIds) => {
         try {
             const res = await axios.post(
-                'http://localhost:8000/api/v3/student/students/by-class-list',
+                'https://school-management-system-1-jprf.onrender.com/api/v3/student/students/by-class-list',
                 { classIds }
             );
             setStudents(res.data.data);
@@ -136,7 +136,7 @@ export default function TeacherStudentList() {
                                                 <td className="px-6 py-2">
                                                     {student.userId?.profileImage ? (
                                                         <img
-                                                            src={`http://localhost:8000/${student.userId.profileImage}`}
+                                                            src={`https://school-management-system-1-jprf.onrender.com/${student.userId.profileImage}`}
                                                             alt="profile"
                                                             className="h-10 w-10 object-cover rounded-full border border-indigo-300 shadow"
                                                         />

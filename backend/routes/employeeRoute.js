@@ -19,13 +19,13 @@ router.post("/add",isSignIn,upload.single("image"),addEmployeeController);
 // get
 // localhost:8000/api/v2/employees/all
 router.get("/all",isSignIn,getEmployeesController);
-// http://localhost:8000/api/v2/employees/single
+// https://school-management-system-1-jprf.onrender.com/api/v2/employees/single
 router.get("/single/:_id",isSignIn,singleEmployeeController);
-// http://localhost:8000/api/v2/employees/single
+// https://school-management-system-1-jprf.onrender.com/api/v2/employees/single
 router.put("/update/:_id",isSignIn,updateEmployeeController);
-// http://localhost:8000/api/v2/employees/department/:_id
+// https://school-management-system-1-jprf.onrender.com/api/v2/employees/department/:_id
 router.get("/department/:_id",isSignIn,getEmployeeByDeptId);
-// http://localhost:8000/api/v2/employees/salary
+// https://school-management-system-1-jprf.onrender.com/api/v2/employees/salary
 router.get("/salary/:_id",getEmployeeSalaryController)
 
 

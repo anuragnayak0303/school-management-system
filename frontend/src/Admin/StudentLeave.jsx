@@ -14,7 +14,7 @@ export default function StudentLeaveforAdmin() {
 
     const fetchLeaves = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v10/student-leave/`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v10/student-leave/`);
             setLeaves(data);
         } catch (error) {
             console.error("Error fetching leave data", error);
@@ -37,7 +37,7 @@ export default function StudentLeaveforAdmin() {
 
     const handleStatusUpdate = async (id, newStatus) => {
         try {
-            await axios.put(`http://localhost:8000/api/v10/student-leave/${id}/status`, {
+            await axios.put(`https://school-management-system-1-jprf.onrender.com/api/v10/student-leave/${id}/status`, {
                 status: newStatus,
             });
             toast.success(`Leave ${newStatus.toLowerCase()} ✅`);
@@ -104,7 +104,7 @@ export default function StudentLeaveforAdmin() {
                                                         <img
                                                             src={
                                                                 user?.profileImage
-                                                                    ? `http://localhost:8000/${user.profileImage}`
+                                                                    ? `https://school-management-system-1-jprf.onrender.com/${user.profileImage}`
                                                                     : fallbackImg
                                                             }
                                                             onError={(e) => {

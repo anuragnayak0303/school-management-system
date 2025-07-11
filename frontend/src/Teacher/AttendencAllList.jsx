@@ -20,7 +20,7 @@ export default function AttendencAllList() {
     const fetchDetails = async () => {
         setLoading(true);
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/teachers/TeacherData/${auth?.user?.id}`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/teachers/TeacherData/${auth?.user?.id}`);
             if (Array.isArray(data.subject)) {
                 setSubjectList(data.subject);
                 const subjectIds = selectedSubjectId === 'all' ? data.subject.map(s => s._id) : [selectedSubjectId];
@@ -35,7 +35,7 @@ export default function AttendencAllList() {
 
     const fetchAttendance = async (subjectIdsArray) => {
         try {
-            const { data } = await axios.post(`http://localhost:8000/api/v8/student/attendance/by-subjects`, {
+            const { data } = await axios.post(`https://school-management-system-1-jprf.onrender.com/api/v8/student/attendance/by-subjects`, {
                 subjectIds: subjectIdsArray,
             });
             if (data.success) setAttendanceList(data.attendance);
@@ -166,7 +166,7 @@ export default function AttendencAllList() {
                                                     <td className="px-4 py-1.5">{new Date(att.date).toLocaleDateString()}</td>
                                                     <td className="px-4 py-1.5">
                                                         {att.student?.userId?.profileImage ? (
-                                                            <img src={`http://localhost:8000/${att.student.userId.profileImage}`} className="h-10 w-10 rounded-full object-cover" alt="Profile" />
+                                                            <img src={`https://school-management-system-1-jprf.onrender.com/${att.student.userId.profileImage}`} className="h-10 w-10 rounded-full object-cover" alt="Profile" />
                                                         ) : (
                                                             <div className="h-10 w-10 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-bold">
                                                                 {getInitials(att.student?.userId?.name)}

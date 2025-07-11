@@ -43,9 +43,9 @@ const FileCard = ({ title, value, onChange, onRemove, isHomepage, onHomepageSele
 
 export default function WebsiteSettingsEdit({ data, onCancel, onSave }) {
   const [logos, setLogos] = useState({
-    dark: data.logos?.dark ? `http://localhost:8000/${data.logos.dark}` : null,
-    light: data.logos?.light ? `http://localhost:8000/${data.logos.light}` : null,
-    favicon: data.logos?.favicon ? `http://localhost:8000/${data.logos.favicon}` : null,
+    dark: data.logos?.dark ? `https://school-management-system-1-jprf.onrender.com/${data.logos.dark}` : null,
+    light: data.logos?.light ? `https://school-management-system-1-jprf.onrender.com/${data.logos.light}` : null,
+    favicon: data.logos?.favicon ? `https://school-management-system-1-jprf.onrender.com/${data.logos.favicon}` : null,
   });
   const [homepageLogo, setHomepageLogo] = useState(data.homepageLogo || "");
   const [socialLinks, setSocialLinks] = useState(data.socialLinks || {
@@ -116,7 +116,7 @@ export default function WebsiteSettingsEdit({ data, onCancel, onSave }) {
 
     try {
       setLoading(true);
-      await axios.post("http://localhost:8000/api/website/add", formData, {
+      await axios.post("https://school-management-system-1-jprf.onrender.com/api/website/add", formData, {
         headers: { "Content-Type": "multipart/form-data" }
       });
       toast.success("Website settings updated successfully ✅");

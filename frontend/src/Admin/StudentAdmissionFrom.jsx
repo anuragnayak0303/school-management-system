@@ -22,7 +22,7 @@ export default function StudentAdmissionForm() {
     }
 
     try {
-      const res = await axios.post('http://localhost:8000/api/v3/student/add', formData, {
+      const res = await axios.post('https://school-management-system-1-jprf.onrender.com/api/v3/student/add', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       toast.success('Admission submitted successfully!');
@@ -45,7 +45,7 @@ export default function StudentAdmissionForm() {
 
   const getClasses = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8000/api/v2/class/all');
+      const { data } = await axios.get('https://school-management-system-1-jprf.onrender.com/api/v2/class/all');
       setAllClass(data);
     } catch (error) {
       console.error('Failed to load classes:', error);
@@ -64,7 +64,7 @@ export default function StudentAdmissionForm() {
     if (!classId) return;
 
     try {
-      const { data } = await axios.get(`http://localhost:8000/api/v2/class/student_no/${classId}`);
+      const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/class/student_no/${classId}`);
       const nextRoll = data.Student_Of_no + 1;
       const formattedRoll = nextRoll < 10 ? `0${nextRoll}` : `${nextRoll}`;
 

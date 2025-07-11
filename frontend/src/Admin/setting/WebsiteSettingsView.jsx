@@ -29,7 +29,7 @@ export default function WebsiteSettingsView({ data, onEdit }) {
                         <h3 className="mb-2 font-semibold">{val.charAt(0).toUpperCase() + val.slice(1)} Logo</h3>
                         {data.logos?.[val] ? (
                             <img
-                                src={`http://localhost:8000/${data.logos?.[val]}`}
+                                src={`https://school-management-system-1-jprf.onrender.com/${data.logos?.[val]}`}
                                 alt={`${val} logo`}
                                 className="h-32 w-full object-contain rounded"
                             />

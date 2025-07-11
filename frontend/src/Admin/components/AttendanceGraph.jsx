@@ -38,7 +38,7 @@ const AttendanceGraph = () => {
 
   const fetchAttendance = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/api/v8/student/attendance/get');
+      const res = await axios.get('https://school-management-system-1-jprf.onrender.com/api/v8/student/attendance/get');
       const data = res.data;
 
       const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();

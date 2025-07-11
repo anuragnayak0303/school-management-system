@@ -11,7 +11,7 @@ export default function VisterAdmission() {
 
     const allAdmission = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v2/admission/all_admission-enquiry`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/admission/all_admission-enquiry`);
             setVisitors(data);
         } catch (error) {
             console.log(error);

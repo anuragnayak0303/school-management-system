@@ -3,9 +3,9 @@ import { getAllAdmissionDetails, submitAdmissionEnquiry } from "../controllers/E
 
 
 const Admissionrouter = express.Router();
-// http://localhost:8000/api/v2/admission/admission-enquiry
+// https://school-management-system-1-jprf.onrender.com/api/v2/admission/admission-enquiry
 Admissionrouter.post("/admission-enquiry", submitAdmissionEnquiry);
-// http://localhost:8000/api/v2/admission/all_admission-enquiry
+// https://school-management-system-1-jprf.onrender.com/api/v2/admission/all_admission-enquiry
 Admissionrouter.get("/all_admission-enquiry", getAllAdmissionDetails);
 
 export default Admissionrouter;

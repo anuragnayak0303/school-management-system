@@ -33,7 +33,7 @@ export default function NoticeBoardCard() {
 
   const getEvents = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:8000/api/v8/event/all`);
+      const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v8/event/all`);
       console.log(data)
       setNotices(data);
     } catch (error) {

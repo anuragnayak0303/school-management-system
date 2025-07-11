@@ -112,7 +112,7 @@ export default function WebsiteSettingsAdd({ initialData, onSave }) {
     formData.append("marqueeText", marqueeText);
     try {
       setLoading(true);
-      await axios.post("http://localhost:8000/api/website/add", formData, {
+      await axios.post("https://school-management-system-1-jprf.onrender.com/api/website/add", formData, {
         headers: { "Content-Type": "multipart/form-data" }
       });
       toast.success("Website settings added successfully ✅");

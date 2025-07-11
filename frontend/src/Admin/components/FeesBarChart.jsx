@@ -27,7 +27,7 @@ export default function StudentAdmissionChart() {
   // useEffect(() => {
   //   const fetchAdmissions = async () => {
   //     try {
-  //       const res = await axios.get("http://localhost:8000/api/v1/students/admissions-per-year");
+  //       const res = await axios.get("https://school-management-system-1-jprf.onrender.com/api/v1/students/admissions-per-year");
   //       const apiData = res.data; // Expected format: [{ year: "2020", admissions: 150 }, ...]
 
   //       // Generate last 6 years (previous 5 + current)

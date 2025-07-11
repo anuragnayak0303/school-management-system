@@ -13,7 +13,7 @@ const OldPasswordStep = ({ onNext }) => {
   const handleSubmit = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:8000/api/v2/user/passwordmatch`,
+        `https://school-management-system-1-jprf.onrender.com/api/v2/user/passwordmatch`,
         { oldPassword },
         {
           headers: {
@@ -90,7 +90,7 @@ const NewPasswordStep = ({ onClose }) => {
   const handleSave = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:8000/api/v2/user/ForgetPass`,
+        `https://school-management-system-1-jprf.onrender.com/api/v2/user/ForgetPass`,
         { newPassword },
         {
           headers: {

@@ -15,7 +15,7 @@ export default function LeavRequesr() {
 
     const fetchLeaves = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v2/employees/leave/all`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/employees/leave/all`);
             setLeaves(data);
         } catch (error) {
             console.error("Error fetching leave data", error);
@@ -36,7 +36,7 @@ export default function LeavRequesr() {
 
     const handleStatusUpdate = async (id, newStatus) => {
         try {
-            const { data } = await axios.put(`http://localhost:8000/api/v2/employees/leave/status/${id}`, {
+            const { data } = await axios.put(`https://school-management-system-1-jprf.onrender.com/api/v2/employees/leave/status/${id}`, {
                 status: newStatus,
             });
             fetchLeaves()
@@ -95,7 +95,7 @@ export default function LeavRequesr() {
 
                                                 <td className="px-4 py-3">
                                                     <img
-                                                        src={`http://localhost:8000/${leave?.userId?.userId?.profileImage}`}
+                                                        src={`https://school-management-system-1-jprf.onrender.com/${leave?.userId?.userId?.profileImage}`}
                                                         alt="profile"
                                                         className="w-10 h-10 rounded-full object-cover border border-gray-300 shadow-sm"
                                                         loading="lazy"

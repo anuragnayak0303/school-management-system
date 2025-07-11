@@ -66,7 +66,7 @@ export default function HomeWorksCard() {
   const fetchAssignments = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8000/api/v9/assignments/class/${student?.class?._id}`
+        `https://school-management-system-1-jprf.onrender.com/api/v9/assignments/class/${student?.class?._id}`
       );
       setAssignments(Array.isArray(data) ? data : []);
     } catch (err) {

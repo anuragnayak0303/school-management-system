@@ -12,7 +12,7 @@ export default function StudentProtected() {
   useEffect(() => {
     async function authCheck() {
       const { data } = await axios.get(
-        `http://localhost:8000/api/v2/user/user-protected`,
+        `https://school-management-system-1-jprf.onrender.com/api/v2/user/user-protected`,
         {
           headers: {
             Authorization: `Bearer ${auth?.token}`,

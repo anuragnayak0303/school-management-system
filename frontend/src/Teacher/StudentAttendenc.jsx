@@ -22,7 +22,7 @@ export default function StudentAttendance() {
     setLoadingTeacher(true);
     try {
       const { data } = await axios.get(
-        `http://localhost:8000/api/teachers/TeacherData/${auth?.user?.id}`
+        `https://school-management-system-1-jprf.onrender.com/api/teachers/TeacherData/${auth?.user?.id}`
       );
       setTeacher(data);
     } catch (error) {
@@ -63,7 +63,7 @@ export default function StudentAttendance() {
 
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/v8/student/attendance/today/by-class-subject?classId=${selectedClass}&subjectId=${subject._id}`
+        `https://school-management-system-1-jprf.onrender.com/api/v8/student/attendance/today/by-class-subject?classId=${selectedClass}&subjectId=${subject._id}`
       );
       const existing = res.data.attendance.map((entry) => ({
         _id: entry.studentId._id,
@@ -80,7 +80,7 @@ export default function StudentAttendance() {
     } catch {
       try {
         const { data } = await axios.get(
-          `http://localhost:8000/api/v3/student/byClass/${selectedClass}`
+          `https://school-management-system-1-jprf.onrender.com/api/v3/student/byClass/${selectedClass}`
         );
 
         if (data.length === 0) {
@@ -129,7 +129,7 @@ export default function StudentAttendance() {
 
     try {
       await axios.post(
-        'http://localhost:8000/api/v8/student/attendance/add',
+        'https://school-management-system-1-jprf.onrender.com/api/v8/student/attendance/add',
         payload
       );
       toast.success('Attendance submitted.');
@@ -231,7 +231,7 @@ export default function StudentAttendance() {
                               <td className="px-3 py-2 w-1/6">
                                 {student?.userId?.profileImage ? (
                                   <img
-                                    src={`http://localhost:8000/${student.userId.profileImage}`}
+                                    src={`https://school-management-system-1-jprf.onrender.com/${student.userId.profileImage}`}
                                     className="h-10 w-10 rounded-full object-cover"
                                     onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/40"; }}
                                     alt="Profile"

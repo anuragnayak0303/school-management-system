@@ -10,7 +10,7 @@ export default function TeacherAttendance() {
     useEffect(() => {
         const fetchAttendance = async () => {
             try {
-                const res = await axios.get("http://localhost:8000/api/attendance/"); // Adjust API
+                const res = await axios.get("https://school-management-system-1-jprf.onrender.com/api/attendance/"); // Adjust API
                 const data = res.data;
                 console.log(data)
                 // Group by teacher

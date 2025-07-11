@@ -33,7 +33,7 @@ export default function StudentDetails() {
                     <Card>
                         <div className="flex items-center space-x-6">
                             <img
-                                src={`http://localhost:8000/${studentData?.userId?.profileImage || 'default.png'}`}
+                                src={`https://school-management-system-1-jprf.onrender.com/${studentData?.userId?.profileImage || 'default.png'}`}
                                 alt="Profile"
                                 className="w-28 h-28 rounded-full shadow-lg border-4 border-indigo-300 object-cover transition-transform duration-300 hover:scale-105"
                             />

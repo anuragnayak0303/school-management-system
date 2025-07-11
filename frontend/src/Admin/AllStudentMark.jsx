@@ -18,14 +18,14 @@ export default function AllStudentMark() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/v2/class/all`)
+      .get(`https://school-management-system-1-jprf.onrender.com/api/v2/class/all`)
       .then((res) => setAllClass(res.data))
       .catch(console.error);
   }, []);
 
   const fetchSubjectsByClass = async (classId) => {
     try {
-      const res = await axios.get(`http://localhost:8000/api/v2/subject/ClassId/${classId}`);
+      const res = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/subject/ClassId/${classId}`);
       setSubjects(res.data || []);
     } catch (err) {
       console.error("Error fetching subjects:", err);
@@ -36,7 +36,7 @@ export default function AllStudentMark() {
     if (!selectedClassId) return;
     setLoading(true);
     try {
-      const res = await axios.get(`http://localhost:8000/api/v11/exam/classId/${selectedClassId}`);
+      const res = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v11/exam/classId/${selectedClassId}`);
       const allMarks = res.data?.data || [];
 
       const uniqueExamNames = [...new Set(allMarks.map((m) => m.examName))];

@@ -22,7 +22,7 @@ export default function TeacherProfileOverview({ data ,teacher}) {
       {/* Teacher Info Card */}
       <div className="w-full lg:w-[55%] lg:h-[20vh] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border shadow bg-[#202C4B] rounded p-4">
         <div className="flex items-center gap-4">
-          <img src={`http://localhost:8000/${data?.image}`} className="w-[70px] h-[70px] border rounded border-white" />
+          <img src={`https://school-management-system-1-jprf.onrender.com/${data?.image}`} className="w-[70px] h-[70px] border rounded border-white" />
           <div>
             <p className="lg:text-[10px] bg-blue-50 w-fit text-blue-600 font-semibold px-2 py-[1px] rounded">
              {teacher?.teacherId}

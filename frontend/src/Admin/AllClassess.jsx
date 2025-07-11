@@ -20,7 +20,7 @@ export default function AllClassess() {
 
     const getClasses = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v2/class/all`)
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/class/all`)
             setAllClasses(data)
         } catch (error) {
             console.log(error)
@@ -90,7 +90,7 @@ export default function AllClassess() {
                                             onClick={async () => {
                                                 if (confirm("Are you sure you want to delete this class?")) {
                                                     try {
-                                                        const { data } = await axios.delete(`http://localhost:8000/api/v2/class/delete/${cls._id}`);
+                                                        const { data } = await axios.delete(`https://school-management-system-1-jprf.onrender.com/api/v2/class/delete/${cls._id}`);
                                                         if (data?.success) {
                                                             toast.success(data?.message);
                                                             getClasses();

@@ -11,7 +11,7 @@ export default function WebsiteSettingsContainer() {
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        axios.get("http://localhost:8000/api/website/get")
+        axios.get("https://school-management-system-1-jprf.onrender.com/api/website/get")
             .then(res => {
                 if (res.data && Object.keys(res.data).length > 0) {
                     setData(res.data);

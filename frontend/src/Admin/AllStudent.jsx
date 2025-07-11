@@ -23,7 +23,7 @@ export default function AllStudent() {
 
   useEffect(() => {
     const fetchStudents = async () => {
-      const { data } = await axios.get(`http://localhost:8000/api/v3/student/get`);
+      const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v3/student/get`);
       setAllStudents(data);
       setFilteredStudents(data);
       const distinct = [...new Set(data.map(s => s.class?.Classname).filter(Boolean))];
@@ -208,7 +208,7 @@ export default function AllStudent() {
                     <td className="px-4 py-3">{s.rollNumber}</td>
                     <td className="px-4 py-3 flex items-center gap-2">
                       {s.userId.profileImage ? (
-                        <img src={`http://localhost:8000/${s.userId.profileImage}`} className="w-8 h-8 rounded-full" />
+                        <img src={`https://school-management-system-1-jprf.onrender.com/${s.userId.profileImage}`} className="w-8 h-8 rounded-full" />
                       ) : (
                         <div className="w-8 h-8 bg-indigo-600 text-white rounded-full flex justify-center items-center font-bold text-xs">
                           {getInitials(s.userId.name)}

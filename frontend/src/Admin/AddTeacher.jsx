@@ -15,7 +15,7 @@ export default function AddTeacher() {
 
     const getClasses = async () => {
         try {
-            const { data } = await axios.get("http://localhost:8000/api/v2/class/all");
+            const { data } = await axios.get("https://school-management-system-1-jprf.onrender.com/api/v2/class/all");
             setAllClasses(data);
         } catch (error) {
             console.log(error);
@@ -28,7 +28,7 @@ export default function AddTeacher() {
 
         setLoadingSubjects(true);
         try {
-            const { data: subjects } = await axios.get(`http://localhost:8000/api/v2/subject/ClassId/${selectedClassId}`);
+            const { data: subjects } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/subject/ClassId/${selectedClassId}`);
             const modifiedSubjects = subjects.map(subject => ({
                 ...subject,
                 hasTeacher: Boolean(subject.define_teacher)
@@ -76,7 +76,7 @@ export default function AddTeacher() {
         });
 
         try {
-            const res = await axios.post('http://localhost:8000/api/teachers/add', formData, {
+            const res = await axios.post('https://school-management-system-1-jprf.onrender.com/api/teachers/add', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 

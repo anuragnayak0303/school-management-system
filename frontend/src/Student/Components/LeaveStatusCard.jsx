@@ -14,7 +14,7 @@ export default function LeaveStatusCard() {
     (async () => {
       if (student?._id) {
         try {
-          const { data } = await axios.get(`http://localhost:8000/api/v10/student-leave/${student?._id}`);
+          const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v10/student-leave/${student?._id}`);
           const filtered = Array.isArray(data)
             ? data.filter((req) => req.status === 'approved' || req.status === 'rejected')
             : [];

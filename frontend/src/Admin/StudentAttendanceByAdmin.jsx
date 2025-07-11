@@ -16,7 +16,7 @@ export default function StudentAttendanceByAdmin() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await axios.get('http://localhost:8000/api/v8/student/attendance/get');
+        const res = await axios.get('https://school-management-system-1-jprf.onrender.com/api/v8/student/attendance/get');
         setAttendanceRecords(res.data);
         setFilteredData(res.data);
         setLoading(false);

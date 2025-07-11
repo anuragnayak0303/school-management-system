@@ -17,7 +17,7 @@ export default function AllTeacherList() {
     const [selectedTeacher, setSelectedTeacher] = useState(null);
     const getAllTeacher = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/teachers/get`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/teachers/get`);
             setteachers(data);
         } catch (error) {
             console.log(error);
@@ -29,7 +29,7 @@ export default function AllTeacherList() {
         if (!confirmDelete) return;
 
         try {
-            const { data } = await axios.delete(`http://localhost:8000/api/teachers/delet/${id}`);
+            const { data } = await axios.delete(`https://school-management-system-1-jprf.onrender.com/api/teachers/delet/${id}`);
             toast.success(data?.message || "Teacher deleted successfully");
             getAllTeacher(); // Refresh list
         } catch (error) {
@@ -85,7 +85,7 @@ export default function AllTeacherList() {
                                         <td className="px-4 py-3 flex items-center gap-2">
                                             {teacher?.userId?.profileImage ? (
                                                 <img
-                                                    src={`http://localhost:8000/${teacher.userId.profileImage}`}
+                                                    src={`https://school-management-system-1-jprf.onrender.com/${teacher.userId.profileImage}`}
                                                     alt="avatar"
                                                     className="w-8 h-8 rounded-full"
                                                 />

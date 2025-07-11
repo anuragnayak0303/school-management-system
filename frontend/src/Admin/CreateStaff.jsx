@@ -29,7 +29,7 @@ export default function CreateStaff() {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/api/v2/user/register', {
+            const response = await axios.post('https://school-management-system-1-jprf.onrender.com/api/v2/user/register', {
                 name: formData.name,
                 email: formData.email,
                 password: formData.password,

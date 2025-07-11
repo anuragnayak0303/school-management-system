@@ -44,11 +44,11 @@ export default function StudentMarksTable() {
   // ✅ Commented out real fetch (keep for future)
 
   // useEffect(() => {
-  //   axios.get("http://localhost:8000/api/v2/class/all").then((res) => {
+  //   axios.get("https://school-management-system-1-jprf.onrender.com/api/v2/class/all").then((res) => {
   //     // handle if needed
   //   });
 
-  //   axios.get("http://localhost:8000/api/v11/exam/all").then((res) => {
+  //   axios.get("https://school-management-system-1-jprf.onrender.com/api/v11/exam/all").then((res) => {
   //     const currentYear = new Date().getFullYear();
   //     const data = Array.isArray(res.data.data)
   //       ? res.data.data.filter(
@@ -69,7 +69,7 @@ export default function StudentMarksTable() {
   // useEffect(() => {
   //   if (!selectedExam) return;
   //   setLoading(true);
-  //   axios.get("http://localhost:8000/api/v11/exam/all").then((res) => {
+  //   axios.get("https://school-management-system-1-jprf.onrender.com/api/v11/exam/all").then((res) => {
   //     const raw = Array.isArray(res.data.data) ? res.data.data : [];
   //     const marks = raw.filter((mark) => mark.examName === selectedExam);
 

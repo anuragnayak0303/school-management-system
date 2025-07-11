@@ -35,7 +35,11 @@ const port = process.env.PORT || 8000;
 connectDB();
 
 // MIDDLEWARES
-app.use(cors());
+app.use(cors({
+  origin: 'https://magical-taiyaki-9ee817.netlify.app/',
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(express.static("public/uploads"));
 

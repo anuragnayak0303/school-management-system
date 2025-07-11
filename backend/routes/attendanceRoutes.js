@@ -4,7 +4,7 @@ import { getAttendance, getAttendanceByUser, markAttendance } from "../controlle
 
 const attendanceRoute = express.Router();
 
-// POST http://localhost:8000/api/attendance/
+// POST https://school-management-system-1-jprf.onrender.com/api/attendance/
 attendanceRoute.post("/add", markAttendance);
 attendanceRoute.get("/:userId", getAttendanceByUser);
 attendanceRoute.get("/", getAttendance);

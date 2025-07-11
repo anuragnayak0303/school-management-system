@@ -10,7 +10,7 @@ export default function StudentProfileCard() {
         <div className="w-full rounded bg-[#202C4B] p-4 shadow-lg text-white relative">
             <div className="flex items-start space-x-4">
                 <img
-                    src={student?.userId?.profileImage ? `http://localhost:8000/${student?.userId?.profileImage}` : 'https://avatar.iran.liara.run/public/44'}
+                    src={student?.userId?.profileImage ? `https://school-management-system-1-jprf.onrender.com/${student?.userId?.profileImage}` : 'https://avatar.iran.liara.run/public/44'}
                     alt="Student"
                     className="w-16 h-20 object-cover rounded-md border border-white"
                 />

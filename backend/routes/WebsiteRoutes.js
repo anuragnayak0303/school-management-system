@@ -11,7 +11,7 @@ const logoUpload = upload.fields([
   { name: 'favicon', maxCount: 1 },
 ]);
 
-// http://localhost:8000/api/website/get
+// https://school-management-system-1-jprf.onrender.com/api/website/get
 
 WebSiterouter.post('/add', logoUpload, addBrandingSetting);
 WebSiterouter.put('/update', logoUpload, updateBrandingSetting);

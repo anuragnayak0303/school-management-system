@@ -30,7 +30,7 @@ export default function LeaveRequestsCard() {
 
   const fetchLeaves = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:8000/api/v2/employees/leave/all`);
+      const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/employees/leave/all`);
       setLeaves(data);
       console.log(data);
     } catch (error) {
@@ -44,7 +44,7 @@ export default function LeaveRequestsCard() {
 
   const handleStatusUpdate = async (id, newStatus) => {
     try {
-      const { data } = await axios.put(`http://localhost:8000/api/v2/employees/leave/status/${id}`, {
+      const { data } = await axios.put(`https://school-management-system-1-jprf.onrender.com/api/v2/employees/leave/status/${id}`, {
         status: newStatus,
       });
       fetchLeaves()
@@ -75,7 +75,7 @@ export default function LeaveRequestsCard() {
                 className="flex items-start bg-gray-50 border border-gray-300 shadow-sm rounded p-3 gap-3"
               >
                 <img
-                  src={`http://localhost:8000/${req?.userId?.userId?.profileImage}` || "https://via.placeholder.com/40"}
+                  src={`https://school-management-system-1-jprf.onrender.com/${req?.userId?.userId?.profileImage}` || "https://via.placeholder.com/40"}
                   alt={req?.userId?.userId?.name || "User"}
                   className="w-10 h-10 rounded object-cover"
                 />

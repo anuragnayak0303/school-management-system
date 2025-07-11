@@ -26,7 +26,7 @@ export default function EditClassModal({ isOpen, onClose, classData, onSave }) {
   const handleSubmit = async () => {
     try {
       const { data } = await axios.put(
-        `http://localhost:8000/api/v2/class/update/${formData._id}`,
+        `https://school-management-system-1-jprf.onrender.com/api/v2/class/update/${formData._id}`,
         formData
       );
       toast.success('Class updated!');

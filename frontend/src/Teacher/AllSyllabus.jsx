@@ -32,7 +32,7 @@ export default function AllSyllabus() {
         try {
             setLoading(true);
             const { data } = await axios.get(
-                `http://localhost:8000/api/teachers/TeacherData/${auth?.user?.id}`
+                `https://school-management-system-1-jprf.onrender.com/api/teachers/TeacherData/${auth?.user?.id}`
             );
             setTeacher(data);
         } catch (error) {
@@ -55,7 +55,7 @@ export default function AllSyllabus() {
     const handleUpdate = async () => {
         try {
             await axios.put(
-                `http://localhost:8000/api/v2/subject/updatasyllabus/${editSubject._id}`,
+                `https://school-management-system-1-jprf.onrender.com/api/v2/subject/updatasyllabus/${editSubject._id}`,
                 { completion: completion }
             );
             alert("Syllabus completion updated!");

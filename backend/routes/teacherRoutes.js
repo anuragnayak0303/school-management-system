@@ -2,7 +2,7 @@ import express from "express";
 import { addTeacher, GetAllTeacher, GetSigleData, GetSigleData2, GetSingledelet, GetTearcherdatabyusingUserId, Teacherupload, updateTeacher } from "../controllers/teacherController.js";
 
 const teacherRoutes = express.Router();
-// http://localhost:8000/api/teachers/getSingle/
+// https://school-management-system-1-jprf.onrender.com/api/teachers/getSingle/
 teacherRoutes.post("/add", Teacherupload.single('photo'), addTeacher);
 teacherRoutes.get("/get", GetAllTeacher)
 teacherRoutes.get('/getSingle/:id', GetSigleData)

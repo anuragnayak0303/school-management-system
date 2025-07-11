@@ -13,7 +13,7 @@ export default function ClassDrawer({ isOpen, onClose, onSave }) {
 
     async function handleSaveClass() {
         try {
-            const { data } = await axios.post(`http://localhost:8000/api/v2/class/add`, classData)
+            const { data } = await axios.post(`https://school-management-system-1-jprf.onrender.com/api/v2/class/add`, classData)
             toast.success("Class Added Successfully")
             setTimeout(() => {
                 setClassData({

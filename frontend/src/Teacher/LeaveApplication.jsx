@@ -22,7 +22,7 @@ export default function LeaveApplication() {
     const fetchDetails = async () => {
         try {
             const { data } = await axios.get(
-                `http://localhost:8000/api/teachers/TeacherData/${auth?.user?.id}`
+                `https://school-management-system-1-jprf.onrender.com/api/teachers/TeacherData/${auth?.user?.id}`
             );
             setTeacher(data);
         } catch (error) {
@@ -32,7 +32,7 @@ export default function LeaveApplication() {
 
     const fetchLeaves = async (teacherId) => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v2/employees/leave/my/${teacherId}`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/employees/leave/my/${teacherId}`);
             setLeaves(data);
         } catch (error) {
             console.error("Error fetching leave data", error);
@@ -68,7 +68,7 @@ export default function LeaveApplication() {
         }
 
         try {
-            const { data } = await axios.post("http://localhost:8000/api/v2/employees/leave/apply", {
+            const { data } = await axios.post("https://school-management-system-1-jprf.onrender.com/api/v2/employees/leave/apply", {
                 reason: form.reason,
                 fromDate: form.fromDate,
                 toDate: form.toDate,
@@ -89,7 +89,7 @@ export default function LeaveApplication() {
         if (!confirmDelete) return;
 
         try {
-            await axios.delete(`http://localhost:8000/api/v2/employees/leave/delete/${id}`);
+            await axios.delete(`https://school-management-system-1-jprf.onrender.com/api/v2/employees/leave/delete/${id}`);
             setLeaves(leaves.filter((leave) => leave._id !== id));
             toast.success("Leave deleted successfully ✅");
         } catch (err) {

@@ -11,7 +11,7 @@ export default function AllUsers() {
 
     const GetAllData = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v2/user/getAll`);
+            const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v2/user/getAll`);
             setUsers(data || []);
             console.log(data)
         } catch (error) {
@@ -82,7 +82,7 @@ export default function AllUsers() {
                                         <td className="px-6 py-3">
                                             {user.profileImage ? (
                                                 <img
-                                                    src={`http://localhost:8000/${user.profileImage}`}
+                                                    src={`https://school-management-system-1-jprf.onrender.com/${user.profileImage}`}
                                                     alt="profile"
                                                     className="w-12 h-12 rounded-full object-cover border-2 border-gray-300"
                                                 />

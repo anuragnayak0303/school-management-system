@@ -24,7 +24,7 @@ export default function NoticeBoard() {
   const location = useLocation()
   const getEvents = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:8000/api/v8/event/all`);
+      const { data } = await axios.get(`https://school-management-system-1-jprf.onrender.com/api/v8/event/all`);
       setEvents(data);
     } catch (error) {
       console.error("Failed to fetch events:", error);

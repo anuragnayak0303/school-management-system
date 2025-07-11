@@ -13,7 +13,7 @@ export default function TopSubjectsCard() {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/v2/class/all");
+        const res = await axios.get("https://school-management-system-1-jprf.onrender.com/api/v2/class/all");
         setClassList(res.data);
         if (res.data.length > 0) {
           setSelectedClass(res.data[0]);
@@ -32,7 +32,7 @@ export default function TopSubjectsCard() {
       try {
         setLoading(true);
         const res = await axios.get(
-          `http://localhost:8000/api/v2/subject/ClassId/${selectedClass._id}`
+          `https://school-management-system-1-jprf.onrender.com/api/v2/subject/ClassId/${selectedClass._id}`
         );
         const colorPool = [
           "#dc2626", "#60a5fa", "#2563eb", "#22c55e", "#eab308", "#ef4444", "#4f46e5"
