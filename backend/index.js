@@ -36,7 +36,7 @@ connectDB();
 
 // MIDDLEWARES
 app.use(cors({
-  origin: 'https://magical-taiyaki-9ee817.netlify.app/',
+  origin: 'https://school-management-system-3-id3q.onrender.com/',
   credentials: true
 }));
 
